@@ -12,6 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
     try {
       const response = await fetch(`${baseUrl}/api/clients/login`, {
         method: "POST",
@@ -20,13 +21,19 @@ const Login = () => {
       });
 
       const data = await response.json();
+
       if (!response.ok) {
         setErrorMsg(data.message || "Identifiants incorrects");
         return;
       }
 
+      // --- CRUCIAL : On s'assure que le token est stocké AVANT de naviguer ---
       localStorage.setItem("token", data.token);
+
+      // On appelle la fonction du context
       login(data.token, data.client);
+
+      // Redirection
       navigate("/");
     } catch (error) {
       setErrorMsg("Erreur de connexion au serveur.");
@@ -48,7 +55,9 @@ const Login = () => {
         />
 
         {errorMsg && (
-          <p style={{ color: "red", marginBottom: "20px" }}>{errorMsg}</p>
+          <p style={{ color: "red", marginBottom: "20px", fontWeight: "bold" }}>
+            ⚠️ {errorMsg}
+          </p>
         )}
 
         <div style={inputContainerStyle}>
@@ -60,6 +69,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="username" // <-- AJOUTÉ : Pour le gestionnaire de mots de passe
           />
         </div>
 
@@ -72,14 +82,20 @@ const Login = () => {
             value={motDePasse}
             onChange={(e) => setMotDePasse(e.target.value)}
             required
+            autoComplete="current-password" // <-- AJOUTÉ : Pour supprimer l'erreur [DOM]
           />
+        </div>
+
+        <div style={{ width: "100%", textAlign: "right", marginTop: "-10px" }}>
+          <Link to="/forgot-password" style={forgotPasswordStyle}>
+            Mot de passe oublié ?
+          </Link>
         </div>
 
         <button type="submit" style={buttonStyle}>
           Se connecter
         </button>
 
-        {/* --- LE BOUTON EST ICI MAINTENANT --- */}
         <button
           type="button"
           onClick={handleVisitor}
@@ -99,7 +115,7 @@ const Login = () => {
   );
 };
 
-// Styles (Inchangés)
+// --- STYLES (Inchangés) ---
 const containerStyle = {
   display: "flex",
   justifyContent: "center",
@@ -140,6 +156,7 @@ const buttonStyle = {
   cursor: "pointer",
   marginTop: "20px",
   fontWeight: "bold",
+  fontFamily: "Montserrat",
 };
 const visitorButtonStyle = {
   backgroundColor: "transparent",
@@ -152,6 +169,15 @@ const visitorButtonStyle = {
   fontFamily: "Montserrat",
   fontSize: "14px",
   fontWeight: "500",
+};
+const forgotPasswordStyle = {
+  background: "none",
+  border: "none",
+  color: "#666",
+  fontSize: "12px",
+  cursor: "pointer",
+  textDecoration: "underline",
+  fontFamily: "Montserrat",
 };
 
 export default Login;

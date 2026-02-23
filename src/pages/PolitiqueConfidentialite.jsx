@@ -1,9 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const PolitiqueConfidentialite = () => {
   return (
     <div style={pageContainer}>
+      {/* SEO */}
+      <Helmet>
+        <title>Politique de Confidentialité | Caf'Thé</title>
+        <meta
+          name="description"
+          content="Consultez la politique de protection des données personnelles de Caf'Thé."
+        />
+        <meta name="robots" content="noindex" />
+      </Helmet>
+
       <Link to="/" style={backLink}>
         ← Retour à l'accueil
       </Link>
@@ -29,24 +40,26 @@ const PolitiqueConfidentialite = () => {
           </p>
 
           <h2 style={h2Style}>2. Utilisation de vos informations</h2>
-          <p style={textStyle}>
+          {/* CORRECTION : Utilisation de <div> au lieu de <p> pour contenir une <ul> */}
+          <div style={textStyle}>
             Vos données servent uniquement à :
             <ul style={listStyle}>
               <li>Gérer votre compte client.</li>
               <li>Livrer vos commandes à la bonne adresse.</li>
               <li>Vous identifier de manière sécurisée (Token JWT).</li>
             </ul>
-          </p>
+          </div>
 
           <h2 style={h2Style}>3. Sécurité & Stockage</h2>
-          <p style={textStyle}>
+          {/* CORRECTION : Utilisation de <div> pour éviter les erreurs d'imbrication avec <br /> */}
+          <div style={textStyle}>
             <strong>Sécurité :</strong> Votre mot de passe est haché avant
             d'être enregistré. Nous n'y avons jamais accès en clair.
             <br />
             <strong>Local Storage :</strong> Nous utilisons le stockage local de
             votre navigateur pour conserver votre panier pendant votre
             navigation.
-          </p>
+          </div>
 
           <h2 style={h2Style}>4. Vos droits</h2>
           <p style={textStyle}>
@@ -124,6 +137,8 @@ const h2Style = {
 const textStyle = {
   fontSize: "16px",
   color: "#333",
+  display: "block", // Assure un bon espacement pour les divs
+  marginBottom: "15px",
 };
 
 const listStyle = {

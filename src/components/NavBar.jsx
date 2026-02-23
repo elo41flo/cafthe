@@ -1,11 +1,25 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext.jsx";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-  const { user, isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+
+  // --- NOUVELLE GESTION DE L'UTILISATEUR SANS CONTEXT ---
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const updateAuthStatus = () => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (savedUser) {
+      setUser(savedUser);
+      setIsAuthenticated(true);
+    } else {
+      setUser(null);
+      setIsAuthenticated(false);
+    }
+  };
 
   const updateCartCount = () => {
     const panier = JSON.parse(localStorage.getItem("panier")) || [];
@@ -17,20 +31,35 @@ const NavBar = () => {
   };
 
   useEffect(() => {
+    // Initialisation au montage
     updateCartCount();
+    updateAuthStatus();
+
+    // Écouteurs d'événements pour mettre à jour en temps réel
     window.addEventListener("cartUpdate", updateCartCount);
-    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("storage", () => {
+      updateCartCount();
+      updateAuthStatus();
+    });
+    // On écoute aussi un événement personnalisé pour la connexion
+    window.addEventListener("authUpdate", updateAuthStatus);
+
     return () => {
       window.removeEventListener("cartUpdate", updateCartCount);
-      window.removeEventListener("storage", updateCartCount);
+      window.removeEventListener("storage", updateAuthStatus);
+      window.removeEventListener("authUpdate", updateAuthStatus);
     };
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem("user");
+    updateAuthStatus(); // Met à jour l'état local
     setIsOpen(false);
+    navigate("/"); // Redirige vers l'accueil
+    // Optionnel : recharger la page pour nettoyer tous les états
+    window.location.reload();
   };
 
   return (
@@ -45,7 +74,6 @@ const NavBar = () => {
           />
         </Link>
 
-        {/* LE BOUTON MENU ÉTAIT MANQUANT ICI */}
         <button onClick={toggleMenu} style={menuBtnStyle}>
           Menu
         </button>
@@ -88,7 +116,7 @@ const NavBar = () => {
           <Link to="/boutique" onClick={toggleMenu} style={linkStyle}>
             Boutique
           </Link>
-          <Link to="/selection" onClick={toggleMenu} style={linkStyle}>
+          <Link to="/pepite" onClick={toggleMenu} style={linkStyle}>
             Sélection du moment
           </Link>
           <Link to="/univers" onClick={toggleMenu} style={linkStyle}>
@@ -99,12 +127,13 @@ const NavBar = () => {
           </Link>
         </nav>
 
-        {/* --- SECTION DÉCONNEXION (REPLACÉE PLUS HAUT) --- */}
+        {/* SECTION STATUT / CONNEXION */}
         <div style={statusSectionStyle}>
           {isAuthenticated ? (
             <div style={{ width: "100%" }}>
               <p style={welcomeTextStyle}>
-                Connecté : <strong>{user?.prenom}</strong>
+                Connecté :{" "}
+                <strong>{user?.prenom_client || user?.prenom || "Ami"}</strong>
               </p>
               <button onClick={handleLogout} style={logoutBtnStyle}>
                 SE DÉCONNECTER
@@ -121,7 +150,7 @@ const NavBar = () => {
   );
 };
 
-// --- STYLES ---
+// --- STYLES (Inchangés pour garder ton design) ---
 const headerStyle = {
   display: "flex",
   justifyContent: "space-between",
@@ -202,8 +231,6 @@ const linkStyle = {
   fontSize: "1.5rem",
   fontWeight: "500",
 };
-
-// Styles de la zone de statut
 const statusSectionStyle = {
   marginTop: "40px",
   paddingTop: "20px",

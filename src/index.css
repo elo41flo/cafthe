@@ -6,3 +6,20 @@ body {
 h1, h2, h3 {
     font-family: 'Playfair Display', serif;
 }
+
+@keyframes pulse {
+    0% { background-color: #eee; }
+    50% { background-color: #f5f5f5; }
+    100% { background-color: #eee; }
+}
+
+/* Applique-le aux divs de ton squelette */
+.skeleton-box {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}

@@ -1,172 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Panier = () => {
+const ChoixRelais = () => {
   const navigate = useNavigate();
+  const [selectedRelais, setSelectedRelais] = useState(null);
 
-  // Pour l'instant on simule un panier, plus tard ce sera via ton Context ou LocalStorage
-  const panierSimule = [
-    { id: 101, nom: "Moka d'Ethiopie", prix: 12.5, quantite: 2 },
-    { id: 408, nom: "Coffret Focus", prix: 35.0, quantite: 1 },
-  ];
+  useEffect(() => {
+    // Initialisation du Widget Mondial Relay
+    window.$("#Zone_Widget").MR_ParcelShopPicker({
+      Target: "#Target_Result", // Champ qui recevra l'ID du relais
+      Brand: "BDTEST  ", // Code marque de test obligatoire en sandbox
+      Country: "FR", // Pays par défaut
+      PostCode: "41000", // Code postal par défaut (Blois pour toi !)
+      ColLivMod: "24R", // Mode de livraison
+      NbResults: "7", // Nombre de points affichés
+      OnParcelShopSelected: (data) => {
+        // Cette fonction s'exécute quand l'utilisateur clique sur "Choisir"
+        console.log("Relais sélectionné :", data);
+        setSelectedRelais(data);
+      },
+    });
+  }, []);
 
-  const total = panierSimule.reduce(
-    (acc, item) => acc + item.prix * item.quantite,
-    0,
-  );
+  const handleConfirm = () => {
+    if (selectedRelais) {
+      // On sauvegarde le choix dans le localStorage pour la commande
+      localStorage.setItem("relais_selected", JSON.stringify(selectedRelais));
+      navigate("/paiement");
+    } else {
+      alert("Veuillez sélectionner un point relais sur la carte.");
+    }
+  };
 
   return (
-    <div
-      style={{
-        backgroundColor: "#fff",
-        minHeight: "100vh",
-        padding: "80px 20px",
-      }}
-    >
-      <h1 style={titleStyle}>Votre Panier</h1>
+    <div style={containerStyle}>
+      <h1 style={titleStyle}>Choisissez votre Point Relais</h1>
+      <p style={{ marginBottom: "20px" }}>
+        Sélectionnez le point le plus proche de chez vous !
+      </p>
 
-      <div style={containerStyle}>
-        {/* LISTE DES PRODUITS */}
-        <div style={listContainer}>
-          {panierSimule.map((item) => (
-            <div key={item.id} style={itemCardStyle}>
-              <div style={{ flex: 2 }}>
-                <h3 style={productNameStyle}>{item.nom}</h3>
-                <p style={priceStyle}>{item.prix.toFixed(2)}€ / unité</p>
-              </div>
-              <div style={qtyControls}>
-                <button style={qtyBtn}>-</button>
-                <span style={{ margin: "0 15px", fontWeight: "bold" }}>
-                  {item.quantite}
-                </span>
-                <button style={qtyBtn}>+</button>
-              </div>
-              <p style={subtotalStyle}>
-                {(item.prix * item.quantite).toFixed(2)}€
-              </p>
-            </div>
-          ))}
+      {/* Le Widget va s'afficher ici */}
+      <div id="Zone_Widget" style={{ marginBottom: "20px" }}></div>
+
+      {/* Affichage du relais sélectionné */}
+      {selectedRelais && (
+        <div style={selectionBox}>
+          <p>
+            <strong>Point sélectionné :</strong> {selectedRelais.Nom}
+          </p>
+          <p>
+            {selectedRelais.Adresse1}, {selectedRelais.CP}{" "}
+            {selectedRelais.Ville}
+          </p>
         </div>
+      )}
 
-        {/* RÉCAPITULATIF COMMANDE */}
-        <div style={summaryCard}>
-          <h2 style={{ fontFamily: "Playfair Display", fontSize: "24px" }}>
-            Résumé
-          </h2>
-          <hr style={{ border: "0.5px solid #eee", margin: "20px 0" }} />
-          <div style={flexRow}>
-            <span>Sous-total</span>
-            <span>{total.toFixed(2)}€</span>
-          </div>
-          <div style={flexRow}>
-            <span>Livraison</span>
-            <span style={{ color: "#97af6e" }}>
-              Calculée à l'étape suivante
-            </span>
-          </div>
-          <div
-            style={{
-              ...flexRow,
-              fontWeight: "bold",
-              fontSize: "20px",
-              marginTop: "20px",
-            }}
-          >
-            <span>Total</span>
-            <span>{total.toFixed(2)}€</span>
-          </div>
-
-          <button onClick={() => navigate("/livraison")} style={btnVertStyle}>
-            Passer à la livraison
-          </button>
-        </div>
+      <div style={{ display: "flex", gap: "20px", marginTop: "30px" }}>
+        <button onClick={() => navigate("/livraisonretrait")} style={btnBack}>
+          Retour
+        </button>
+        <button onClick={handleConfirm} style={btnNext}>
+          Confirmer et payer
+        </button>
       </div>
     </div>
   );
 };
 
 // --- STYLES ---
-const titleStyle = {
-  fontFamily: "Playfair Display, serif",
-  fontSize: "42px",
-  textAlign: "center",
-  marginBottom: "50px",
-};
 const containerStyle = {
-  maxWidth: "1100px",
-  margin: "0 auto",
-  display: "flex",
-  gap: "50px",
-  flexWrap: "wrap",
-};
-const listContainer = { flex: 2, minWidth: "300px" };
-const summaryCard = {
-  flex: 1,
-  minWidth: "300px",
-  padding: "30px",
-  border: "1px solid #eee",
-  borderRadius: "20px",
-  height: "fit-content",
-};
-
-const itemCardStyle = {
-  display: "flex",
-  alignItems: "center",
-  padding: "20px 0",
-  borderBottom: "1px solid #eee",
-};
-const productNameStyle = {
-  fontFamily: "Montserrat",
-  fontSize: "18px",
-  fontWeight: "bold",
-  margin: 0,
-};
-const priceStyle = {
-  fontFamily: "Montserrat",
-  color: "#666",
-  fontSize: "14px",
-};
-const subtotalStyle = {
-  flex: 1,
-  textAlign: "right",
-  fontWeight: "bold",
+  maxWidth: "1000px",
+  margin: "40px auto",
+  padding: "20px",
+  textAlign: "center",
   fontFamily: "Montserrat",
 };
-
-const qtyControls = {
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "#f9f9f9",
-  padding: "5px 15px",
-  borderRadius: "15px",
+const titleStyle = {
+  fontFamily: "Playfair Display",
+  color: "#aa8d74",
+  fontSize: "32px",
 };
-const qtyBtn = {
-  border: "none",
-  background: "none",
-  cursor: "pointer",
-  fontSize: "18px",
-  fontWeight: "bold",
-};
-
-const flexRow = {
-  display: "flex",
-  justifyContent: "space-between",
-  marginBottom: "10px",
-  fontFamily: "Montserrat",
-};
-
-const btnVertStyle = {
-  backgroundColor: "#97af6e",
-  color: "#000",
-  border: "none",
-  borderRadius: "25px",
+const selectionBox = {
   padding: "15px",
-  width: "100%",
-  marginTop: "30px",
+  backgroundColor: "#f9fcf6",
+  border: "1px solid #97af6e",
+  borderRadius: "10px",
+  marginTop: "20px",
+};
+const btnNext = {
+  flex: 2,
+  backgroundColor: "#97af6e",
+  color: "white",
+  padding: "15px",
+  borderRadius: "30px",
+  border: "none",
   fontWeight: "bold",
   cursor: "pointer",
-  fontFamily: "Montserrat",
-  boxShadow: "0 4px 4px rgba(0,0,0,0.1)",
+};
+const btnBack = {
+  flex: 1,
+  backgroundColor: "#ccc",
+  color: "white",
+  padding: "15px",
+  borderRadius: "30px",
+  border: "none",
+  fontWeight: "bold",
+  cursor: "pointer",
 };
 
-export default Panier;
+export default ChoixRelais;
