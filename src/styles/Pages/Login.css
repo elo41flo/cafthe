@@ -1,137 +1,189 @@
 /* --- CONTENEUR GLOBAL --- */
 .auth-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-bg);
-  padding: 20px;
-  transition: background-color 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    align-items: center; /* Centré verticalement sur PC */
+    justify-content: center;
+    background-color: var(--color-bg);
+    padding: 20px;
+    transition: background-color 0.3s ease;
 }
 
 /* --- CARTE DE CONNEXION --- */
 .auth-card {
-  background-color: var(--color-card);
-  padding: 50px 40px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-main);
-  border: 1px solid var(--color-border);
-  width: 100%;
-  max-width: 450px;
-  text-align: center;
-  transition: all 0.3s ease;
+    background-color: var(--color-card);
+    padding: 50px 40px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-main);
+    border: 1px solid var(--color-border);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
 .auth-logo {
-  height: 100px;
-  margin-bottom: 40px;
-  /* Optionnel : petit filtre pour que le logo ressorte mieux en dark mode */
-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.1));
+    height: 100px;
+    width: auto;
+    margin: 0 auto 40px auto;
+    display: block;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.1));
 }
 
-/* --- INPUTS --- */
+/* --- INPUTS (LE FIX DES EMOJIS) --- */
 .auth-input-group {
-  position: relative;
-  width: 100%;
-  margin-bottom: 20px;
+    position: relative; /* Référentiel pour l'icône */
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .auth-input-icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  font-size: 18px;
-  color: var(--color-text);
-  opacity: 0.7;
+    position: absolute;
+    left: 20px; /* Position fixe à gauche */
+    top: 50%;
+    transform: translateY(-50%); /* Centrage vertical mathématique */
+    z-index: 10;
+    font-size: 20px;
+    pointer-events: none; /* L'icône ne bloque pas le clic */
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .auth-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 15px 15px 15px 55px; /* Décalage pour l'icône */
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  transition: all 0.3s ease;
+    width: 100%;
+    height: 55px; /* Hauteur fixe pour un rendu propre */
+    box-sizing: border-box;
+    /* TRÈS IMPORTANT : Le padding-left doit être assez grand pour l'icône + un espace */
+    padding: 0 20px 0 60px !important; 
+    border-radius: 30px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
 }
 
 .auth-input:focus {
-  outline: none;
-  border-color: var(--color-secondary);
-  box-shadow: 0 0 0 3px rgba(151, 175, 110, 0.2);
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(151, 175, 110, 0.2);
 }
 
 /* --- LIENS & TEXTES --- */
 .auth-forgot-link {
-  display: block;
-  text-align: right;
-  font-size: 13px;
-  color: var(--color-text);
-  opacity: 0.8;
-  text-decoration: none;
-  margin-top: -10px;
-  margin-bottom: 25px;
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    color: var(--color-text);
+    opacity: 0.8;
+    margin-top: -10px;
+    margin-bottom: 25px;
+    transition: color 0.3s;
 }
 
 .auth-forgot-link:hover {
-  text-decoration: underline;
-  color: var(--color-primary);
+    color: var(--color-primary);
+    text-decoration: underline;
 }
 
 .auth-footer-text {
-  margin-top: 25px;
-  font-size: 14px;
-  color: var(--color-text);
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--color-text);
 }
 
 /* --- BOUTONS --- */
 .auth-btn {
-  background-color: var(--color-secondary);
-  color: white !important;
-  border: none;
-  border-radius: var(--radius-btn);
-  padding: 15px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    width: 100%;
+    background-color: var(--color-secondary);
+    color: white !important;
+    border: none;
+    border-radius: var(--radius-btn);
+    padding: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .auth-btn:hover {
-  background-color: var(--color-accent) !important;
-  color: #2d241c !important;
-  transform: translateY(-2px);
+    background-color: var(--color-accent) !important;
+    color: #2d241c !important;
+    transform: translateY(-2px);
 }
 
 .auth-btn-visitor {
-  width: 100%;
-  background-color: transparent;
-  color: var(--color-text);
-  padding: 12px;
-  border-radius: var(--radius-btn);
-  border: 1px solid var(--color-secondary);
-  cursor: pointer;
-  margin-top: 15px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+    width: 100%;
+    background-color: transparent;
+    color: var(--color-text);
+    padding: 14px;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--color-secondary);
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .auth-btn-visitor:hover {
-  background-color: rgba(151, 175, 110, 0.1);
+    background-color: rgba(151, 175, 110, 0.1);
 }
 
-/* Erreur */
+/* --- GESTION DES ERREURS --- */
 .auth-error {
-  background-color: rgba(255, 0, 0, 0.1);
-  color: #ff5252;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  border: 1px solid rgba(255, 0, 0, 0.2);
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff5252;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   RESPONSIVE (Mobiles et Tablettes)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .auth-container {
+        align-items: flex-start; /* Évite d'être caché par le clavier mobile */
+        padding-top: 60px;
+    }
+
+    .auth-card {
+        padding: 40px 20px;
+        max-width: 100%;
+        border: none; /* Plus épuré sur mobile */
+        box-shadow: none; /* On peut laisser le fond plat sur mobile */
+    }
+
+    .auth-logo {
+        height: 80px;
+        margin-bottom: 30px;
+    }
+
+    .auth-input {
+        height: 50px;
+        padding-left: 55px !important; /* Ajustement léger pour mobile */
+    }
+
+    .auth-forgot-link {
+        text-align: center; /* Plus simple à viser au doigt */
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 380px) {
+    .auth-card {
+        padding: 30px 15px;
+    }
 }

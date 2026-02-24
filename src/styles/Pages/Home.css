@@ -1,10 +1,18 @@
 /* ==========================================================================
-   SECTION HERO
+   VARIABLES & RESET DE BASE
    ========================================================================== */
-/* --- HERO --- */
+.home-container {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-bg);
+}
+
+/* ==========================================================================
+   SECTION HERO (Desktop)
+   ========================================================================== */
 .hero-section {
   position: relative;
-  height: 75vh;
+  height: 85vh; /* Hauteur immersive */
   background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2070');
   background-size: cover;
   background-position: center;
@@ -14,23 +22,45 @@
 }
 
 .hero-overlay {
-  background-color: var(--color-overlay);
-  padding: 50px;
-  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Blanc cassé pour le texte */
+  padding: 60px;
+  border-radius: 30px;
   text-align: center;
-  max-width: 700px;
-  box-shadow: var(--shadow-main);
-  border: 1px solid var(--color-border);
+  max-width: 800px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(5px);
 }
 
-/* --- ENGAGEMENTS (Le fix pour ta capture noire) --- */
+/* En Dark Mode, l'overlay s'adapte automatiquement grâce à tes variables */
+[data-theme='dark'] .hero-overlay {
+  background-color: rgba(30, 30, 30, 0.85);
+}
+
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.hero-p {
+  font-size: 1.2rem;
+  color: var(--color-text);
+  margin-bottom: 35px;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   ENGAGEMENTS
+   ========================================================================== */
 .engagement-section {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 60px;
-  padding: 40px 20px;
-  background-color: var(--color-bg); /* Empêche le décalage de couleur */
+  gap: 80px;
+  padding: 60px 20px;
+  background-color: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -38,96 +68,89 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  text-align: center;
+  gap: 15px;
 }
 
 .engagement-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
+  transition: transform 0.3s ease;
 }
 
-/* --- SECTION BOX (Infos Gauche / Photo Droite) --- */
+.engagement-item:hover .engagement-icon {
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
+   SECTION BOX
+   ========================================================================== */
 .box-section {
-  padding: 80px 20px;
-  background-color: var(--color-bg);
+  padding: 100px 20px;
 }
 
 .box-content {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 80px;
 }
 
 .box-text-side {
   flex: 1;
-  text-align: left;
 }
 
 .box-title {
-  color: var(--color-primary) !important; /* On garde le marron pour le titre */
-  font-size: 2.8rem;
-  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 25px;
+}
+
+.box-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.box-list li {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.box-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .box-img {
   width: 100%;
-  max-width: 450px;
-  border-radius: 20px;
+  max-width: 500px;
+  border-radius: 40px;
   box-shadow: var(--shadow-main);
-  border: 8px solid var(--color-bg); /* Cadre qui s'adapte au thème */
+  transition: transform 0.5s ease;
 }
 
-/* --- PÉPITES (Le fix pour tes cards plates) --- */
-.pepites-section {
-  padding: 80px 20px;
-  background-color: var(--color-bg);
-}
-
-.pepite-card {
-  background-color: var(--color-overlay); /* Utilise l'overlay pour un léger relief */
-  padding: 30px;
-  border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  box-shadow: var(--shadow-main);
-  border: 1px solid var(--color-border);
-  border-left: 6px solid var(--color-secondary);
-}
-
-/* --- BOUTONS --- */
-.btn-home-main, .btn-home-box, .btn-pepite {
-  display: inline-block;
-  padding: 14px 35px;
-  border-radius: 30px;
-  background-color: var(--color-secondary);
-  color: #ffffff !important;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.btn-home-main:hover, .btn-pepite:hover {
-  background-color: var(--color-accent) !important;
-  color: #2d241c !important;
-  transform: translateY(-3px);
+.box-img:hover {
+  transform: scale(1.02);
 }
 
 /* ==========================================================================
-   SECTION PÉPITES (Cards)
+   PÉPITES (Cards)
    ========================================================================== */
 .pepites-section {
-  padding: 80px 20px;
-  background-color: var(--color-bg);
+  padding: 100px 20px;
 }
 
 .pepites-main-title {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-  color: var(--color-text);
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  margin-bottom: 60px;
 }
 
 .pepite-container {
@@ -138,91 +161,189 @@
   gap: 30px;
 }
 
+.pepite-item {
+  width: 100%;
+}
+
+.pepite-subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  color: var(--color-secondary);
+  font-weight: 700;
+}
+
 .pepite-card {
-  background-color: var(--color-card); /* Devient gris foncé en dark mode */
-  padding: 30px;
-  border-radius: 20px;
+  background-color: var(--color-card);
+  padding: 40px;
+  border-radius: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow-main);
   border: 1px solid var(--color-border);
-  border-left: 6px solid var(--color-secondary);
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .pepite-card:hover {
-  transform: translateX(10px);
-  border-left-color: var(--color-accent); /* Jaune au survol */
+  transform: translateX(15px);
+  border-left: 8px solid var(--color-accent);
 }
 
 .pepite-name {
-  font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
-  color: var(--color-text);
-  margin: 0;
+  margin-bottom: 5px;
 }
 
 .pepite-text {
-  color: var(--color-text);
-  opacity: 0.8;
   font-style: italic;
+  opacity: 0.7;
 }
 
 /* ==========================================================================
    BOUTONS UNIFIÉS
    ========================================================================== */
-.btn-home-main, 
-.btn-home-box, 
-.btn-pepite {
+.btn-home-main, .btn-home-box, .btn-pepite {
   display: inline-block;
-  padding: 16px 40px;
-  border-radius: 30px;
+  padding: 18px 45px;
+  border-radius: 50px;
   font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: all 0.3s ease;
-  border: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
-  text-align: center;
 }
 
-/* Vert */
 .btn-home-main, .btn-pepite {
   background-color: var(--color-secondary);
-  color: #ffffff !important;
+  color: white !important;
 }
 
-/* Marron */
 .btn-home-box {
   background-color: var(--color-primary);
-  color: #ffffff !important;
+  color: white !important;
 }
 
-/* Hover Jaune Lumineux */
-.btn-home-main:hover, 
-.btn-home-box:hover, 
-.btn-pepite:hover {
+.btn-home-main:hover, .btn-home-box:hover, .btn-pepite:hover {
   background-color: var(--color-accent) !important;
-  color: #2d241c !important; /* Texte sombre sur fond jaune */
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4);
+  color: var(--color-primary) !important;
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 /* ==========================================================================
-   RESPONSIVE
+   RESPONSIVE FINAL (Correction Image & Hero)
    ========================================================================== */
 @media (max-width: 768px) {
+  
+  .hero-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;    /* Centre horizontalement */
+    justify-content: center !important; /* Centre verticalement */
+    height: 80vh !important;           /* Donne assez de hauteur pour voir le centrage */
+    width: 100vw !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* La CARD (l'enfant) */
+  .hero-overlay {
+    /* On annule les marges auto ou les positionnements fixes */
+    margin: 0 auto !important; 
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+
+    /* Style propre et clair */
+    background-color: var(--color-overlay) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    padding: 40px 20px !important;
+    width: 100% !important;
+    max-width: 340px !important; /* Taille parfaite pour mobile */
+    border-radius: 25px !important;
+    box-shadow: var(--shadow-main) !important;
+    border: 1px solid var(--color-border) !important;
+    
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  .hero-h1 {
+    font-size: 1.8rem !important;
+    text-align: center !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .hero-p {
+    font-size: 1rem !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .btn-home-main {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .engagement-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Permet de passer à la ligne sur petit mobile */
+    gap: 20px;
+    padding: 40px 10px;
+}
+
+.engagement-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+}
+
+.engagement-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block; /* Force l'icône à être seule sur sa ligne */
+}
+
   .box-content {
     flex-direction: column-reverse;
-    text-align: center;
     gap: 40px;
-  }
-  .box-text-side {
     text-align: center;
   }
-  .hero-h1 {
-    font-size: 2.5rem;
+
+  .box-title {
+    font-size: 2.2rem;
+  }
+
+  .box-list {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .box-img {
+    border-radius: 25px;
+    width: 100%;
+  }
+
+  .pepite-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+  }
+
+  .btn-home-main, .btn-home-box, .btn-pepite {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
