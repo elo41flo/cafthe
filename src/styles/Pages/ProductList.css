@@ -1,0 +1,31 @@
+/* src/components/ProductList.css */
+
+.product-list-container {
+  padding-bottom: 60px;
+}
+
+.product-list-title {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.product-grid {
+  display: grid;
+  /* Grille intelligente : min 280px, max 1 fraction de l'espace */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.product-error {
+  text-align: center;
+  color: var(--color-promo);
+  padding: 40px;
+  font-weight: bold;
+}

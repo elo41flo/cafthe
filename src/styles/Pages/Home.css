@@ -1,0 +1,228 @@
+/* ==========================================================================
+   SECTION HERO
+   ========================================================================== */
+/* --- HERO --- */
+.hero-section {
+  position: relative;
+  height: 75vh;
+  background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2070');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  background-color: var(--color-overlay);
+  padding: 50px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 700px;
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--color-border);
+}
+
+/* --- ENGAGEMENTS (Le fix pour ta capture noire) --- */
+.engagement-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 40px 20px;
+  background-color: var(--color-bg); /* Empêche le décalage de couleur */
+  border-bottom: 1px solid var(--color-border);
+}
+
+.engagement-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.engagement-icon {
+  font-size: 2rem;
+}
+
+/* --- SECTION BOX (Infos Gauche / Photo Droite) --- */
+.box-section {
+  padding: 80px 20px;
+  background-color: var(--color-bg);
+}
+
+.box-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.box-text-side {
+  flex: 1;
+  text-align: left;
+}
+
+.box-title {
+  color: var(--color-primary) !important; /* On garde le marron pour le titre */
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.box-img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-main);
+  border: 8px solid var(--color-bg); /* Cadre qui s'adapte au thème */
+}
+
+/* --- PÉPITES (Le fix pour tes cards plates) --- */
+.pepites-section {
+  padding: 80px 20px;
+  background-color: var(--color-bg);
+}
+
+.pepite-card {
+  background-color: var(--color-overlay); /* Utilise l'overlay pour un léger relief */
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--color-border);
+  border-left: 6px solid var(--color-secondary);
+}
+
+/* --- BOUTONS --- */
+.btn-home-main, .btn-home-box, .btn-pepite {
+  display: inline-block;
+  padding: 14px 35px;
+  border-radius: 30px;
+  background-color: var(--color-secondary);
+  color: #ffffff !important;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-home-main:hover, .btn-pepite:hover {
+  background-color: var(--color-accent) !important;
+  color: #2d241c !important;
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   SECTION PÉPITES (Cards)
+   ========================================================================== */
+.pepites-section {
+  padding: 80px 20px;
+  background-color: var(--color-bg);
+}
+
+.pepites-main-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: var(--color-text);
+}
+
+.pepite-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.pepite-card {
+  background-color: var(--color-card); /* Devient gris foncé en dark mode */
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--color-border);
+  border-left: 6px solid var(--color-secondary);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.pepite-card:hover {
+  transform: translateX(10px);
+  border-left-color: var(--color-accent); /* Jaune au survol */
+}
+
+.pepite-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.pepite-text {
+  color: var(--color-text);
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   BOUTONS UNIFIÉS
+   ========================================================================== */
+.btn-home-main, 
+.btn-home-box, 
+.btn-pepite {
+  display: inline-block;
+  padding: 16px 40px;
+  border-radius: 30px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Vert */
+.btn-home-main, .btn-pepite {
+  background-color: var(--color-secondary);
+  color: #ffffff !important;
+}
+
+/* Marron */
+.btn-home-box {
+  background-color: var(--color-primary);
+  color: #ffffff !important;
+}
+
+/* Hover Jaune Lumineux */
+.btn-home-main:hover, 
+.btn-home-box:hover, 
+.btn-pepite:hover {
+  background-color: var(--color-accent) !important;
+  color: #2d241c !important; /* Texte sombre sur fond jaune */
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+  .box-content {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 40px;
+  }
+  .box-text-side {
+    text-align: center;
+  }
+  .hero-h1 {
+    font-size: 2.5rem;
+  }
+}

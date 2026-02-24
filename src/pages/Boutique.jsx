@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import ProductCard from "../components/ProductCard";
 import SkeletonCard from "../components/SkeletonCard";
-import ProductQuickView from "../components/ProductQuickView"; // <-- IMPORT AJOUTÉ
+import ProductQuickView from "../components/ProductQuickView";
+import "../styles/Pages/Boutique.css"; // Import des styles
 
 const Boutique = () => {
   const [produits, setProduits] = useState([]);
@@ -10,8 +11,6 @@ const Boutique = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("default");
   const [openCategory, setOpenCategory] = useState("Cafe");
-
-  // --- ÉTAT POUR L'APERÇU RAPIDE ---
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -44,56 +43,53 @@ const Boutique = () => {
     setOpenCategory(openCategory === id ? null : id);
   };
 
-  // Fonction pour ajouter au panier (utilisée par la modale)
   const handleAddToCart = (product) => {
     const currentCart = JSON.parse(localStorage.getItem("panier")) || [];
     const newProduct = {
       ...product,
       uniqueId: Date.now() + Math.random(),
     };
-    const newCart = [...currentCart, newProduct];
-    localStorage.setItem("panier", JSON.stringify(newCart));
+    localStorage.setItem(
+      "panier",
+      JSON.stringify([...currentCart, newProduct]),
+    );
     window.dispatchEvent(new Event("cartUpdate"));
     window.dispatchEvent(new Event("openCartDrawer"));
   };
 
   return (
-    <div style={pageStyle}>
+    <div className="boutique-page">
       <Helmet>
         <title>Boutique Caf'Thé | Cafés de Terroir & Thés Bio</title>
-        <meta
-          name="description"
-          content="Parcourez notre catalogue : cafés fraîchement torréfiés..."
-        />
       </Helmet>
 
       {/* HEADER */}
-      <section style={headerStyle}>
-        <h1 style={titleStyle}>La Boutique</h1>
-        <p style={introTextStyle}>
+      <section className="boutique-header">
+        <h1 className="boutique-title">La Boutique</h1>
+        <p className="boutique-intro">
           Affinez votre sélection et trouvez votre bonheur.
         </p>
       </section>
 
       {/* BARRE DE FILTRES */}
-      <div style={filterBarContainer}>
-        <div style={inputWrapperStyle}>
+      <div className="filter-bar">
+        <div className="search-wrapper">
           <span>🔍</span>
           <input
             type="text"
+            className="search-input"
             placeholder="Rechercher..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={searchInputStyle}
           />
         </div>
 
-        <div style={sortWrapperStyle}>
-          <label style={labelStyle}>Trier par :</label>
+        <div className="sort-wrapper">
+          <label className="sort-label">Trier par :</label>
           <select
+            className="sort-select"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
-            style={selectStyle}
           >
             <option value="default">Pertinence</option>
             <option value="asc">Prix : Croissant</option>
@@ -103,7 +99,7 @@ const Boutique = () => {
       </div>
 
       {/* ACCORDÉONS */}
-      <div style={containerStyle}>
+      <div className="boutique-container">
         {categories.map((cat) => {
           const produitsFiltres = produits
             .filter((p) => {
@@ -124,15 +120,15 @@ const Boutique = () => {
           const isOpened = searchTerm.length > 0 || openCategory === cat.id;
 
           return (
-            <div key={cat.id} style={categoryWrapper}>
+            <div key={cat.id} className="category-wrapper">
               <div
+                className={`accordion-header ${isOpened ? "active" : ""}`}
                 onClick={() => toggleCategory(cat.id)}
-                style={accordionHeader(isOpened)}
               >
-                <h2 style={catTitleStyle}>{cat.title}</h2>
+                <h2 className="cat-title">{cat.title}</h2>
                 <span
+                  className="accordion-icon"
                   style={{
-                    ...iconStyle,
                     transform: isOpened ? "rotate(180deg)" : "rotate(0deg)",
                   }}
                 >
@@ -141,7 +137,7 @@ const Boutique = () => {
               </div>
 
               {isOpened && (
-                <div style={productGridStyle}>
+                <div className="product-grid fade-in">
                   {loading ? (
                     [1, 2, 3].map((n) => <SkeletonCard key={n} />)
                   ) : produitsFiltres.length > 0 ? (
@@ -149,11 +145,11 @@ const Boutique = () => {
                       <ProductCard
                         key={p.numero_produit || p.id}
                         produit={p}
-                        onQuickView={() => setSelectedProduct(p)} // <-- ACTION AJOUTÉE
+                        onQuickView={() => setSelectedProduct(p)}
                       />
                     ))
                   ) : (
-                    <p style={emptyMsgStyle}>Aucun résultat.</p>
+                    <p className="empty-msg">Aucun résultat.</p>
                   )}
                 </div>
               )}
@@ -162,7 +158,7 @@ const Boutique = () => {
         })}
       </div>
 
-      {/* --- MODALE D'APERÇU RAPIDE --- */}
+      {/* MODALE D'APERÇU RAPIDE */}
       {selectedProduct && (
         <ProductQuickView
           product={selectedProduct}
@@ -172,106 +168,6 @@ const Boutique = () => {
       )}
     </div>
   );
-};
-
-// --- STYLES (Conservés et complétés) ---
-const pageStyle = {
-  backgroundColor: "#fff",
-  minHeight: "100vh",
-  paddingBottom: "80px",
-  fontFamily: "'Montserrat', sans-serif",
-};
-const headerStyle = { textAlign: "center", padding: "60px 20px" };
-const titleStyle = {
-  fontFamily: "'Playfair Display', serif",
-  fontSize: "48px",
-  marginBottom: "10px",
-  color: "#aa8d74",
-};
-const introTextStyle = {
-  fontSize: "18px",
-  color: "#555",
-  maxWidth: "800px",
-  margin: "0 auto",
-  lineHeight: "1.6",
-};
-const filterBarContainer = {
-  maxWidth: "1100px",
-  margin: "0 auto 50px auto",
-  padding: "0 20px",
-  display: "flex",
-  gap: "20px",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-  alignItems: "center",
-};
-const inputWrapperStyle = {
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "#f9f9f9",
-  borderRadius: "30px",
-  padding: "12px 25px",
-  border: "1px solid #eee",
-  flex: "1",
-  minWidth: "280px",
-};
-const searchInputStyle = {
-  flex: 1,
-  border: "none",
-  background: "none",
-  outline: "none",
-  fontSize: "1rem",
-  color: "#333",
-};
-const sortWrapperStyle = { display: "flex", alignItems: "center", gap: "10px" };
-const labelStyle = { fontSize: "14px", fontWeight: "bold", color: "#555" };
-const selectStyle = {
-  padding: "10px 15px",
-  borderRadius: "20px",
-  border: "1px solid #ddd",
-  backgroundColor: "#f9f9f9",
-  cursor: "pointer",
-  fontFamily: "'Montserrat', sans-serif",
-};
-const containerStyle = {
-  maxWidth: "1100px",
-  margin: "0 auto",
-  padding: "0 20px",
-};
-const categoryWrapper = {
-  marginBottom: "10px",
-  borderBottom: "1px solid #f5f5f5",
-};
-const accordionHeader = (isOpen) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "30px 0",
-  cursor: "pointer",
-  borderBottom: isOpen ? "2px solid #97af6e" : "2px solid transparent",
-  transition: "all 0.3s ease",
-});
-const catTitleStyle = {
-  fontFamily: "'Playfair Display', serif",
-  fontSize: "28px",
-  margin: 0,
-  color: "#4a3b2c",
-};
-const iconStyle = { fontSize: "16px", color: "#97af6e", transition: "0.3s" };
-const productGridStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-  gap: "40px",
-  padding: "40px 0",
-};
-const emptyMsgStyle = {
-  gridColumn: "1 / -1",
-  textAlign: "center",
-  color: "#999",
-  padding: "60px",
-  fontStyle: "italic",
-  backgroundColor: "#fafafa",
-  borderRadius: "15px",
 };
 
 export default Boutique;

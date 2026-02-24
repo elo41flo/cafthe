@@ -1,0 +1,92 @@
+/* --- CONTENEUR --- */
+.profile-form-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: var(--color-card); /* Utilise la couleur de carte pour le relief */
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-main);
+}
+
+.profile-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--color-text); /* Aligné sur ton App.css */
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* --- FORMULAIRE --- */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-form label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: -10px; /* Rapproche le label de l'input */
+}
+
+.profile-input {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg); /* Fond plus clair/sombre que la carte */
+  color: var(--color-text);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(151, 175, 110, 0.2); /* Halo vert discret */
+}
+
+/* --- BOUTON MISE À JOUR (CHARTE) --- */
+.btn-update-profile {
+  background-color: var(--color-secondary); /* Ton vert #97af6e */
+  color: #ffffff !important;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: 10px;
+}
+
+.btn-update-profile:hover {
+  background-color: var(--color-accent) !important; /* Ton jaune #ffeb9c */
+  color: #2d241c !important; /* Texte sombre sur le jaune */
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4);
+}
+
+/* --- OPTIONNEL : LIENS DE SUPPRESSION / ANNULATION --- */
+.profile-footer {
+  margin-top: 25px;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+}
+
+.link-cancel {
+  color: var(--color-text);
+  opacity: 0.6;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link-cancel:hover {
+  opacity: 1;
+}

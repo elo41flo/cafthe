@@ -1,0 +1,124 @@
+/* --- VARIABLES GLOBALES --- */
+:root {
+  /* Charte Graphique */
+  --color-primary: #aa8d74;    /* Marron */
+  --color-secondary: #97af6e;  /* Vert */
+  --color-accent: #ffeb9c;     /* Jaune */
+  
+  /* Mode Clair */
+  --color-bg: #ffffff;
+  --color-white: #ffffff;
+  --color-card: #ffffff;
+  --color-overlay: rgba(255, 255, 255, 0.95);
+  --color-text: #2d241c;       /* Marron sombre */
+  --color-border: #f0f0f0;
+  
+  --radius-md: 15px;
+  --radius-btn: 30px;
+  --shadow-main: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* --- DARK MODE (LA VERSION CARRÉE ET PROPRE) --- */
+[data-theme='dark'] {
+  --color-bg: #0a0a0a;         /* Fond noir pur */
+  --color-white: #1a1a1a;
+  --color-card: #1c1c1c;       /* Relief des cartes */
+  --color-overlay: rgba(28, 28, 28, 0.98); 
+  --color-text: #ffffff;       /* Force le BLANC pur */
+  --color-border: #333333;
+  
+  --color-primary: #d4bc9c;    /* Marron éclairci */
+  --color-secondary: #b2c98a;  /* Vert éclairci */
+  --shadow-main: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* --- BASE STYLES --- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* FIX UNIVERSEL : Force le changement de couleur sur TOUT */
+h1, h2, h3, h4, p, span, li, strong, small, a, div {
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+/* Empêche les liens de devenir bleus/violets */
+a {
+  text-decoration: none;
+}
+
+/* Typographies */
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* --- COMPOSANTS RÉUTILISABLES --- */
+
+/* Bloc Hero Central */
+.hero-overlay {
+  background-color: var(--color-overlay) !important;
+  padding: 60px 40px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  max-width: 750px;
+  width: 90%;
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--color-border);
+  z-index: 10;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Cartes (Pépites / Produits) */
+.pepite-card, .card {
+  background-color: var(--color-card) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-main);
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* --- BOUTONS --- */
+.btn-home-main, .btn-home-box, .btn-pepite {
+  display: inline-block;
+  padding: 16px 40px;
+  border-radius: var(--radius-btn);
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  /* Texte toujours blanc sur les fonds vert/marron */
+  color: #ffffff !important; 
+}
+
+.btn-home-main, .btn-pepite {
+  background-color: var(--color-secondary);
+}
+
+.btn-home-box {
+  background-color: var(--color-primary);
+}
+
+/* Hover Jaune Lumineux (Charte) */
+.btn-home-main:hover, .btn-home-box:hover, .btn-pepite:hover {
+  background-color: var(--color-accent) !important;
+  /* On repasse en sombre pour lire sur le jaune pâle */
+  color: #2d241c !important; 
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4);
+}
+
+/* Images en Dark Mode : on baisse légèrement l'exposition */
+[data-theme='dark'] img {
+  filter: brightness(0.9) contrast(1.05);
+}

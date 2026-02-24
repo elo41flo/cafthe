@@ -1,0 +1,93 @@
+/* src/styles/Legals.css */
+
+.legals-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  line-height: 1.6;
+}
+
+.back-link {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: opacity 0.2s;
+}
+
+.back-link:hover {
+  opacity: 0.7;
+}
+
+.legals-header {
+  text-align: center;
+  margin: 40px 0 60px 0;
+}
+
+.legals-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.legals-date {
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.legals-content-box {
+  background-color: var(--color-active-bg);
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.legals-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--color-primary);
+  margin-top: 30px;
+  marginBottom: 15px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+}
+
+.legals-text {
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.legals-section {
+  margin-bottom: 40px;
+}
+
+/* Ajout spécifique pour les liens dans le texte */
+.legals-link-inline {
+  color: var(--color-secondary);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.legals-link-inline:hover {
+  text-decoration: underline;
+}
+
+/* src/styles/Legals.css */
+
+.legals-intro-text {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 50px;
+  color: var(--color-text-light);
+}
+
+.legals-list {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.legals-list li {
+  margin-bottom: 8px;
+}

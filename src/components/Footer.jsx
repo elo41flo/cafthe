@@ -1,59 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/Components/Footer.css"; // Import du style
 
 const Footer = () => {
   return (
-    <footer
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "40px 60px",
-        backgroundColor: "white",
-        borderTop: "1px solid #eee",
-        marginTop: "auto",
-      }}
-    >
+    <footer className="footer-container">
       {/* LOGO À GAUCHE */}
-      <div style={{ flex: 1 }}>
+      <div className="footer-logo-wrapper">
         <img
           src="/src/assets/logo.webp"
           alt="Caf'Thé Logo"
-          style={{ height: "100px", objectFit: "contain" }}
+          className="footer-logo"
         />
       </div>
 
       {/* LIENS AU CENTRE */}
-      <div
-        style={{
-          display: "flex",
-          gap: "30px",
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "14px", // Un peu plus petit pour laisser de la place aux icônes
-          marginRight: "40px",
-        }}
-      >
-        <Link to="/MentionsLegales" style={linkStyle}>
+      <nav className="footer-links-wrapper">
+        <Link to="/MentionsLegales" className="footer-link">
           Mentions légales
         </Link>
-        <Link to="/cgv" style={linkStyle}>
+        <Link to="/cgv" className="footer-link">
           CGV
         </Link>
-        <Link to="/Politiqueconfidentialite" style={linkStyle}>
+        <Link to="/Politiqueconfidentialite" className="footer-link">
           Politique de confidentialité
         </Link>
-        <Link to="/PlanDuSite" style={linkStyle}>
+        <Link to="/PlanDuSite" className="footer-link">
           Plan du site
         </Link>
-      </div>
+      </nav>
 
       {/* RÉSEAUX SOCIAUX À DROITE */}
-      <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+      <div className="footer-socials">
         <a
           href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={socialIconStyle}
+          className="footer-social-icon"
           title="Facebook"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -64,7 +47,7 @@ const Footer = () => {
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={socialIconStyle}
+          className="footer-social-icon"
           title="Instagram"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -76,7 +59,7 @@ const Footer = () => {
           href="https://x.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={socialIconStyle}
+          className="footer-social-icon"
           title="X (Twitter)"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
@@ -86,20 +69,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-const linkStyle = {
-  textDecoration: "underline",
-  color: "#000",
-  fontWeight: "400",
-};
-
-const socialIconStyle = {
-  color: "#333",
-  transition: "transform 0.2s ease, color 0.2s ease",
-  display: "flex",
-  alignItems: "center",
-  textDecoration: "none",
 };
 
 export default Footer;

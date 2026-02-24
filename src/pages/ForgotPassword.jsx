@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Pages/ForgotPassword.css"; // On importe le style commun à l'authentification
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ const ForgotPassword = () => {
 
   const handleCheckEmail = async (e) => {
     e.preventDefault();
-    // On simule une vérification API ou on passe direct à la suite pour la démo
+    // Simulation : dans un vrai cas, on vérifierait si l'email existe en BDD
     setStep(2);
   };
 
@@ -38,41 +39,41 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={cardStyle}>
-        <h2 style={{ fontFamily: "Playfair Display", color: "#4a3b2c" }}>
-          Réinitialisation
-        </h2>
+    <div className="auth-container">
+      <div className="auth-card fade-in">
+        <h2 className="auth-title">Réinitialisation</h2>
 
         {step === 1 ? (
           <form onSubmit={handleCheckEmail}>
-            <p>Entrez votre email pour modifier votre mot de passe.</p>
+            <p className="auth-text">
+              Entrez votre email pour modifier votre mot de passe.
+            </p>
             <input
               type="email"
+              className="auth-input"
               placeholder="Votre e-mail"
               required
-              style={inputStyle}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit" style={buttonStyle}>
+            <button type="submit" className="auth-btn">
               Vérifier mon compte
             </button>
           </form>
         ) : (
           <form onSubmit={handleReset}>
-            <p>
+            <p className="auth-text">
               Email : <strong>{email}</strong>
             </p>
             <input
               type="password"
+              className="auth-input"
               placeholder="Nouveau mot de passe"
               required
-              style={inputStyle}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <button type="submit" style={buttonStyle}>
+            <button type="submit" className="auth-btn">
               Changer mon mot de passe
             </button>
           </form>
@@ -80,40 +81,6 @@ const ForgotPassword = () => {
       </div>
     </div>
   );
-};
-
-// Styles rapides pour la cohérence
-const containerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  minHeight: "80vh",
-  fontFamily: "Montserrat",
-};
-const cardStyle = {
-  padding: "40px",
-  backgroundColor: "#fff",
-  borderRadius: "20px",
-  boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-  textAlign: "center",
-  maxWidth: "400px",
-};
-const inputStyle = {
-  width: "100%",
-  padding: "12px",
-  borderRadius: "25px",
-  border: "1px solid #97af6e",
-  marginBottom: "20px",
-  boxSizing: "border-box",
-};
-const buttonStyle = {
-  backgroundColor: "#97af6e",
-  color: "white",
-  border: "none",
-  padding: "12px 30px",
-  borderRadius: "25px",
-  cursor: "pointer",
-  fontWeight: "bold",
 };
 
 export default ForgotPassword;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/Pages/FormAdress.css"; // Import des styles
 
 const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
   // On gère l'onglet actif : 'livraison' ou 'facturation'
@@ -9,7 +10,7 @@ const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
     rue: "",
     cp: "",
     ville: "",
-    nom_adresse: "", // Optionnel : pour donner un petit nom (Maison, Travail...)
+    nom_adresse: "",
   });
 
   const handleSubmit = async (e) => {
@@ -21,7 +22,6 @@ const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
 
     try {
       const token = localStorage.getItem("token");
-      // On utilise la route update-address que ton backend connaît
       const res = await fetch(`${apiUrl}/api/clients/update-address`, {
         method: "PUT",
         headers: {
@@ -30,14 +30,14 @@ const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
         },
         body: JSON.stringify({
           ...newAddr,
-          type_adresse: type, // Indique au backend quelle adresse modifier
+          type_adresse: type,
         }),
       });
 
       if (res.ok) {
         alert(`Adresse de ${type} mise à jour !`);
         setNewAddr({ rue: "", cp: "", ville: "", nom_adresse: "" });
-        await fetchUserData(); // Pour rafraîchir les infos sur MonCompte.jsx
+        await fetchUserData();
         onBack();
       } else {
         alert("Erreur lors de la mise à jour.");
@@ -48,37 +48,37 @@ const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
   };
 
   return (
-    <div style={formContainer}>
-      <button onClick={onBack} style={backBtn}>
+    <div className="address-form-container fade-in">
+      <button onClick={onBack} className="address-back-btn">
         ← Retour au compte
       </button>
 
-      <h2 style={sectionTitle}>Mes adresses</h2>
+      <h2 className="address-title">Mes adresses</h2>
 
       {/* --- ONGLES DE SÉLECTION --- */}
-      <div style={tabContainer}>
+      <div className="tab-container">
         <button
           onClick={() => setType("livraison")}
-          style={type === "livraison" ? activeTab : inactiveTab}
+          className={`tab-btn ${type === "livraison" ? "active" : "inactive"}`}
         >
           Livraison
         </button>
         <button
           onClick={() => setType("facturation")}
-          style={type === "facturation" ? activeTab : inactiveTab}
+          className={`tab-btn ${type === "facturation" ? "active" : "inactive"}`}
         >
           Facturation
         </button>
       </div>
 
-      <p style={{ fontSize: "14px", color: "#666", marginBottom: "20px" }}>
+      <p className="address-info-text">
         Vous modifiez votre adresse de <strong>{type}</strong>.
       </p>
 
-      {/* --- FORMULAIRE DÉTAILLÉ --- */}
-      <form onSubmit={handleSubmit} style={formStyle}>
+      {/* --- FORMULAIRE --- */}
+      <form onSubmit={handleSubmit} className="address-form">
         <input
-          style={inputStyle}
+          className="address-input"
           placeholder="Nom de l'adresse (ex: Maison, Bureau...)"
           value={newAddr.nom_adresse}
           onChange={(e) =>
@@ -87,23 +87,25 @@ const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
         />
 
         <input
-          style={inputStyle}
+          className="address-input"
           placeholder="Numéro et nom de rue"
           value={newAddr.rue}
           onChange={(e) => setNewAddr({ ...newAddr, rue: e.target.value })}
           required
         />
 
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div className="address-row">
           <input
-            style={{ ...inputStyle, flex: 1 }}
+            className="address-input"
+            style={{ flex: 1 }}
             placeholder="Code Postal"
             value={newAddr.cp}
             onChange={(e) => setNewAddr({ ...newAddr, cp: e.target.value })}
             required
           />
           <input
-            style={{ ...inputStyle, flex: 2 }}
+            className="address-input"
+            style={{ flex: 2 }}
             placeholder="Ville"
             value={newAddr.ville}
             onChange={(e) => setNewAddr({ ...newAddr, ville: e.target.value })}
@@ -111,82 +113,12 @@ const FormAdresse = ({ user, onBack, apiUrl, fetchUserData }) => {
           />
         </div>
 
-        <button type="submit" style={btnVertStyle}>
+        <button type="submit" className="btn-save-address">
           Enregistrer l'adresse de {type}
         </button>
       </form>
     </div>
   );
-};
-
-// --- STYLES ---
-const formContainer = {
-  maxWidth: "600px",
-  margin: "60px auto",
-  padding: "20px",
-  fontFamily: "Montserrat",
-};
-const sectionTitle = {
-  fontFamily: "Playfair Display",
-  color: "#aa8d74",
-  fontSize: "28px",
-  marginBottom: "20px",
-};
-const formStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "15px",
-};
-const inputStyle = {
-  padding: "12px",
-  borderRadius: "10px",
-  border: "1px solid #ddd",
-  fontFamily: "Montserrat",
-  fontSize: "15px",
-};
-const btnVertStyle = {
-  backgroundColor: "#97af6e",
-  color: "white",
-  border: "none",
-  borderRadius: "15px",
-  padding: "15px",
-  fontWeight: "bold",
-  cursor: "pointer",
-  marginTop: "10px",
-};
-const backBtn = {
-  background: "none",
-  border: "none",
-  color: "#97af6e",
-  fontWeight: "bold",
-  cursor: "pointer",
-  marginBottom: "20px",
-};
-
-// Styles pour les onglets
-const tabContainer = {
-  display: "flex",
-  gap: "10px",
-  marginBottom: "20px",
-};
-const activeTab = {
-  flex: 1,
-  padding: "10px",
-  backgroundColor: "#aa8d74",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  fontWeight: "bold",
-  cursor: "pointer",
-};
-const inactiveTab = {
-  flex: 1,
-  padding: "10px",
-  backgroundColor: "#f5f5f5",
-  color: "#888",
-  border: "none",
-  borderRadius: "8px",
-  cursor: "pointer",
 };
 
 export default FormAdresse;

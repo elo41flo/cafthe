@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Pages/CréationClientMagasin.css"; // Import du style
 
 const CreationClientMagasin = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const CreationClientMagasin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // On définit un mot de passe par défaut que le client changera plus tard
+    // Mot de passe temporaire pour le client
     const newUser = {
       ...formData,
       password: "CaftheTemporaire2026!",
@@ -49,29 +50,21 @@ const CreationClientMagasin = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Espace Magasin</h2>
-        <p style={styles.subtitle}>Création rapide d'un compte client</p>
+    <div className="shop-container">
+      <div className="shop-card fade-in">
+        <h2 className="shop-title">Espace Magasin</h2>
+        <p className="shop-subtitle">Création rapide d'un compte client</p>
 
         {message.text && (
-          <div
-            style={{
-              ...styles.alert,
-              backgroundColor:
-                message.type === "success" ? "#d4edda" : "#f8d7da",
-            }}
-          >
-            {message.text}
-          </div>
+          <div className={`shop-alert ${message.type}`}>{message.text}</div>
         )}
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.row}>
+        <form onSubmit={handleSubmit} className="shop-form">
+          <div className="shop-row">
             <input
               type="text"
               placeholder="Prénom"
-              style={styles.input}
+              className="shop-input"
               required
               value={formData.prenom}
               onChange={(e) =>
@@ -81,7 +74,7 @@ const CreationClientMagasin = () => {
             <input
               type="text"
               placeholder="Nom"
-              style={styles.input}
+              className="shop-input"
               required
               value={formData.nom}
               onChange={(e) =>
@@ -93,7 +86,7 @@ const CreationClientMagasin = () => {
           <input
             type="email"
             placeholder="Adresse Email"
-            style={styles.input}
+            className="shop-input"
             required
             value={formData.email}
             onChange={(e) =>
@@ -104,24 +97,25 @@ const CreationClientMagasin = () => {
           <input
             type="tel"
             placeholder="Téléphone (Optionnel)"
-            style={styles.input}
+            className="shop-input"
             value={formData.telephone}
             onChange={(e) =>
               setFormData({ ...formData, telephone: e.target.value })
             }
           />
 
-          <p style={styles.info}>
+          <p className="shop-pwd-info">
             Mot de passe provisoire : <strong>CaftheTemporaire2026!</strong>
           </p>
 
-          <button type="submit" style={styles.button}>
+          <button type="submit" className="shop-btn-submit">
             Enregistrer le client
           </button>
+
           <button
             type="button"
-            onClick={() => navigate("/moncompte")}
-            style={styles.btnBack}
+            onClick={() => navigate("/mon-compte")}
+            className="shop-btn-back"
           >
             Retour au compte
           </button>
@@ -129,69 +123,6 @@ const CreationClientMagasin = () => {
       </div>
     </div>
   );
-};
-
-// Styles en ligne pour rester simple et cohérent
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "80vh",
-    backgroundColor: "#f9f6f2",
-    fontFamily: "Montserrat, sans-serif",
-  },
-  card: {
-    backgroundColor: "white",
-    padding: "40px",
-    borderRadius: "15px",
-    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-    width: "100%",
-    maxWidth: "500px",
-    textAlign: "center",
-  },
-  title: { color: "#4a3b2c", marginBottom: "10px" },
-  subtitle: { color: "#888", marginBottom: "30px" },
-  form: { display: "flex", flexDirection: "column", gap: "15px" },
-  row: { display: "flex", gap: "10px" },
-  input: {
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    fontSize: "14px",
-    width: "100%",
-  },
-  button: {
-    backgroundColor: "#97af6e",
-    color: "white",
-    border: "none",
-    padding: "14px",
-    borderRadius: "25px",
-    cursor: "pointer",
-    fontWeight: "bold",
-    fontSize: "16px",
-    marginTop: "10px",
-  },
-  btnBack: {
-    backgroundColor: "transparent",
-    color: "#4a3b2c",
-    border: "none",
-    cursor: "pointer",
-    textDecoration: "underline",
-  },
-  alert: {
-    padding: "10px",
-    borderRadius: "8px",
-    marginBottom: "20px",
-    fontSize: "14px",
-  },
-  info: {
-    fontSize: "12px",
-    color: "#666",
-    backgroundColor: "#eee",
-    padding: "5px",
-    borderRadius: "5px",
-  },
 };
 
 export default CreationClientMagasin;

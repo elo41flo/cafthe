@@ -1,0 +1,296 @@
+/* src/pages/MonCompte.css */
+
+.account-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.account-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.account-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.account-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.account-content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* --- SECTIONS COMMUNES --- */
+.account-section {
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.account-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+/* --- ABONNEMENT --- */
+.subscription-card {
+  background-color: var(--color-card);
+  padding: 30px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-main);
+}
+
+.sub-info-box {
+  background-color: var(--color-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.3s ease;
+}
+
+.sub-info-box.accent-box {
+  border-color: var(--color-secondary);
+}
+
+.sub-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text);
+  opacity: 0.6;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.sub-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.sub-value.highlight {
+  color: var(--color-secondary);
+}
+
+/* --- HISTORIQUE & STATUTS (NOUVEAU) --- */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  background-color: var(--color-card);
+  border-radius: 15px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-main);
+  transition: border-color 0.3s ease;
+}
+
+.order-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.order-id {
+  font-weight: 800;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.order-date {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* BADGES DE STATUT MONDIAL RELAY / MAGASIN */
+.order-status-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.status-ready { background-color: var(--color-secondary); color: white !important; } /* Vert */
+.status-prep { background-color: var(--color-primary); color: white !important; }   /* Marron */
+.status-shipping { background-color: #3498db; color: white !important; }          /* Bleu */
+.status-delivered { background-color: var(--color-accent); color: #2d241c !important; } /* Jaune */
+
+.order-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.order-price {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+/* --- ADRESSES & INFOS --- */
+.info-details p {
+  margin: 8px 0;
+  color: var(--color-text);
+}
+
+.addr-card {
+  padding: 25px;
+  background-color: var(--color-card);
+  border-radius: 15px;
+  border: 1px solid var(--color-border);
+  line-height: 1.6;
+}
+
+.addr-type-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 8px;
+}
+
+/* --- BOUTONS & LIENS --- */
+.btn-account-action, .btn-reorder {
+  background-color: var(--color-primary);
+  color: white !important;
+  border: none;
+  padding: 12px 25px;
+  border-radius: var(--radius-btn);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-account-action:hover, .btn-reorder:hover {
+  background-color: var(--color-accent) !important;
+  color: #2d241c !important;
+  transform: translateY(-2px);
+}
+
+.link-toggle {
+  background: none;
+  border: none;
+  color: var(--color-secondary);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* --- SÉCURITÉ --- */
+.security-card .security-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-card);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.dots {
+  letter-spacing: 3px;
+  font-weight: bold;
+  color: var(--color-secondary);
+}
+
+/* Zone de suppression */
+.delete-account-zone {
+  margin-top: 50px;
+  border-top: 2px solid #e57373; /* Bordure rouge pour marquer le danger */
+  border-bottom: none !important;
+  padding-top: 30px;
+}
+
+.danger-title {
+  color: #e57373 !important; /* Rouge pour le titre */
+}
+
+.delete-box {
+  background-color: rgba(229, 115, 115, 0.05); /* Fond rouge très léger */
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px dashed #e57373;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.delete-box p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.btn-delete-account {
+  background-color: transparent;
+  color: #e57373;
+  border: 1px solid #e57373;
+  padding: 12px 25px;
+  border-radius: var(--radius-btn);
+  font-weight: 700;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.3s ease;
+}
+
+.btn-delete-account:hover {
+  background-color: #e57373;
+  color: white !important;
+  box-shadow: 0 5px 15px rgba(229, 115, 115, 0.3);
+}
+
+/* Dark Mode adaptation */
+[data-theme='dark'] .delete-box {
+  background-color: rgba(229, 115, 115, 0.1);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .order-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  .order-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .account-main-title { font-size: 2.5rem; }
+}

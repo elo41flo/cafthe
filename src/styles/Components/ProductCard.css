@@ -1,0 +1,138 @@
+/* src/components/ProductCard.css */
+
+.product-card {
+  width: 300px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-primary); /* Ton marron signature */
+  color: var(--color-white);
+  position: relative;
+  box-shadow: var(--shadow-main);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-promo);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.product-image-container {
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+  background-color: #eee;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: var(--color-white);
+}
+
+.product-card-description {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: #f5f5f5;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.product-stock-alert {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin: 0 0 10px 0;
+  color: #ffee00;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.product-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  marginTop: auto;
+}
+
+.product-card-price {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.product-card-weight {
+  font-size: 0.75rem;
+  color: #f0f0f0;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.product-btn-details {
+  padding: 8px 18px;
+  background-color: var(--color-secondary);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.product-icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  padding: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+}
+
+.product-icon-btn:hover {
+  background-color: #f0f0f0;
+  border-color: var(--color-secondary);
+}
+
+.product-btn-disabled {
+  padding: 8px 18px;
+  background-color: #666;
+  color: #ccc;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}

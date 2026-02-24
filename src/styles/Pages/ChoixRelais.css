@@ -1,0 +1,76 @@
+/* src/pages/ChoixRelais.css */
+
+.relais-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.relais-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.relais-intro {
+  margin-bottom: 20px;
+  color: var(--color-text);
+}
+
+/* Zone du Widget Mondial Relay */
+#Zone_Widget {
+  margin-bottom: 20px;
+  border-radius: var(--radius-md);
+  overflow: hidden; /* Pour forcer les coins arrondis sur le widget */
+  border: 1px solid var(--color-border);
+}
+
+/* Encadré de sélection */
+.selection-box {
+  padding: 15px;
+  background-color: var(--color-active-bg);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.selection-box p {
+  margin: 5px 0;
+}
+
+/* Boutons */
+.relais-btn-group {
+  display: flex;
+  gap: 20px;
+  marginTop: 30px;
+}
+
+.btn-relais-confirm {
+  flex: 2;
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 15px;
+  border-radius: var(--radius-btn);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-relais-back {
+  flex: 1;
+  background-color: var(--color-text-light);
+  color: white;
+  padding: 15px;
+  border-radius: var(--radius-btn);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-relais-confirm:hover, .btn-relais-back:hover {
+  opacity: 0.9;
+}

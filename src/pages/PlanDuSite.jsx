@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/Pages/PlanDuSite.css"; // Import du nouveau fichier CSS
 
 const PlanDuSite = () => {
   const sections = [
@@ -36,26 +37,26 @@ const PlanDuSite = () => {
   ];
 
   return (
-    <div style={pageContainer}>
-      <Link to="/" style={backLink}>
+    <div className="sitemap-container">
+      <Link to="/" className="back-link">
         ← Retour à l'accueil
       </Link>
 
-      <header style={headerStyle}>
-        <h1 style={titleStyle}>Plan du Site</h1>
-        <p style={subtitleStyle}>
+      <header className="sitemap-header">
+        <h1 className="sitemap-title">Plan du Site</h1>
+        <p className="sitemap-subtitle">
           Retrouvez toutes les pages de votre boutique Caf’Thé en un clic.
         </p>
       </header>
 
-      <div style={gridContainer}>
+      <div className="sitemap-grid">
         {sections.map((section, index) => (
-          <div key={index} style={sectionBox}>
-            <h2 style={h2Style}>{section.title}</h2>
-            <ul style={listStyle}>
+          <div key={index} className="sitemap-section-box fade-in">
+            <h2 className="sitemap-h2">{section.title}</h2>
+            <ul className="sitemap-list">
               {section.links.map((link, i) => (
-                <li key={i} style={listItemStyle}>
-                  <Link to={link.path} style={linkItemStyle}>
+                <li key={i} className="sitemap-list-item">
+                  <Link to={link.path} className="sitemap-link">
                     {link.name}
                   </Link>
                 </li>
@@ -66,56 +67,6 @@ const PlanDuSite = () => {
       </div>
     </div>
   );
-};
-
-// --- STYLES ---
-const pageContainer = {
-  maxWidth: "1000px",
-  margin: "0 auto",
-  padding: "80px 20px",
-  fontFamily: "'Montserrat', sans-serif",
-};
-const backLink = {
-  color: "#97af6e",
-  textDecoration: "none",
-  fontWeight: "bold",
-  fontSize: "14px",
-};
-const headerStyle = { textAlign: "center", margin: "40px 0 60px 0" };
-const titleStyle = {
-  fontFamily: "'Playfair Display', serif",
-  fontSize: "42px",
-  color: "#333",
-  marginBottom: "10px",
-};
-const subtitleStyle = { color: "#666", fontSize: "18px" };
-const gridContainer = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: "30px",
-};
-const sectionBox = {
-  backgroundColor: "#fcfdfa",
-  padding: "30px",
-  borderRadius: "15px",
-  border: "1px solid #f0f0f0",
-};
-const h2Style = {
-  fontFamily: "'Playfair Display', serif",
-  fontSize: "22px",
-  color: "#aa8d74",
-  marginBottom: "20px",
-  borderBottom: "2px solid #97af6e",
-  paddingBottom: "10px",
-};
-const listStyle = { listStyle: "none", padding: 0, margin: 0 };
-const listItemStyle = { marginBottom: "12px" };
-const linkItemStyle = {
-  textDecoration: "none",
-  color: "#333",
-  fontSize: "16px",
-  transition: "0.3s",
-  fontWeight: "500",
 };
 
 export default PlanDuSite;

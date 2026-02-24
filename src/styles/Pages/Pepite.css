@@ -1,0 +1,97 @@
+/* src/pages/Pepite.css */
+
+.pepite-page {
+  background-color: var(--color-white);
+  padding-bottom: 100px;
+}
+
+.pepite-header {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.pepite-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: var(--color-text);
+}
+
+.pepite-main-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  margin-bottom: 40px;
+  color: var(--color-text-light);
+}
+
+/* Container de la carte */
+.pepite-card-container {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  padding: 0 20px;
+}
+
+.pepite-card-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 5px;
+  color: var(--color-text);
+}
+
+.pepite-card-desc-intro {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: var(--color-text-light);
+}
+
+/* La bannière marron */
+.pepite-banner {
+  background-color: var(--color-primary); /* Ton marron signature */
+  border-radius: var(--radius-md);
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: #000; /* Garde le texte noir sur le marron pour le contraste */
+  box-shadow: var(--shadow-main);
+}
+
+.pepite-product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  fontWeight: bold;
+  margin-bottom: 15px;
+}
+
+.pepite-expert-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.pepite-btn {
+  background-color: var(--color-secondary); /* Ton vert signature */
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 12px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.pepite-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  .pepite-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}

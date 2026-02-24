@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Pages/ChoixRelais.css";
 
 const ChoixRelais = () => {
   const navigate = useNavigate();
   const [selectedRelais, setSelectedRelais] = useState(null);
 
   useEffect(() => {
-    // Initialisation du Widget Mondial Relay
-    window.$("#Zone_Widget").MR_ParcelShopPicker({
-      Target: "#Target_Result", // Champ qui recevra l'ID du relais
-      Brand: "BDTEST  ", // Code marque de test obligatoire en sandbox
-      Country: "FR", // Pays par défaut
-      PostCode: "41000", // Code postal par défaut (Blois pour toi !)
-      ColLivMod: "24R", // Mode de livraison
-      NbResults: "7", // Nombre de points affichés
-      OnParcelShopSelected: (data) => {
-        // Cette fonction s'exécute quand l'utilisateur clique sur "Choisir"
-        console.log("Relais sélectionné :", data);
-        setSelectedRelais(data);
-      },
-    });
+    // Initialisation du Widget Mondial Relay via jQuery (window.$)
+    if (window.$ && window.$("#Zone_Widget").MR_ParcelShopPicker) {
+      window.$("#Zone_Widget").MR_ParcelShopPicker({
+        Target: "#Target_Result",
+        Brand: "BDTEST  ", // Sandbox
+        Country: "FR",
+        PostCode: "41000", // Blois !
+        ColLivMod: "24R",
+        NbResults: "7",
+        OnParcelShopSelected: (data) => {
+          console.log("Relais sélectionné :", data);
+          setSelectedRelais(data);
+        },
+      });
+    }
   }, []);
 
   const handleConfirm = () => {
     if (selectedRelais) {
-      // On sauvegarde le choix dans le localStorage pour la commande
       localStorage.setItem("relais_selected", JSON.stringify(selectedRelais));
       navigate("/paiement");
     } else {
@@ -33,18 +34,18 @@ const ChoixRelais = () => {
   };
 
   return (
-    <div style={containerStyle}>
-      <h1 style={titleStyle}>Choisissez votre Point Relais</h1>
-      <p style={{ marginBottom: "20px" }}>
+    <div className="relais-container">
+      <h1 className="relais-title">Choisissez votre Point Relais</h1>
+      <p className="relais-intro">
         Sélectionnez le point le plus proche de chez vous !
       </p>
 
-      {/* Le Widget va s'afficher ici */}
-      <div id="Zone_Widget" style={{ marginBottom: "20px" }}></div>
+      {/* Zone d'affichage du Widget */}
+      <div id="Zone_Widget"></div>
 
-      {/* Affichage du relais sélectionné */}
+      {/* Affichage conditionnel de la sélection */}
       {selectedRelais && (
-        <div style={selectionBox}>
+        <div className="selection-box fade-in">
           <p>
             <strong>Point sélectionné :</strong> {selectedRelais.Nom}
           </p>
@@ -55,57 +56,19 @@ const ChoixRelais = () => {
         </div>
       )}
 
-      <div style={{ display: "flex", gap: "20px", marginTop: "30px" }}>
-        <button onClick={() => navigate("/livraisonretrait")} style={btnBack}>
+      <div className="relais-btn-group">
+        <button
+          onClick={() => navigate("/livraisonretrait")}
+          className="btn-relais-back"
+        >
           Retour
         </button>
-        <button onClick={handleConfirm} style={btnNext}>
+        <button onClick={handleConfirm} className="btn-relais-confirm">
           Confirmer et payer
         </button>
       </div>
     </div>
   );
-};
-
-// --- STYLES ---
-const containerStyle = {
-  maxWidth: "1000px",
-  margin: "40px auto",
-  padding: "20px",
-  textAlign: "center",
-  fontFamily: "Montserrat",
-};
-const titleStyle = {
-  fontFamily: "Playfair Display",
-  color: "#aa8d74",
-  fontSize: "32px",
-};
-const selectionBox = {
-  padding: "15px",
-  backgroundColor: "#f9fcf6",
-  border: "1px solid #97af6e",
-  borderRadius: "10px",
-  marginTop: "20px",
-};
-const btnNext = {
-  flex: 2,
-  backgroundColor: "#97af6e",
-  color: "white",
-  padding: "15px",
-  borderRadius: "30px",
-  border: "none",
-  fontWeight: "bold",
-  cursor: "pointer",
-};
-const btnBack = {
-  flex: 1,
-  backgroundColor: "#ccc",
-  color: "white",
-  padding: "15px",
-  borderRadius: "30px",
-  border: "none",
-  fontWeight: "bold",
-  cursor: "pointer",
 };
 
 export default ChoixRelais;

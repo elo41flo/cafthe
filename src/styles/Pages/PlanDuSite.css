@@ -1,0 +1,71 @@
+/* src/pages/PlanDuSite.css */
+
+.sitemap-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.sitemap-header {
+  text-align: center;
+  margin: 40px 0 60px 0;
+}
+
+.sitemap-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.sitemap-subtitle {
+  color: var(--color-text-light);
+  font-size: 18px;
+}
+
+.sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.sitemap-section-box {
+  background-color: var(--color-white);
+  padding: 30px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-main);
+}
+
+.sitemap-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--color-secondary);
+  padding-bottom: 10px;
+}
+
+.sitemap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sitemap-list-item {
+  margin-bottom: 12px;
+}
+
+.sitemap-link {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 16px;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.sitemap-link:hover {
+  color: var(--color-secondary);
+  padding-left: 5px; /* Petit effet de décalage au survol */
+}

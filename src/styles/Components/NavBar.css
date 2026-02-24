@@ -1,0 +1,171 @@
+/* src/components/NavBar.css */
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  background-color: var(--color-white);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 100px;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.3s ease;
+}
+
+/* Bouton Menu (Burger) */
+.menu-toggle-btn {
+  background-color: var(--color-secondary);
+  color: #1a1a1a;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.menu-toggle-btn:hover {
+  background-color: var(--color-accent) !important;
+  color: #2d241c !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(255, 235, 156, 0.5);
+}
+
+/* --- SIDEBAR --- */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 1500;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar-menu {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Caché par défaut */
+  width: 80%;
+  max-width: 400px;
+  height: 100vh;
+  background-color: var(--color-card); /* Utilise la variable pour le Dark Mode */
+  transition: right 0.4s cubic-bezier(0.77,0,0.175,1);
+  z-index: 2000;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+
+.sidebar-menu.open {
+  right: 0;
+}
+
+.close-sidebar-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: var(--color-text); /* S'adapte au thème */
+}
+
+/* --- NOUVELLE SECTION STATUS (Remontée) --- */
+.sidebar-auth-status {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.status-text {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.status-name {
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+/* --- NAVIGATION --- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.nav-link-item {
+  text-decoration: none;
+  color: var(--color-text);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-link-item:hover {
+  transform: translateX(10px);
+  color: var(--color-primary);
+}
+
+/* --- BOUTONS AUTH (Se connecter / Déconnexion) --- */
+.btn-auth-sidebar {
+  text-align: center;
+  padding: 14px;
+  border-radius: var(--radius-btn);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+  display: block;
+}
+
+/* Style Vert (Login) */
+.btn-login-sidebar {
+  background-color: var(--color-secondary);
+  color: white !important;
+}
+
+/* Style Noir/Sombre (Logout) */
+.btn-logout-sidebar {
+  background-color: #1a1a1a;
+  color: white !important;
+  margin-top: auto; /* Repousse le logout vers le bas si tu préfères */
+}
+
+/* Hover Jaune Commun */
+.btn-auth-sidebar:hover {
+  background-color: var(--color-accent) !important;
+  color: #2d241c !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 235, 156, 0.4);
+}
+
+/* Icônes Thème/Panier */
+.sidebar-icons-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.theme-toggle-btn {
+  cursor: pointer;
+  background: var(--color-border);
+  border: none;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.3s;
+}

@@ -1,0 +1,103 @@
+/* src/components/ProductQuickView.css */
+
+.quickview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px); /* Effet de flou sur le fond */
+}
+
+.quickview-modal {
+  background-color: var(--color-white);
+  padding: 30px;
+  border-radius: var(--radius-md);
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: var(--shadow-main);
+  animation: scaleUp 0.3s ease-out;
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.quickview-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 30px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+.quickview-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.quickview-image-container {
+  flex: 1;
+  min-width: 250px;
+}
+
+.quickview-img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.quickview-details {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quickview-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.quickview-price {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--color-secondary);
+  margin: 15px 0;
+}
+
+.quickview-desc {
+  line-height: 1.6;
+  color: var(--color-text-light);
+  font-size: 15px;
+}
+
+.btn-quickview-add {
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: opacity 0.2s;
+}
+
+.btn-quickview-add:hover {
+  opacity: 0.9;
+}

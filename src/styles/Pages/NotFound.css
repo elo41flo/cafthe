@@ -1,0 +1,61 @@
+/* src/pages/NotFound.css */
+
+.error-page-container {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  padding: 20px;
+  background-color: var(--color-white);
+}
+
+.error-content-box {
+  max-width: 600px;
+}
+
+.error-code {
+  font-family: 'Playfair Display', serif;
+  font-size: 120px;
+  color: var(--color-secondary); /* Ton vert Caf'Thé */
+  margin: 0;
+  line-height: 1;
+}
+
+.error-icon {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.error-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--color-text);
+  margin-bottom: 15px;
+}
+
+.error-text {
+  font-size: 18px;
+  color: var(--color-text-light);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.btn-error-home {
+  background-color: var(--color-primary); /* Ton marron Caf'Thé */
+  color: white;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 15px 40px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  box-shadow: 0 5px 15px rgba(170,141,116,0.3);
+}
+
+.btn-error-home:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}

@@ -1,26 +1,32 @@
 import React, { useState } from "react";
+import "../styles/Pages/FormProfil.css"; // Import des styles
 
-const FormProfil = ({ user, onBack }) => {
+const FormProfil = ({ user, onBack, apiUrl, fetchUserData }) => {
   const [formData, setFormData] = useState({
-    nom: user.nom,
-    prenom: user.prenom,
-    telephone: user.telephone || "",
+    nom: user?.nom_client || "",
+    prenom: user?.prenom_client || "",
+    telephone: user?.telephone || "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/utilisateurs/${user.id_utilisateur}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${apiUrl}/api/clients/update-profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify(formData),
+      });
+
       if (res.ok) {
         alert("Profil mis à jour !");
+        await fetchUserData(); // Rafraîchit les données dans le composant parent
         onBack();
+      } else {
+        alert("Erreur lors de la mise à jour.");
       }
     } catch (err) {
       console.error(err);
@@ -28,36 +34,43 @@ const FormProfil = ({ user, onBack }) => {
   };
 
   return (
-    <div style={formContainer}>
-      <button onClick={onBack} style={backBtn}>
+    <div className="profile-form-container fade-in">
+      <button onClick={onBack} className="profile-back-btn">
         ← Retour
       </button>
-      <h2 style={sectionTitle}>Modifier mon profil</h2>
-      <form onSubmit={handleSubmit} style={formStyle}>
-        <label>Nom</label>
+
+      <h2 className="profile-title">Modifier mon profil</h2>
+
+      <form onSubmit={handleSubmit} className="profile-form">
+        <label htmlFor="nom">Nom</label>
         <input
-          style={inputStyle}
+          id="nom"
+          className="profile-input"
           value={formData.nom}
           onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
+          required
         />
 
-        <label>Prénom</label>
+        <label htmlFor="prenom">Prénom</label>
         <input
-          style={inputStyle}
+          id="prenom"
+          className="profile-input"
           value={formData.prenom}
           onChange={(e) => setFormData({ ...formData, prenom: e.target.value })}
+          required
         />
 
-        <label>Téléphone</label>
+        <label htmlFor="tel">Téléphone</label>
         <input
-          style={inputStyle}
+          id="tel"
+          className="profile-input"
           value={formData.telephone}
           onChange={(e) =>
             setFormData({ ...formData, telephone: e.target.value })
           }
         />
 
-        <button type="submit" style={btnVertStyle}>
+        <button type="submit" className="btn-update-profile">
           Enregistrer les modifications
         </button>
       </form>
@@ -65,38 +78,4 @@ const FormProfil = ({ user, onBack }) => {
   );
 };
 
-const formContainer = {
-  maxWidth: "600px",
-  margin: "60px auto",
-  padding: "20px",
-  fontFamily: "Montserrat",
-};
-const formStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "15px",
-  marginTop: "30px",
-};
-const inputStyle = {
-  padding: "12px",
-  borderRadius: "10px",
-  border: "1px solid #ddd",
-  fontFamily: "Montserrat",
-};
-const btnVertStyle = {
-  backgroundColor: "#97af6e",
-  color: "white",
-  border: "none",
-  borderRadius: "15px",
-  padding: "12px",
-  fontWeight: "bold",
-  cursor: "pointer",
-};
-const backBtn = {
-  background: "none",
-  border: "none",
-  color: "#97af6e",
-  fontWeight: "bold",
-  cursor: "pointer",
-  marginBottom: "20px",
-};
+export default FormProfil;

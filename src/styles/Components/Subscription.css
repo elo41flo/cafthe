@@ -1,0 +1,139 @@
+/* src/pages/SubscriptionBox.css */
+
+.sub-container {
+  padding: 80px 20px;
+  background-color: var(--color-bg);
+  display: flex;
+  justify-content: center;
+}
+
+.sub-card {
+  background-color: var(--color-white);
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-main);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.sub-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  margin-bottom: 30px;
+}
+
+/* Barre de progression */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-border);
+  border-radius: 4px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--color-secondary);
+  border-radius: 4px;
+  transition: width 0.4s ease-in-out;
+}
+
+/* Grilles et choix */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.choice-btn {
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  color: var(--color-text-light);
+  transition: all 0.2s;
+}
+
+.choice-btn.active {
+  border: 2px solid var(--color-secondary);
+  background-color: var(--color-active-bg);
+  color: var(--color-secondary);
+}
+
+.formula-card {
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.formula-card.active {
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-active-bg);
+}
+
+.sub-textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-text);
+  padding: 15px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  resize: none;
+}
+
+/* Boutons de navigation */
+.btn-sub-next {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.btn-sub-back {
+  background-color: var(--color-border);
+  color: var(--color-text);
+  padding: 12px 30px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-sub-confirm {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  flex: 1;
+}
+
+.btn-sub-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}

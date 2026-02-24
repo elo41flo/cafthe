@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../styles/Pages/Pepite.css"; // Import du style
 
 const Pepite = () => {
   const [produits, setProduits] = useState([]);
@@ -22,21 +23,18 @@ const Pepite = () => {
     fetchData();
   }, [apiUrl]);
 
-  // Fonction pour récupérer un produit par son ID (numero_produit)
   const findById = (id) => produits.find((p) => p.numero_produit === id);
 
   if (loading)
     return (
-      <div style={{ textAlign: "center", padding: "50px" }}>
-        Chargement de la sélection...
-      </div>
+      <div className="panier-empty-text">Chargement de la sélection...</div>
     );
 
   return (
-    <div style={{ backgroundColor: "#fff", paddingBottom: "100px" }}>
-      <section style={{ textAlign: "center", padding: "80px 20px" }}>
-        <h1 style={titleStyle}>Les Pépites de Caf’Thé</h1>
-        <p style={subtitleStyle}>
+    <div className="pepite-page">
+      <section className="pepite-header">
+        <h1 className="pepite-main-title">Les Pépites de Caf’Thé</h1>
+        <p className="pepite-main-subtitle">
           Chaque mois, notre équipe déguste et sélectionne pour <br />
           vous le meilleur de nos arrivages.
         </p>
@@ -77,87 +75,29 @@ const Pepite = () => {
   );
 };
 
-// Composant interne pour le design des bannières marron
 const PépiteCard = ({ titre, sousTitre, produit, labelBtn }) => {
   if (!produit) return null;
 
   return (
-    <div style={containerStyle}>
-      <h2 style={h2Style}>{titre}</h2>
-      <p style={subTextStyle}>{sousTitre}</p>
-      <div style={bannerStyle}>
+    <div className="pepite-card-container fade-in">
+      <h2 className="pepite-card-h2">{titre}</h2>
+      <p className="pepite-card-desc-intro">{sousTitre}</p>
+      <div className="pepite-banner">
         <div style={{ maxWidth: "70%" }}>
-          <h3 style={pepiteNameStyle}>{produit.nom_produit}</h3>
-          <p style={descStyle}>
+          <h3 className="pepite-product-name">{produit.nom_produit}</h3>
+          <p className="pepite-expert-text">
             <strong>L'avis de l'expert :</strong> {produit.description}
           </p>
           {produit.origine && (
-            <p style={descStyle}>
+            <p className="pepite-expert-text">
               <strong>Origine :</strong> {produit.origine}
             </p>
           )}
         </div>
-        <button style={btnStyle}>{labelBtn}</button>
+        <button className="pepite-btn">{labelBtn}</button>
       </div>
     </div>
   );
-};
-
-// --- STYLES ---
-const titleStyle = {
-  fontFamily: "Playfair Display, serif",
-  fontSize: "48px",
-  marginBottom: "20px",
-};
-const subtitleStyle = {
-  fontFamily: "Montserrat, sans-serif",
-  fontSize: "20px",
-  marginBottom: "40px",
-};
-const containerStyle = {
-  maxWidth: "900px",
-  margin: "0 auto 60px auto",
-  padding: "0 20px",
-};
-const h2Style = {
-  fontFamily: "Playfair Display, serif",
-  fontSize: "28px",
-  marginBottom: "5px",
-};
-const subTextStyle = {
-  fontFamily: "Montserrat, sans-serif",
-  fontSize: "14px",
-  marginBottom: "20px",
-};
-const bannerStyle = {
-  backgroundColor: "#aa8d74",
-  borderRadius: "20px",
-  padding: "40px",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-end",
-  color: "#000",
-};
-const pepiteNameStyle = {
-  fontFamily: "Playfair Display, serif",
-  fontSize: "22px",
-  fontWeight: "bold",
-  marginBottom: "15px",
-};
-const descStyle = {
-  fontFamily: "Montserrat, sans-serif",
-  fontSize: "15px",
-  marginBottom: "10px",
-  lineHeight: "1.4",
-};
-const btnStyle = {
-  backgroundColor: "#97af6e",
-  border: "none",
-  borderRadius: "15px",
-  padding: "12px 25px",
-  fontWeight: "bold",
-  cursor: "pointer",
-  boxShadow: "0 4px 4px rgba(0,0,0,0.25)",
 };
 
 export default Pepite;

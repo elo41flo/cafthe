@@ -1,0 +1,100 @@
+/* src/styles/FormAdresse.css */
+
+.address-form-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.address-back-btn {
+  background: none;
+  border: none;
+  color: var(--color-secondary);
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: opacity 0.2s;
+}
+
+.address-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Onglets */
+.tab-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: bold;
+}
+
+.tab-btn.inactive {
+  background-color: var(--color-border);
+  color: var(--color-text-light);
+}
+
+.address-info-text {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin-bottom: 20px;
+}
+
+/* Formulaire */
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.address-input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  background-color: var(--color-white);
+  color: var(--color-text);
+  outline: none;
+}
+
+.address-input:focus {
+  border-color: var(--color-secondary);
+}
+
+.address-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-save-address {
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-save-address:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,157 @@
+/* src/pages/AideContact.css */
+
+.aide-container {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  padding-bottom: 100px;
+}
+
+/* Header Section */
+.aide-header {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.aide-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.aide-intro-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--color-text);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Sections communes */
+.aide-section {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  padding: 0 20px;
+}
+
+.aide-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.aide-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  color: var(--color-text-light);
+  margin-bottom: 30px;
+}
+
+/* FAQ */
+.faq-wrapper {
+  margin-top: 30px;
+}
+
+.faq-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.faq-bullet {
+  font-size: 12px;
+  margin-top: 8px;
+  color: var(--color-primary);
+}
+
+.faq-category-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
+
+.faq-question {
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.faq-answer {
+  font-size: 15px;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+/* --- FORMULAIRE --- */
+.aide-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+}
+
+/* On ajuste les inputs pour qu'ils soient lisibles en dark mode */
+.aide-input, .aide-textarea {
+  background-color: var(--color-card); /* Utilise la variable card pour le relief */
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 15px 25px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.aide-input:focus, .aide-textarea:focus {
+  border-color: var(--color-secondary); /* Petit rappel de vert au clic */
+}
+
+.aide-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* --- LE BOUTON AVEC HOVER JAUNE --- */
+.aide-btn {
+  background-color: var(--color-secondary); /* Vert #97af6e */
+  color: #ffffff !important; /* Texte blanc par défaut */
+  border: none;
+  border-radius: 30px; /* Plus arrondi pour matcher la home */
+  padding: 14px 40px;
+  width: fit-content;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.aide-btn:hover {
+  background-color: var(--color-accent) !important; /* Jaune #ffeb9c */
+  color: #2d241c !important; /* Texte sombre pour la lisibilité sur le jaune */
+  transform: translateY(-3px); /* Petit effet de levée */
+  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4); /* Halo lumineux jaune */
+  opacity: 1; /* On annule l'ancienne règle d'opacité */
+}
+
+.aide-btn:hover {
+  opacity: 0.8;
+}
+
+/* Localisation */
+.info-box {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.google-map {
+  border: 0;
+  border-radius: 20px;
+  margin-top: 20px;
+}

@@ -1,0 +1,85 @@
+/* src/pages/Paiement.css */
+
+.paiement-container {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.paiement-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.paiement-summary-box {
+  padding: 25px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  margin-bottom: 30px;
+  border: 1px solid var(--color-border);
+}
+
+.paiement-summary-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+}
+
+.paiement-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.paiement-separator {
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  margin: 15px 0;
+}
+
+.paiement-tva-note {
+  font-size: 12px;
+  color: var(--color-text-light);
+  text-align: right;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.relais-detail-box {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--color-active-bg);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.paypal-button-container {
+  margin-top: 10px;
+}
+
+.paiement-error-msg {
+  color: #d9534f;
+  background-color: #f2dede;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.btn-modify-delivery {
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  text-decoration: underline;
+  width: 100%;
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 14px;
+}
