@@ -1,27 +1,20 @@
 // Importation
-import React, { useEffect, useState } from "react"; // Import des outils de base de React (Hooks)
-import { Link } from "react-router-dom"; // Import du composant Link pour naviguer sans recharger la page
-import "../styles/Pages/Home.css"; // Import du fichier de style de cette page
-import imageAccueil from "/public/image_accueil.webp";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/Pages/Home.css";
 
 const Home = () => {
-  // Etat
-  // On déclare une variable d'état pour savoir si l'utilisateur est connecté
-  // Par défaut on considère qu'il ne l'est pas
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Logique au chargement
   useEffect(() => {
-    // La fonction s'exécute une seule fois quand la page s'affiche
-    const user = localStorage.getItem("user"); // On regarde dans le stockage du navigateur s'il y a un utilisateur
-    if (user) setIsLoggedIn(true); // Si oui, on passe l'état à "true"
-  }, []); // Le tableau vide [] signifie : "ne s'exécute qu'au premier affichage"
+    const user = localStorage.getItem("user");
+    if (user) setIsLoggedIn(true);
+  }, []);
 
   return (
     <div className="home-container">
       {/* Hero */}
       <section className="hero-section">
-        {/* Ajout d'un overlay pour rendre le texte lisible */}
         <div className="hero-overlay fade-in">
           <h1 className="hero-h1">L'Art de l'éveil, la douceur de l'instant</h1>
           <p className="hero-p">
@@ -36,7 +29,6 @@ const Home = () => {
 
       {/* Engagement */}
       <section className="engagement-section">
-        {/* Chaque emoji représente une valeur */}
         <div className="engagement-item">
           <span className="engagement-icon">🌱</span>
           <p>Agriculture Durable</p>
@@ -54,7 +46,6 @@ const Home = () => {
       {/* Section abonnement box */}
       <section className="box-section">
         <div className="box-content">
-          {/* Argumentaire de vente */}
           <div className="box-text-side">
             <h2 className="box-title">La Box Caf'Thé</h2>
             <p className="box-desc">
@@ -76,10 +67,10 @@ const Home = () => {
             </Link>
           </div>
 
-          {/* Visuel du produit */}
           <div className="box-image-wrapper">
+            {/* CORRECTION ICI : On utilise le chemin direct car l'image est dans 'public' */}
             <img
-              src={imageAccueil} // Utilisation de la variable importée
+              src="/image_accueil.webp"
               alt="Box Caf'Thé"
               className="box-img"
             />
@@ -91,9 +82,6 @@ const Home = () => {
       <section className="pepites-section">
         <h2 className="pepites-main-title">Les Pépites de Caf’Thé</h2>
         <div className="pepite-container">
-          {/* Ici, on utilise .map() pour boucler sur un tableau d'objets. 
-          Ca évite de répéter le même code HTML pour chaque produit.
-          */}
           {[
             {
               id: 101,
@@ -127,7 +115,6 @@ const Home = () => {
                   <h4 className="pepite-name">{pepite.nom}</h4>
                   <p className="pepite-text">"{pepite.desc}"</p>
                 </div>
-                {/* Lien vers la fiche produit détaillé des produits */}
                 <Link to={`/produit/${pepite.id}`} className="btn-pepite">
                   Découvrir
                 </Link>
