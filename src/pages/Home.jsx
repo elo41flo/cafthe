@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Pages/Home.css";
-import image_accueil from "../assets/image_accueil";
+import image_accueil from "../assets/image_accueil.webp";
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
