@@ -66,7 +66,7 @@ const NavBar = () => {
       <header className="header-main">
         <Link to="/">
           <img
-            src={logo}
+            src="/logo_2.webp" // Le slash "/" au début est CRUCIAL
             alt="Caf'Thé Logo"
             style={{ height: "80px" }}
           />
