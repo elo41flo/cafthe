@@ -332,8 +332,15 @@
   }
 
   .box-img {
-    border-radius: 25px;
-    width: 100%;
+  width: 100%;
+  max-width: 500px;
+  height: auto; /* Garde les proportions */
+  min-height: 200px; /* Force une hauteur minimum pour le test */
+  display: block; /* Évite les espaces vides en dessous */
+  border-radius: 40px;
+  box-shadow: var(--shadow-main);
+  transition: transform 0.5s ease;
+  background-color: #f0f0f0; /* Si l'image ne charge pas, tu verras un bloc gris */
   }
 
   .pepite-card {
