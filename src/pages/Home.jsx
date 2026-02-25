@@ -68,13 +68,13 @@ const Home = () => {
               Créer ma box
             </Link>
           </div>
-
+          // DANS Home.jsx
           <div className="box-image-wrapper">
-            {/* CORRECTION : Chemin direct depuis la racine car l'image est dans 'public' */}
             <img
               src="/image_accueil.webp"
               alt="Box Caf'Thé"
               className="box-img"
+              loading="eager"
             />
           </div>
         </div>
