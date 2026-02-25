@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"; // Import des outils de base de React (Hooks)
 import { Link } from "react-router-dom"; // Import du composant Link pour naviguer sans recharger la page
 import "../styles/Pages/Home.css"; // Import du fichier de style de cette page
-import imageAccueil from "../../public/image_accueil.webp";
+import imageAccueil from "/public/image_accueil.webp";
 
 const Home = () => {
   // Etat
