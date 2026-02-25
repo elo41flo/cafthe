@@ -65,7 +65,7 @@ const NavBar = () => {
       <header className="header-main">
         <Link to="/">
           <img
-            src="/src/assets/logo.webp"
+            src="/logo_2.webp"
             alt="Caf'Thé Logo"
             style={{ height: "80px" }}
           />
