@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import "../styles/Components/NavBar.css"; // Import du style
-import logo from "../assets/logo_2.webp"; // Import direct
 
 const NavBar = () => {
   const navigate = useNavigate();
