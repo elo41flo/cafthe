@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import "../styles/Components/NavBar.css"; // Import du style
+import logo from "../assets/logo_2.webp"; // Import direct
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const NavBar = () => {
       <header className="header-main">
         <Link to="/">
           <img
-            src="/logo_2.webp"
+            src={logo}
             alt="Caf'Thé Logo"
             style={{ height: "80px" }}
           />
