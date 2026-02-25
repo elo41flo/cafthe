@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Pages/Home.css";
+import image_accueil from "../assets/image_accueil";
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,11 +70,7 @@ const Home = () => {
 
           <div className="box-image-wrapper">
             {/* CORRECTION ICI : On utilise le chemin direct car l'image est dans 'public' */}
-            <img
-              src="/image_accueil.webp"
-              alt="Box Caf'Thé"
-              className="box-img"
-            />
+            <img src={image_accueil} alt="Box Caf'Thé" className="box-img" />
           </div>
         </div>
       </section>
