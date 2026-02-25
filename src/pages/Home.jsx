@@ -68,7 +68,6 @@ const Home = () => {
               Créer ma box
             </Link>
           </div>
-          // DANS Home.jsx
           <div className="box-image-wrapper">
             {/* Le "/" au début dit à Vercel de regarder à la racine du dossier public */}
             <img
