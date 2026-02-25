@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Pages/Home.css";
-import image_accueil from "../assets/image_accueil.webp";
+
+// CORRECTION : ON SUPPRIME L'IMPORT DE L'IMAGE ICI
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,8 +70,12 @@ const Home = () => {
           </div>
 
           <div className="box-image-wrapper">
-            {/* CORRECTION ICI : On utilise le chemin direct car l'image est dans 'public' */}
-            <img src={image_accueil} alt="Box Caf'Thé" className="box-img" />
+            {/* CORRECTION : Chemin direct depuis la racine car l'image est dans 'public' */}
+            <img
+              src="/image_accueil.webp"
+              alt="Box Caf'Thé"
+              className="box-img"
+            />
           </div>
         </div>
       </section>
@@ -83,25 +88,25 @@ const Home = () => {
             {
               id: 101,
               nom: "Moka d'Ethiopie",
-              desc: "Notes florales de jasmin et de bergamote.",
+              desc: "Notes florales de jasmin.",
               auteur: "Le Coup de Cœur de Julien",
             },
             {
               id: 201,
               nom: "Darjeeling FF",
-              desc: "Le champagne des thes, leger et tres floral.",
+              desc: "Le champagne des thés.",
               auteur: "Le Coup de Cœur de Julien",
             },
             {
               id: 301,
               nom: "Moulin Manuel Pro",
-              desc: "Meules en ceramique pour une mouture precise.",
+              desc: "Mouture précise.",
               auteur: "La Découverte de Thomas",
             },
             {
               id: 401,
               nom: "L'Eveil du Monde",
-              desc: "4 sachets de 100g de cafes d'origine. Decouverte des terroirs.",
+              desc: "Découverte des terroirs.",
               auteur: "La Découverte de Mounia",
             },
           ].map((pepite) => (
