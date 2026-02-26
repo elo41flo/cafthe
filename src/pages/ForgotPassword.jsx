@@ -9,23 +9,13 @@ const ForgotPassword = () => {
   const [errorMsg, setErrorMsg] = useState(""); // Pour afficher les erreurs proprement
   const navigate = useNavigate();
 
-  // On récupère l'URL de l'API (Vercel utilisera la variable d'env, sinon localhost)
+  // 1. Déclare l'URL de base (Vite utilise import.meta.env)
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
-  const handleCheckEmail = async (e) => {
-    e.preventDefault();
-    setErrorMsg("");
-
-    // Optionnel : Tu pourrais faire un appel API ici pour vérifier si l'email existe
-    // avant de passer à l'étape 2.
-    setStep(2);
-  };
 
   const handleReset = async (e) => {
     e.preventDefault();
-    setErrorMsg("");
-
     try {
+      // 2. Utilise la variable baseUrl
       const response = await fetch(`${baseUrl}/api/clients/reset-password`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -34,6 +24,7 @@ const ForgotPassword = () => {
           new_password: newPassword,
         }),
       });
+      // ... reste du code
 
       const data = await response.json();
 
