@@ -7,11 +7,7 @@ const Footer = () => {
     <footer className="footer-container">
       {/* LOGO À GAUCHE */}
       <div className="footer-logo-wrapper">
-        <img
-          src="/src/assets/logo.webp"
-          alt="Caf'Thé Logo"
-          className="footer-logo"
-        />
+        <img src="/logo.webp" alt="Caf'Thé Logo" className="footer-logo" />
       </div>
 
       {/* LIENS AU CENTRE */}
