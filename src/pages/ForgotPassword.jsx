@@ -1,40 +1,51 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Pages/ForgotPassword.css"; // On importe le style commun à l'authentification
+import "../styles/Pages/ForgotPassword.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [step, setStep] = useState(1); // 1: Email, 2: Nouveau MDP
   const [newPassword, setNewPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(""); // Pour afficher les erreurs proprement
   const navigate = useNavigate();
+
+  // On récupère l'URL de l'API (Vercel utilisera la variable d'env, sinon localhost)
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const handleCheckEmail = async (e) => {
     e.preventDefault();
-    // Simulation : dans un vrai cas, on vérifierait si l'email existe en BDD
+    setErrorMsg("");
+
+    // Optionnel : Tu pourrais faire un appel API ici pour vérifier si l'email existe
+    // avant de passer à l'étape 2.
     setStep(2);
   };
 
   const handleReset = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/clients/reset-password",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email_client: email,
-            new_password: newPassword,
-          }),
-        },
-      );
+      const response = await fetch(`${baseUrl}/api/clients/reset-password`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email_client: email,
+          new_password: newPassword,
+        }),
+      });
+
+      const data = await response.json();
 
       if (response.ok) {
         alert("Succès ! Votre mot de passe a été réinitialisé.");
         navigate("/login");
+      } else {
+        setErrorMsg(data.message || "Une erreur est survenue.");
       }
     } catch (error) {
-      alert("Erreur lors de la réinitialisation.");
+      console.error("Erreur Reset Password:", error);
+      setErrorMsg("Impossible de joindre le serveur.");
     }
   };
 
@@ -42,6 +53,9 @@ const ForgotPassword = () => {
     <div className="auth-container">
       <div className="auth-card fade-in">
         <h2 className="auth-title">Réinitialisation</h2>
+
+        {/* Affichage du message d'erreur s'il y en a un */}
+        {errorMsg && <p className="auth-error">⚠️ {errorMsg}</p>}
 
         {step === 1 ? (
           <form onSubmit={handleCheckEmail}>
@@ -70,11 +84,26 @@ const ForgotPassword = () => {
               className="auth-input"
               placeholder="Nouveau mot de passe"
               required
+              minLength="12" // Sécurité de base
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <button type="submit" className="auth-btn">
               Changer mon mot de passe
+            </button>
+            <button
+              type="button"
+              className="auth-btn-secondary"
+              onClick={() => setStep(1)}
+              style={{
+                marginTop: "10px",
+                background: "none",
+                color: "#666",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Retour
             </button>
           </form>
         )}
