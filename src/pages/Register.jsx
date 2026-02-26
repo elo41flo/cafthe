@@ -82,7 +82,7 @@ const Register = () => {
         style={{ maxWidth: "450px" }}
       >
         <img
-          src="/src/assets/logo_2.webp"
+          src="/logo_2.webp"
           alt="Caf'Thé"
           className="auth-logo"
           style={{ height: "80px" }}

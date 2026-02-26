@@ -64,11 +64,7 @@ const Login = () => {
     <div className="auth-container">
       {/* Formulaire de connexion */}
       <form onSubmit={handleSubmit} className="auth-card fade-in">
-        <img
-          src="/src/assets/logo_2.webp"
-          alt="Logo Caf'Thé"
-          className="auth-logo"
-        />
+        <img src="/logo_2.webp" alt="Logo Caf'Thé" className="auth-logo" />
 
         {/* Affichage conditionnel de l'erreur : n'apparaît que si errorMsg n'est pas vide */}
         {errorMsg && <p className="auth-error">⚠️ {errorMsg}</p>}
