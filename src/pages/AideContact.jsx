@@ -68,9 +68,7 @@ const AideContact = () => {
         </div>
       </section>
 
-      {/* --- SECTION FORMULAIRE --- 
-          L'action pointe vers Formspree pour la réception réelle des emails.
-      */}
+      {/* --- SECTION FORMULAIRE --- */}
       <section className="aide-section">
         <h2 className="aide-h2">Nous envoyer un message</h2>
         <p className="aide-subtitle">
@@ -111,6 +109,21 @@ const AideContact = () => {
             className="aide-textarea"
             required
           />
+
+          {/* AJOUT : Case de consentement RGPD */}
+          <div className="aide-form-rgpd">
+            <input
+              type="checkbox"
+              id="rgpd-consent"
+              name="consentement_rgpd"
+              required
+            />
+            <label htmlFor="rgpd-consent">
+              J'accepte que mes données soient utilisées pour répondre à ma
+              demande conformément à la{" "}
+              <strong>politique de confidentialité</strong>.
+            </label>
+          </div>
 
           <button type="submit" className="aide-btn">
             Envoyer le message
