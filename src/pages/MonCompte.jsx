@@ -95,6 +95,7 @@ const MonCompte = () => {
   }, [fetchData]);
 
   // --- MODIFICATION 1 : FONCTION POUR RECOMMANDER ---
+  // --- MODIFICATION : FONCTION POUR RECOMMANDER CORRIGÉE ---
   const handleReorder = async (orderId) => {
     try {
       const token = localStorage.getItem("token");
@@ -106,36 +107,42 @@ const MonCompte = () => {
         const items = await res.json();
 
         if (items && items.length > 0) {
-          // --- VÉRIFICATION DE LA CLÉ ---
-          // On essaie de détecter quelle clé ton site utilise d'habitude
+          // 1. Détecter la clé utilisée par ton application
           const storageKey = localStorage.getItem("panier") ? "panier" : "cart";
 
+          // 2. Récupérer l'existant
           const currentCart = JSON.parse(
             localStorage.getItem(storageKey) || "[]",
           );
 
+          // 3. Formater proprement (on utilise prix_ttc ou prix selon ton SQL)
           const formattedItems = items.map((item) => ({
             id: item.id || item.numero_produit,
             nom: item.nom || item.nom_produit,
-            prix: Number(item.prix) || 0,
+            // FORCE le prix à être un nombre pour que le panier l'affiche
+            prix: Number(item.prix || item.prix_ttc) || 0,
             image: item.image || item.image_produit,
             quantite: item.quantite || 1,
-            // Ajoute ici d'autres champs si ton panier en a besoin (ex: description)
           }));
 
+          // 4. Fusionner sans doublons (Optionnel mais recommandé)
           const newCart = [...currentCart, ...formattedItems];
 
-          // On enregistre dans la clé détectée
+          // 5. Sauvegarder
           localStorage.setItem(storageKey, JSON.stringify(newCart));
 
-          console.log(`✅ Tentative d'ajout dans ${storageKey}:`, newCart);
+          console.log(`✅ Panier mis à jour (${storageKey})`, newCart);
 
-          // On force le panier à se vider de son cache et à recharger
-          window.location.assign("/panier");
+          // 6. REDIRECTION : On utilise window.location pour forcer
+          // React à recharger le Context du panier au démarrage de la page panier
+          window.location.href = "/panier";
+        } else {
+          alert("Commande vide ou articles indisponibles.");
         }
       }
     } catch (err) {
       console.error("Erreur critique reorder:", err);
+      alert("Une erreur est survenue lors de la récupération de la commande.");
     }
   };
 
