@@ -104,29 +104,21 @@ const MonCompte = () => {
 
       if (res.ok) {
         const items = await res.json();
-        console.log("Articles reçus du back:", items); // <--- REGARDE ICI DANS LA CONSOLE (F12)
 
         if (items.length > 0) {
           const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-          // Vérifie si ton panier utilise "id" ou "numero_produit"
-          // On force le format pour correspondre à ton panier habituel
+          // On s'assure que les prix sont bien des nombres
           const formattedItems = items.map((item) => ({
-            id: item.numero_produit, // ou numero_produit selon ton code panier
-            nom: item.nom_produit,
-            prix: Number(item.prix_produit),
-            image: item.image_produit,
-            quantite: item.quantite || 1,
+            ...item,
+            prix: Number(item.prix) || 0,
           }));
 
           const newCart = [...currentCart, ...formattedItems];
           localStorage.setItem("cart", JSON.stringify(newCart));
 
-          console.log(
-            "Panier mis à jour:",
-            JSON.parse(localStorage.getItem("cart")),
-          );
-          navigate("/panier");
+          // AU LIEU DE navigate("/panier"), on force un rechargement complet
+          window.location.href = "/panier";
         }
       }
     } catch (err) {
