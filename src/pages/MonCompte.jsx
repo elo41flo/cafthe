@@ -105,24 +105,37 @@ const MonCompte = () => {
       if (res.ok) {
         const items = await res.json();
 
-        if (items.length > 0) {
-          const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        if (items && items.length > 0) {
+          // --- VÉRIFICATION DE LA CLÉ ---
+          // On essaie de détecter quelle clé ton site utilise d'habitude
+          const storageKey = localStorage.getItem("panier") ? "panier" : "cart";
 
-          // On s'assure que les prix sont bien des nombres
+          const currentCart = JSON.parse(
+            localStorage.getItem(storageKey) || "[]",
+          );
+
           const formattedItems = items.map((item) => ({
-            ...item,
+            id: item.id || item.numero_produit,
+            nom: item.nom || item.nom_produit,
             prix: Number(item.prix) || 0,
+            image: item.image || item.image_produit,
+            quantite: item.quantite || 1,
+            // Ajoute ici d'autres champs si ton panier en a besoin (ex: description)
           }));
 
           const newCart = [...currentCart, ...formattedItems];
-          localStorage.setItem("cart", JSON.stringify(newCart));
 
-          // AU LIEU DE navigate("/panier"), on force un rechargement complet
-          window.location.href = "/panier";
+          // On enregistre dans la clé détectée
+          localStorage.setItem(storageKey, JSON.stringify(newCart));
+
+          console.log(`✅ Tentative d'ajout dans ${storageKey}:`, newCart);
+
+          // On force le panier à se vider de son cache et à recharger
+          window.location.assign("/panier");
         }
       }
     } catch (err) {
-      console.error("Erreur reorder:", err);
+      console.error("Erreur critique reorder:", err);
     }
   };
 
