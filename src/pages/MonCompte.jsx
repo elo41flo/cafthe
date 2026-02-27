@@ -107,31 +107,35 @@ const MonCompte = () => {
         const items = await res.json();
 
         if (items && items.length > 0) {
-          // ICI : Remplace par la clé EXACTE que tu as vue dans l'onglet Application
-          const storageKey = "cart";
-
+          // Ton panier utilise la clé "panier" d'après ton code
+          const storageKey = "panier";
           const currentCart = JSON.parse(
             localStorage.getItem(storageKey) || "[]",
           );
 
-          const formattedItems = items.map((item) => ({
-            // On s'assure que TOUTES les variantes de clés possibles sont couvertes
-            id: item.id || item.numero_produit,
-            nom: item.nom || item.nom_produit || item.name,
-            prix: Number(item.prix || item.prix_ttc || 0),
-            image: item.image || item.image_produit,
-            quantite: Number(item.quantite || 1),
-          }));
+          const formattedItems = items.map((item) => {
+            const productId = item.id || item.numero_produit;
+            return {
+              // ON AJOUTE LE uniqueId INDISPENSABLE POUR TON PANIER
+              uniqueId: `${productId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+              id: productId,
+              nom: item.nom || item.nom_produit,
+              prix: Number(item.prix || item.prix_ttc) || 0,
+              image: item.image || item.image_produit,
+              quantite: Number(item.quantite || 1),
+              format: item.format || "Sachet 250g", // Valeur par défaut si vide
+            };
+          });
 
           const newCart = [...currentCart, ...formattedItems];
           localStorage.setItem(storageKey, JSON.stringify(newCart));
 
-          // On force le rechargement pour que le Panier lise le LocalStorage
+          // On force le rechargement pour que Panier.jsx lise le localStorage
           window.location.href = "/panier";
         }
       }
     } catch (err) {
-      console.error("Erreur critique:", err);
+      console.error("Erreur reorder:", err);
     }
   };
 
