@@ -6,16 +6,42 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [step, setStep] = useState(1); // 1: Email, 2: Nouveau MDP
   const [newPassword, setNewPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(""); // Pour afficher les erreurs proprement
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
-  // 1. Déclare l'URL de base (Vite utilise import.meta.env)
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+  // --- ÉTAPE 1 : LA FONCTION QUI MANQUAIT ---
+  const handleCheckEmail = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+    console.log("Vérification de l'email :", email);
+
+    try {
+      const response = await fetch(`${baseUrl}/api/clients/check-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email_client: email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStep(2); // On passe au changement de mot de passe
+      } else {
+        setErrorMsg(data.message || "Email non reconnu.");
+      }
+    } catch (error) {
+      console.error("Erreur check-email:", error);
+      setErrorMsg("Le serveur ne répond pas.");
+    }
+  };
+
+  // --- ÉTAPE 2 : LE RESET EFFECTIF ---
   const handleReset = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
     try {
-      // 2. Utilise la variable baseUrl
       const response = await fetch(`${baseUrl}/api/clients/reset-password`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -24,19 +50,16 @@ const ForgotPassword = () => {
           new_password: newPassword,
         }),
       });
-      // ... reste du code
-
-      const data = await response.json();
 
       if (response.ok) {
-        alert("Succès ! Votre mot de passe a été réinitialisé.");
+        alert("Succès ! Mot de passe modifié.");
         navigate("/login");
       } else {
-        setErrorMsg(data.message || "Une erreur est survenue.");
+        const data = await response.json();
+        setErrorMsg(data.message || "Erreur lors de la mise à jour.");
       }
     } catch (error) {
-      console.error("Erreur Reset Password:", error);
-      setErrorMsg("Impossible de joindre le serveur.");
+      setErrorMsg("Erreur réseau.");
     }
   };
 
@@ -44,14 +67,12 @@ const ForgotPassword = () => {
     <div className="auth-container">
       <div className="auth-card fade-in">
         <h2 className="auth-title">Réinitialisation</h2>
-
-        {/* Affichage du message d'erreur s'il y en a un */}
         {errorMsg && <p className="auth-error">⚠️ {errorMsg}</p>}
 
         {step === 1 ? (
           <form onSubmit={handleCheckEmail}>
             <p className="auth-text">
-              Entrez votre email pour modifier votre mot de passe.
+              Entrez votre email pour vérifier votre compte.
             </p>
             <input
               type="email"
@@ -68,14 +89,14 @@ const ForgotPassword = () => {
         ) : (
           <form onSubmit={handleReset}>
             <p className="auth-text">
-              Email : <strong>{email}</strong>
+              Nouveau mot de passe pour <strong>{email}</strong>
             </p>
             <input
               type="password"
               className="auth-input"
-              placeholder="Nouveau mot de passe"
+              placeholder="12 caractères minimum"
               required
-              minLength="12" // Sécurité de base
+              minLength="12"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -84,15 +105,8 @@ const ForgotPassword = () => {
             </button>
             <button
               type="button"
-              className="auth-btn-secondary"
               onClick={() => setStep(1)}
-              style={{
-                marginTop: "10px",
-                background: "none",
-                color: "#666",
-                border: "none",
-                cursor: "pointer",
-              }}
+              className="auth-btn-visitor"
             >
               Retour
             </button>
