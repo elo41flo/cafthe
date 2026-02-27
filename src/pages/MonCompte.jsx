@@ -107,42 +107,31 @@ const MonCompte = () => {
         const items = await res.json();
 
         if (items && items.length > 0) {
-          // 1. Détecter la clé utilisée par ton application
-          const storageKey = localStorage.getItem("panier") ? "panier" : "cart";
+          // ICI : Remplace par la clé EXACTE que tu as vue dans l'onglet Application
+          const storageKey = "cart";
 
-          // 2. Récupérer l'existant
           const currentCart = JSON.parse(
             localStorage.getItem(storageKey) || "[]",
           );
 
-          // 3. Formater proprement (on utilise prix_ttc ou prix selon ton SQL)
           const formattedItems = items.map((item) => ({
+            // On s'assure que TOUTES les variantes de clés possibles sont couvertes
             id: item.id || item.numero_produit,
-            nom: item.nom || item.nom_produit,
-            // FORCE le prix à être un nombre pour que le panier l'affiche
-            prix: Number(item.prix || item.prix_ttc) || 0,
+            nom: item.nom || item.nom_produit || item.name,
+            prix: Number(item.prix || item.prix_ttc || 0),
             image: item.image || item.image_produit,
-            quantite: item.quantite || 1,
+            quantite: Number(item.quantite || 1),
           }));
 
-          // 4. Fusionner sans doublons (Optionnel mais recommandé)
           const newCart = [...currentCart, ...formattedItems];
-
-          // 5. Sauvegarder
           localStorage.setItem(storageKey, JSON.stringify(newCart));
 
-          console.log(`✅ Panier mis à jour (${storageKey})`, newCart);
-
-          // 6. REDIRECTION : On utilise window.location pour forcer
-          // React à recharger le Context du panier au démarrage de la page panier
+          // On force le rechargement pour que le Panier lise le LocalStorage
           window.location.href = "/panier";
-        } else {
-          alert("Commande vide ou articles indisponibles.");
         }
       }
     } catch (err) {
-      console.error("Erreur critique reorder:", err);
-      alert("Une erreur est survenue lors de la récupération de la commande.");
+      console.error("Erreur critique:", err);
     }
   };
 
