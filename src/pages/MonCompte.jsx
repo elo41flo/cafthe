@@ -63,7 +63,6 @@ const MonCompte = () => {
   const fetchData = useCallback(async () => {
     const token = localStorage.getItem("token");
 
-    // Si pas de token, on redirige direct sans tenter de fetch (évite les 401)
     if (!token) {
       navigate("/login");
       return;
@@ -76,7 +75,6 @@ const MonCompte = () => {
         fetch(`${apiUrl}/api/clients/my-orders`, { headers }),
       ]);
 
-      // Si l'un des deux répond 401, le token est expiré ou invalide
       if (userRes.status === 401 || ordersRes.status === 401) {
         localStorage.clear();
         navigate("/login");
@@ -95,6 +93,46 @@ const MonCompte = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // --- MODIFICATION 1 : FONCTION POUR RECOMMANDER ---
+  const handleReorder = async (orderId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${apiUrl}/api/commandes/items/${orderId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.ok) {
+        const items = await res.json();
+        console.log("Articles reçus du back:", items); // <--- REGARDE ICI DANS LA CONSOLE (F12)
+
+        if (items.length > 0) {
+          const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+          // Vérifie si ton panier utilise "id" ou "numero_produit"
+          // On force le format pour correspondre à ton panier habituel
+          const formattedItems = items.map((item) => ({
+            id: item.numero_produit, // ou numero_produit selon ton code panier
+            nom: item.nom_produit,
+            prix: Number(item.prix_produit),
+            image: item.image_produit,
+            quantite: item.quantite || 1,
+          }));
+
+          const newCart = [...currentCart, ...formattedItems];
+          localStorage.setItem("cart", JSON.stringify(newCart));
+
+          console.log(
+            "Panier mis à jour:",
+            JSON.parse(localStorage.getItem("cart")),
+          );
+          navigate("/panier");
+        }
+      }
+    } catch (err) {
+      console.error("Erreur reorder:", err);
+    }
+  };
 
   const handleDeleteAccount = async () => {
     const confirmFirst = window.confirm(
@@ -260,7 +298,13 @@ const MonCompte = () => {
                   </div>
                   <div className="order-actions">
                     <span className="order-price">{prixNum.toFixed(2)} €</span>
-                    <button className="btn-reorder">Recommander</button>
+                    {/* --- MODIFICATION 2 : ONCLICK AJOUTÉ --- */}
+                    <button
+                      className="btn-reorder"
+                      onClick={() => handleReorder(order.numero_commande)}
+                    >
+                      Recommander
+                    </button>
                   </div>
                 </div>
               );
