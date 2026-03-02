@@ -31,13 +31,16 @@ const ProductQuickView = ({ product, onClose, onAddToCart }) => {
             <button
               className="btn-quickview-add"
               onClick={() => {
-                // On prépare l'objet exactement comme le Panier l'attend
+                // On prépare l'objet avec TOUTES les infos nécessaires pour le Panier.jsx
                 const formattedProduct = {
                   ...product,
-                  nom: product.nom_produit, // Important : transformation de la clé
-                  prix: product.prix_ttc, // Important : transformation de la clé
-                  quantite: 1, // On s'assure qu'il y a une quantité
-                  uniqueId: Date.now() + Math.random(), // Identifiant unique pour le panier
+                  nom: product.nom_produit,
+                  prix: product.prix_ttc,
+                  quantite: 1,
+                  uniqueId: Date.now() + Math.random(),
+                  // ON AJOUTE CES DEUX LIGNES :
+                  image: product.image, // Pour que le Panier puisse reconstruire l'URL
+                  format: product.format || "Sachet 250g", // Valeur par défaut si vide
                 };
 
                 onAddToCart(formattedProduct);

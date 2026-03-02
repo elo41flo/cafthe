@@ -6,6 +6,9 @@ const Panier = () => {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
 
+  // URL de l'API pour récupérer les images
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
   useEffect(() => {
     const data = localStorage.getItem("panier");
     if (data) setItems(JSON.parse(data));
@@ -14,6 +17,7 @@ const Panier = () => {
   const saveAndSync = (nouveauPanier) => {
     setItems(nouveauPanier);
     localStorage.setItem("panier", JSON.stringify(nouveauPanier));
+    // Notifier les autres composants (ex: le compteur du Header)
     window.dispatchEvent(new Event("cartUpdate"));
   };
 
@@ -33,12 +37,13 @@ const Panier = () => {
     saveAndSync(nouveauPanier);
   };
 
-  // Calculs
+  // Calculs financiers
   const totalTTC = items.reduce(
     (acc, item) =>
       acc + (Number(item.prix) || 0) * (Number(item.quantite) || 0),
     0,
   );
+
   const totalHT = totalTTC / 1.2;
   const tva = totalTTC - totalHT;
   const livraisonOfferte = totalTTC >= 45;
@@ -63,13 +68,33 @@ const Panier = () => {
         ) : (
           items.map((item) => (
             <div key={item.uniqueId} className="panier-product-row">
-              <div style={{ flex: 3 }}>
-                <span className="panier-product-name">● {item.nom}</span>
-                {item.format && (
+              {/* Zone Produit avec Image et Nom */}
+              <div
+                style={{
+                  flex: 3,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "15px",
+                }}
+              >
+                <img
+                  src={`${apiUrl}/images/${item.image || "default.webp"}`}
+                  alt={item.nom}
+                  className="panier-item-img"
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                  }}
+                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span className="panier-product-name">{item.nom}</span>
+                  {/* Gestion du format pour éviter le "undefined" */}
                   <span className="panier-format-tag">
-                    Format : {item.format}
+                    Format : {item.format ? item.format : "Sachet 250g"}
                   </span>
-                )}
+                </div>
               </div>
 
               <span style={{ flex: 1, textAlign: "center" }}>
@@ -103,6 +128,7 @@ const Panier = () => {
               <button
                 onClick={() => removeItem(item.uniqueId)}
                 className="panier-delete-btn"
+                title="Supprimer l'article"
               >
                 ✕
               </button>
