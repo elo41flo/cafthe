@@ -43,9 +43,19 @@ const ProductCard = ({ produit, onQuickView }) => {
       id: produit.numero_produit,
       nom: produit.nom_produit,
       prix: prixFinal,
-      image: imageUrl,
+      // --- CORRECTION IMAGE ---
+      // On n'envoie que le NOM de l'image (ex: "cafe.webp")
+      // car le CartDrawer et le Panier rajoutent déjà l'URL de l'API
+      image: produit.image,
+
       quantite: 1,
+
+      // --- CORRECTION POIDS/FORMAT ---
+      // On envoie les deux clés pour être sûr que tous les composants comprennent
       poids_sachet: poidsValeur,
+      format:
+        poidsValeur === 1 ? "vendu à l'unité" : `sachet de ${poidsValeur}g`,
+
       uniqueId: Date.now() + Math.random(),
     };
 
