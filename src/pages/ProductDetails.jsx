@@ -39,6 +39,15 @@ const ProductDetails = () => {
     if (!produit) return;
     const panier = JSON.parse(localStorage.getItem("panier")) || [];
     const isCafe = produit.categorie === "Cafe";
+
+    // LOGIQUE DE POIDS (Identique à ta ProductCard pour être raccord)
+    const id = Number(produit.numero_produit);
+    const estUnThe =
+      (id >= 201 && id <= 230) ||
+      (produit.nom_produit || "").toLowerCase().includes("the");
+    const poidsValeur = estUnThe ? 100 : 250;
+
+    // Identifiant unique qui inclut le format pour ne pas mélanger Grain et Capsule dans le panier
     const uniqueId = isCafe
       ? `${produit.numero_produit}-${format}`
       : `${produit.numero_produit}`;
@@ -56,8 +65,13 @@ const ProductDetails = () => {
         uniqueId,
         id: produit.numero_produit,
         nom: produit.nom_produit,
-        image: `${apiUrl}/images/${produit.image}`,
+        // ON ENVOIE JUSTE LE NOM DE L'IMAGE (Le CartDrawer s'occupe de l'URL)
+        image: produit.image,
+
+        // ON SÉPARE FORMAT ET POIDS
         format: isCafe ? format : null,
+        poids_sachet: poidsValeur,
+
         prix: prixUnitaire,
         quantite: quantite,
       });
