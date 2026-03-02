@@ -38,7 +38,9 @@ const CartDrawer = ({ isOpen, onClose, cartItems, removeItem }) => {
               const prixAffichage =
                 Number(item.prix_ttc) || Number(item.prix) || 0;
 
-              // RÉGLAGE IMAGE : On vérifie si c'est déjà une URL ou juste un nom de fichier
+              // --- LOGIQUE IMAGE AMÉLIORÉE ---
+              // Si l'image contient déjà "http", on l'utilise telle quelle.
+              // Sinon on construit l'URL avec l'API.
               const imgSource = item.image?.startsWith("http")
                 ? item.image
                 : `${apiUrl}/images/${item.image || "logo_2.webp"}`;
@@ -50,7 +52,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, removeItem }) => {
                     alt={item.nom_produit || item.nom}
                     className="drawer-img"
                     onError={(e) => {
-                      e.target.src = "/logo_2.webp";
+                      e.target.src = "/logo_2.webp"; // Image de secours si l'URL API échoue
                     }}
                   />
 
@@ -59,11 +61,15 @@ const CartDrawer = ({ isOpen, onClose, cartItems, removeItem }) => {
                       {item.nom_produit || item.nom}
                     </h4>
 
-                    {/* RÉGLAGE FORMAT : On teste toutes les clés possibles ou valeur par défaut */}
+                    {/* --- LOGIQUE POIDS SÉCURISÉE --- */}
                     <p className="drawer-subdetail">
                       {item.isSubscription
                         ? item.format || "Abonnement"
-                        : item.poids_sachet || item.format || "Sachet 250g"}
+                        : item.poids_sachet === 1 ||
+                            item.poids_sachet === "1" ||
+                            item.format === "vendu à l'unité"
+                          ? "vendu à l'unité"
+                          : `sachet de ${item.poids_sachet || item.format || "250"}g`}
                     </p>
 
                     <p className="drawer-item-price">

@@ -35,23 +35,17 @@ const ProductCard = ({ produit, onQuickView }) => {
   }
 
   const handleAddToCart = () => {
-    const prixFinal = parseFloat(produit.prix_ttc) || 0;
     const currentCart = JSON.parse(localStorage.getItem("panier")) || [];
-
-    // FORCE l'extraction du nom de fichier si jamais produit.image est un objet
-    const nomImage =
-      typeof produit.image === "string" ? produit.image : produit.image_produit;
 
     const itemToAdd = {
       ...produit,
       id: produit.numero_produit,
       nom: produit.nom_produit,
-      prix: prixFinal,
-      // On envoie JUSTE le nom du fichier, sans l'URL de l'API
-      image: nomImage,
+      prix: parseFloat(produit.prix_ttc) || 0,
+      image: produit.image, // Juste le nom du fichier
       quantite: 1,
+      // ON UTILISE CETTE CLÉ UNIQUE :
       poids_sachet: poidsValeur,
-      format: poidsTexte, // On utilise ta variable poidsTexte qui contient "sachet de 250g"
       uniqueId: Date.now() + Math.random(),
     };
 
