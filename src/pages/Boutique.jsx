@@ -45,14 +45,22 @@ const Boutique = () => {
 
   const handleAddToCart = (product) => {
     const currentCart = JSON.parse(localStorage.getItem("panier")) || [];
+
+    // On crée un objet propre avec les clés attendues par le Panier
     const newProduct = {
-      ...product,
       uniqueId: Date.now() + Math.random(),
+      id: product.numero_produit || product.id,
+      nom: product.nom_produit, // On transforme nom_produit en nom
+      prix: product.prix_ttc, // On transforme prix_ttc en prix
+      format: product.format || "Sachet 250g",
+      quantite: product.quantite || 1,
+      image: product.image_produit || product.image,
     };
-    localStorage.setItem(
-      "panier",
-      JSON.stringify([...currentCart, newProduct]),
-    );
+
+    const updatedCart = [...currentCart, newProduct];
+    localStorage.setItem("panier", JSON.stringify(updatedCart));
+
+    // Notification pour les autres composants (Header, Drawer)
     window.dispatchEvent(new Event("cartUpdate"));
     window.dispatchEvent(new Event("openCartDrawer"));
   };
