@@ -1,11 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Components/CartDrawer.css"; // Import du style
+import "../styles/Components/CartDrawer.css";
 
 const CartDrawer = ({ isOpen, onClose, cartItems, removeItem }) => {
   const navigate = useNavigate();
 
   if (!isOpen) return null;
+
+  // Récupération de l'URL API pour les images
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const total = cartItems.reduce((acc, item) => {
     const prixUnitaire = Number(item.prix_ttc) || Number(item.prix) || 0;
@@ -22,40 +25,28 @@ const CartDrawer = ({ isOpen, onClose, cartItems, removeItem }) => {
           <h2 style={{ fontFamily: "Playfair Display", margin: 0 }}>
             Mon Panier
           </h2>
-          <button
-            onClick={onClose}
-            style={{
-              background: "none",
-              border: "none",
-              color: "var(--color-primary)",
-              fontSize: "20px",
-              cursor: "pointer",
-            }}
-          >
+          <button onClick={onClose} className="close-drawer-btn">
             ✕
           </button>
         </div>
 
         <div className="drawer-content">
           {cartItems.length === 0 ? (
-            <p
-              style={{
-                textAlign: "center",
-                marginTop: "50px",
-                color: "var(--color-text-light)",
-              }}
-            >
-              Votre panier est vide.
-            </p>
+            <p className="empty-cart-msg">Votre panier est vide.</p>
           ) : (
             cartItems.map((item) => {
               const prixAffichage =
                 Number(item.prix_ttc) || Number(item.prix) || 0;
 
+              // RÉGLAGE IMAGE : On vérifie si c'est déjà une URL ou juste un nom de fichier
+              const imgSource = item.image?.startsWith("http")
+                ? item.image
+                : `${apiUrl}/images/${item.image || "logo_2.webp"}`;
+
               return (
                 <div key={item.uniqueId} className="drawer-item">
                   <img
-                    src={item.image}
+                    src={imgSource}
                     alt={item.nom_produit || item.nom}
                     className="drawer-img"
                     onError={(e) => {
@@ -64,34 +55,18 @@ const CartDrawer = ({ isOpen, onClose, cartItems, removeItem }) => {
                   />
 
                   <div style={{ flex: 1 }}>
-                    <h4
-                      style={{
-                        margin: "0 0 5px 0",
-                        fontSize: "14px",
-                        color: "var(--color-text)",
-                      }}
-                    >
+                    <h4 className="drawer-item-title">
                       {item.nom_produit || item.nom}
                     </h4>
 
-                    {item.isSubscription ? (
-                      <p className="drawer-subdetail">{item.poids_sachet}</p>
-                    ) : (
-                      <p className="drawer-subdetail">
-                        {item.poids_sachet === 1
-                          ? "vendu à l'unité"
-                          : `sachet de ${item.poids_sachet}g`}
-                      </p>
-                    )}
+                    {/* RÉGLAGE FORMAT : On teste toutes les clés possibles ou valeur par défaut */}
+                    <p className="drawer-subdetail">
+                      {item.isSubscription
+                        ? item.format || "Abonnement"
+                        : item.poids_sachet || item.format || "Sachet 250g"}
+                    </p>
 
-                    <p
-                      style={{
-                        margin: 0,
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                        color: "var(--color-text)",
-                      }}
-                    >
+                    <p className="drawer-item-price">
                       {prixAffichage.toFixed(2)} € x {item.quantite}
                     </p>
                   </div>
