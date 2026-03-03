@@ -5,87 +5,59 @@ import "../styles/Pages/ChoixRelais.css";
 const ChoixRelais = () => {
   const navigate = useNavigate();
   const [selectedRelais, setSelectedRelais] = useState(null);
-  const [isWidgetLoaded, setIsWidgetLoaded] = useState(false);
 
   useEffect(() => {
-    // Initialisation sécurisée du Widget
-    const initMR = () => {
-      if (window.$ && window.$("#Zone_Widget").MR_ParcelShopPicker) {
-        window.$("#Zone_Widget").MR_ParcelShopPicker({
-          Target: "#Target_Result",
-          Brand: "BDTEST  ", // Sandbox
-          Country: "FR",
-          PostCode: "41000",
-          ColLivMod: "24R",
-          NbResults: "7",
-          Responsive: true, // Option importante si supportée
-          OnParcelShopSelected: (data) => {
-            setSelectedRelais(data);
-          },
-        });
-
-        // FIX : On attend que le DOM du widget soit injecté pour forcer le resize
-        setTimeout(() => {
-          setIsWidgetLoaded(true);
-          window.dispatchEvent(new Event("resize"));
-        }, 1000);
-      }
-    };
-
-    initMR();
+    // On s'assure que jQuery et le plugin sont chargés
+    if (window.$ && window.$("#Zone_Widget").MR_ParcelShopPicker) {
+      window.$("#Zone_Widget").MR_ParcelShopPicker({
+        Target: "#Target_Result",
+        Brand: "BDTEST  ", // Ton code enseigne
+        Country: "FR",
+        PostCode: "41000",
+        ColLivMod: "24R",
+        NbResults: "7",
+        Responsive: true, // ACTIVE LE MODE MOBILE NATIF
+        ShowResultsOnMap: true,
+        OnParcelShopSelected: (data) => {
+          setSelectedRelais(data);
+        },
+      });
+    }
   }, []);
 
   const handleConfirm = () => {
     if (selectedRelais) {
       localStorage.setItem("relais_selected", JSON.stringify(selectedRelais));
       navigate("/paiement");
-    } else {
-      alert("Veuillez sélectionner un point relais sur la carte.");
     }
   };
 
   return (
-    <div className="relais-page-container">
-      <div className="relais-header">
-        <h1 className="relais-title">Point Relais</h1>
-        <p className="relais-subtitle">Sélectionnez votre lieu de retrait</p>
+    <div className="relais-mobile-wrapper">
+      <div className="relais-header-simple">
+        <h1>Point Relais</h1>
+        <p>Sélectionnez votre lieu de retrait</p>
       </div>
 
-      {/* Conteneur principal du widget */}
-      <div className="widget-wrapper">
-        <div id="Zone_Widget"></div>
-      </div>
+      {/* Le conteneur du widget avec la classe responsive de MR */}
+      <div id="Zone_Widget" className="MRW-Widget"></div>
 
-      <div
-        className={`relais-selection-card ${selectedRelais ? "active" : ""}`}
-      >
+      <div className="relais-footer-sticky">
         {selectedRelais ? (
-          <div className="relais-details">
-            <p className="relais-name">📍 {selectedRelais.Nom}</p>
-            <p className="relais-address">
-              {selectedRelais.Adresse1}, {selectedRelais.Ville}
-            </p>
+          <div className="relais-info-mini">
+            <strong>{selectedRelais.Nom}</strong>
+            <p>{selectedRelais.Ville}</p>
           </div>
         ) : (
-          <p className="relais-placeholder">
-            Sélectionnez un point sur la carte pour continuer
-          </p>
+          <p className="relais-hint">Cliquez sur un point de la carte</p>
         )}
-      </div>
 
-      <div className="relais-footer">
         <button
           onClick={handleConfirm}
           className="btn-relais-next"
           disabled={!selectedRelais}
         >
-          CONFIRMER CE POINT
-        </button>
-        <button
-          onClick={() => navigate("/livraisonretrait")}
-          className="btn-relais-link"
-        >
-          Retour
+          Valider ce choix
         </button>
       </div>
     </div>
