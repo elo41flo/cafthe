@@ -1,6 +1,12 @@
 /* ==========================================================================
-   VARIABLES & RESET DE BASE
+   RESET & VARIABLES
    ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .home-container {
   width: 100%;
   overflow-x: hidden;
@@ -8,31 +14,38 @@
 }
 
 /* ==========================================================================
-   SECTION HERO (Desktop)
+   SECTION HERO - LE CENTRAGE ABSOLU
    ========================================================================== */
 .hero-section {
   position: relative;
-  height: 85vh; /* Hauteur immersive */
+  min-height: 85vh;
+  width: 100%;
   background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2070');
   background-size: cover;
   background-position: center;
+  
+  /* Centrage parfait du contenu */
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 40px 20px;
 }
 
 .hero-overlay {
-  background-color: rgba(255, 255, 255, 0.9); /* Blanc cassé pour le texte */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 60px;
   border-radius: 30px;
   text-align: center;
   max-width: 800px;
+  width: 100%;
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
   backdrop-filter: blur(5px);
+  /* Force le centrage interne des éléments */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* En Dark Mode, l'overlay s'adapte automatiquement grâce à tes variables */
 [data-theme='dark'] .hero-overlay {
   background-color: rgba(30, 30, 30, 0.85);
 }
@@ -43,6 +56,7 @@
   line-height: 1.2;
   color: var(--color-primary);
   margin-bottom: 20px;
+  width: 100%; /* Garantit le centrage du texte */
 }
 
 .hero-p {
@@ -77,10 +91,6 @@
   transition: transform 0.3s ease;
 }
 
-.engagement-item:hover .engagement-icon {
-  transform: scale(1.2);
-}
-
 /* ==========================================================================
    SECTION BOX
    ========================================================================== */
@@ -96,9 +106,7 @@
   gap: 80px;
 }
 
-.box-text-side {
-  flex: 1;
-}
+.box-text-side { flex: 1; }
 
 .box-title {
   font-family: 'Playfair Display', serif;
@@ -109,7 +117,6 @@
 
 .box-list {
   list-style: none;
-  padding: 0;
   margin-bottom: 40px;
 }
 
@@ -121,12 +128,6 @@
   gap: 10px;
 }
 
-.box-image-wrapper {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
 .box-img {
   width: 100%;
   max-width: 500px;
@@ -135,16 +136,10 @@
   transition: transform 0.5s ease;
 }
 
-.box-img:hover {
-  transform: scale(1.02);
-}
-
 /* ==========================================================================
    PÉPITES (Cards)
    ========================================================================== */
-.pepites-section {
-  padding: 100px 20px;
-}
+.pepites-section { padding: 100px 20px; }
 
 .pepites-main-title {
   text-align: center;
@@ -161,19 +156,6 @@
   gap: 30px;
 }
 
-.pepite-item {
-  width: 100%;
-}
-
-.pepite-subtitle {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-  color: var(--color-secondary);
-  font-weight: 700;
-}
-
 .pepite-card {
   background-color: var(--color-card);
   padding: 40px;
@@ -186,22 +168,12 @@
 }
 
 .pepite-card:hover {
-  transform: translateX(15px);
+  transform: translateX(10px);
   border-left: 8px solid var(--color-accent);
 }
 
-.pepite-name {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-}
-
-.pepite-text {
-  font-style: italic;
-  opacity: 0.7;
-}
-
 /* ==========================================================================
-   BOUTONS UNIFIÉS
+   BOUTONS
    ========================================================================== */
 .btn-home-main, .btn-home-box, .btn-pepite {
   display: inline-block;
@@ -210,230 +182,83 @@
   font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   cursor: pointer;
+  text-align: center;
 }
 
-.btn-home-main, .btn-pepite {
-  background-color: var(--color-secondary);
-  color: white !important;
-}
+.btn-home-main { background-color: var(--color-secondary); color: white !important; }
+.btn-home-box { background-color: var(--color-primary); color: white !important; }
 
-.btn-home-box {
-  background-color: var(--color-primary);
-  color: white !important;
-}
+/* ==========================================================================
+   RESPONSIVE TABLETTE (768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-h1 { font-size: 2.5rem; }
+  
+  .engagement-section { gap: 30px; flex-wrap: wrap; }
+  
+  .box-content {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 40px;
+  }
 
-.btn-home-main:hover, .btn-home-box:hover, .btn-pepite:hover {
-  background-color: var(--color-accent) !important;
-  color: var(--color-primary) !important;
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  .pepite-card {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
 }
 
 /* ==========================================================================
-   RESPONSIVE FINAL (Correction Image & Hero)
+   RESPONSIVE MOBILE CRITIQUE (320px - 360px)
    ========================================================================== */
-@media (max-width: 768px) {
-  
+@media (max-width: 360px) {
   .hero-section {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;    /* Centre horizontalement */
-    justify-content: center !important; /* Centre verticalement */
-    height: 80vh !important;           /* Donne assez de hauteur pour voir le centrage */
-    width: 100vw !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
+    min-height: 70vh;
+    padding: 20px 10px;
   }
 
-  /* La CARD (l'enfant) */
   .hero-overlay {
-    /* On annule les marges auto ou les positionnements fixes */
-    margin: 0 auto !important; 
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-
-    /* Style propre et clair */
-    background-color: var(--color-overlay) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    
-    padding: 40px 20px !important;
-    width: 100% !important;
-    max-width: 340px !important; /* Taille parfaite pour mobile */
-    border-radius: 25px !important;
-    box-shadow: var(--shadow-main) !important;
-    border: 1px solid var(--color-border) !important;
-    
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 15px !important;
+    padding: 30px 15px;
+    border-radius: 20px;
+    /* On s'assure que l'overlay lui-même est bien centré dans son parent */
+    margin: 0 auto;
   }
 
   .hero-h1 {
-    font-size: 1.8rem !important;
-    text-align: center !important;
-    margin: 0 0 10px 0 !important;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    text-align: center;
   }
 
   .hero-p {
-    font-size: 1rem !important;
-    text-align: center !important;
-    margin-bottom: 20px !important;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    text-align: center;
   }
 
   .btn-home-main {
-    width: 100% !important;
-    margin: 0 !important;
-  }
-
-  .engagement-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap; /* Permet de passer à la ligne sur petit mobile */
-    gap: 20px;
-    padding: 40px 10px;
-}
-
-.engagement-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    flex: 1;
-    min-width: 100px;
-}
-
-.engagement-icon {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    display: block; /* Force l'icône à être seule sur sa ligne */
-}
-
-  .box-content {
-    flex-direction: column-reverse;
-    gap: 40px;
-    text-align: center;
-  }
-
-  .box-title {
-    font-size: 2.2rem;
-  }
-
-  .box-list {
-    display: inline-block;
-    text-align: left;
-  }
-
-  .box-img {
-  width: 100%;
-  max-width: 500px;
-  height: auto; /* Garde les proportions */
-  min-height: 200px; /* Force une hauteur minimum pour le test */
-  display: block; /* Évite les espaces vides en dessous */
-  border-radius: 40px;
-  box-shadow: var(--shadow-main);
-  transition: transform 0.5s ease;
-  background-color: #f0f0f0; /* Si l'image ne charge pas, tu verras un bloc gris */
-  }
-
-  .pepite-card {
-    flex-direction: column;
-    text-align: center;
-    gap: 25px;
-  }
-
-  .btn-home-main, .btn-home-box, .btn-pepite {
     width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-/* ==========================================================================
-   OPTIMISATION SPÉCIFIQUE SMARTPHONES ÉTROITS (320px)
-   ========================================================================== */
-@media (max-width: 360px) {
-  
-  /* --- HERO SECTION --- */
-  .hero-section {
-    height: auto !important;
-    padding: 60px 15px !important; /* On réduit pour gagner de la place */
+    padding: 15px 20px;
+    font-size: 0.9rem;
   }
 
-  .hero-overlay {
-    padding: 25px 15px !important; /* Padding interne réduit */
-    max-width: 280px !important;   /* Largeur adaptée aux 320px */
-  }
-
-  .hero-h1 {
-    font-size: 1.5rem !important;  /* Plus petit pour éviter les coupures de mots */
-    line-height: 1.1 !important;
-  }
-
-  .hero-p {
-    font-size: 0.9rem !important;
-    margin-bottom: 15px !important;
-  }
-
-  /* --- ENGAGEMENTS --- */
   .engagement-section {
-    gap: 15px !important;
-    padding: 30px 5px !important;
+    padding: 40px 10px;
+    gap: 20px;
   }
 
-  .engagement-icon {
-    font-size: 1.8rem !important; /* Icônes moins imposantes */
-  }
+  .engagement-icon { font-size: 2rem; }
 
-  .engagement-item span {
-    font-size: 0.8rem !important; /* Texte des engagements plus petit */
-  }
+  .box-title { font-size: 1.8rem; }
+  
+  .box-img { border-radius: 20px; }
 
-  /* --- SECTION BOX --- */
-  .box-section {
-    padding: 50px 15px !important;
-  }
-
-  .box-title {
-    font-size: 1.8rem !important;
-  }
-
-  .box-list li {
-    font-size: 0.9rem !important;
-    gap: 8px !important;
-  }
-
-  .box-img {
-    border-radius: 20px !important; /* Moins d'arrondi sur petit écran */
-  }
-
-  /* --- PÉPITES --- */
-  .pepites-section {
-    padding: 50px 15px !important;
-  }
-
-  .pepites-main-title {
-    font-size: 1.8rem !important;
-    margin-bottom: 30px !important;
-  }
-
-  .pepite-card {
-    padding: 20px !important; /* Moins de vide interne */
-  }
-
-  .pepite-name {
-    font-size: 1.4rem !important;
-  }
-
-  /* --- BOUTONS --- */
-  .btn-home-main, .btn-home-box, .btn-pepite {
-    padding: 14px 20px !important; /* Boutons moins hauts */
-    font-size: 0.8rem !important;
-  }
+  .pepites-main-title { font-size: 1.8rem; margin-bottom: 30px; }
+  
+  .pepite-card { padding: 25px 15px; }
+  
+  .pepite-name { font-size: 1.4rem; }
 }
