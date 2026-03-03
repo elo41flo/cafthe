@@ -119,6 +119,7 @@ const NavBar = () => {
           <Link to="/contact" onClick={toggleMenu} className="nav-link-item">
             Aide & Contact
           </Link>
+          <br />
         </nav>
 
         <div className="sidebar-auth-status">
