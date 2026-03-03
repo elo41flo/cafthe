@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import "../styles/Components/NavBar.css"; // Import du style
+import "../styles/Components/NavBar.css";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -64,11 +64,7 @@ const NavBar = () => {
     <>
       <header className="header-main">
         <Link to="/">
-          <img
-            src="/logo_2.webp" // Le slash "/" au début est CRUCIAL
-            alt="Caf'Thé Logo"
-            style={{ height: "80px" }}
-          />
+          <img src="/logo_2.webp" alt="Caf'Thé Logo" className="logo-img" />
         </Link>
 
         <button onClick={toggleMenu} className="menu-toggle-btn">
@@ -76,38 +72,38 @@ const NavBar = () => {
         </button>
       </header>
 
+      {/* Overlay */}
       {isOpen && <div onClick={toggleMenu} className="sidebar-overlay" />}
 
-      <div className="sidebar-menu" style={{ right: isOpen ? "0" : "-100%" }}>
+      {/* Menu Latéral */}
+      <div className={`sidebar-menu ${isOpen ? "open" : ""}`}>
         <button onClick={toggleMenu} className="close-sidebar-btn">
           ✕
         </button>
 
         <div className="sidebar-icons-row">
-          <Link
-            to="/panier"
-            onClick={toggleMenu}
-            className="nav-link-item"
-            style={{ position: "relative", fontSize: "2rem" }}
-          >
-            🛒{" "}
+          {/* PANIER avec Badge */}
+          <Link to="/panier" onClick={toggleMenu} className="sidebar-cart-link">
+            <span style={{ fontSize: "1.2rem" }}>🛒</span>
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </Link>
 
+          {/* COMPTE CLIENT */}
           <Link
             to={isAuthenticated ? "/mon-compte" : "/login"}
             onClick={toggleMenu}
-            style={{ fontSize: "2rem", textDecoration: "none" }}
+            className="sidebar-cart-link"
           >
-            👤
+            <span style={{ fontSize: "1.2rem" }}>👤</span>
           </Link>
 
+          {/* THEME TOGGLE */}
           <button onClick={toggleTheme} className="theme-toggle-btn">
             {isDarkMode ? "☀️" : "🌙"}
           </button>
         </div>
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
+        <nav className="sidebar-nav">
           <Link to="/" onClick={toggleMenu} className="nav-link-item">
             Accueil
           </Link>
@@ -124,15 +120,20 @@ const NavBar = () => {
             Aide & Contact
           </Link>
         </nav>
-        <br />
-        <div className="sidebar-status-section">
+
+        <div className="sidebar-auth-status">
           {isAuthenticated ? (
             <div>
-              <p style={{ fontFamily: "Montserrat", marginBottom: "15px" }}>
+              <p className="status-text">
                 Connecté :{" "}
-                <strong>{user?.prenom_client || user?.prenom || "Ami"}</strong>
+                <span className="status-name">
+                  {user?.prenom_client || user?.prenom || "Ami"}
+                </span>
               </p>
-              <button onClick={handleLogout} className="btn-logout">
+              <button
+                onClick={handleLogout}
+                className="btn-auth-sidebar btn-logout-sidebar"
+              >
                 SE DÉCONNECTER
               </button>
             </div>
@@ -140,7 +141,7 @@ const NavBar = () => {
             <Link
               to="/login"
               onClick={toggleMenu}
-              className="btn-login-sidebar"
+              className="btn-auth-sidebar btn-login-sidebar"
             >
               SE CONNECTER
             </Link>
@@ -149,6 +150,6 @@ const NavBar = () => {
       </div>
     </>
   );
-};
+}; // <-- L'accolade qui manquait était ici !
 
 export default NavBar;

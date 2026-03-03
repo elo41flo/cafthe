@@ -1,18 +1,22 @@
 /* ==========================================================================
-   HEADER PRINCIPAL
+   1. HEADER PRINCIPAL
    ========================================================================== */
 .header-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 40px;
+  padding: 0 40px;
   background-color: var(--color-white);
   position: sticky;
   top: 0;
   z-index: 1000;
   height: 100px;
   border-bottom: 1px solid var(--color-border);
-  transition: background-color 0.3s ease;
+}
+
+.logo-img {
+  height: 60px;
+  width: auto;
 }
 
 .menu-toggle-btn {
@@ -21,25 +25,20 @@
   border: none;
   padding: 10px 25px;
   border-radius: 20px;
-  font-size: 1.2rem;
   font-family: 'Playfair Display', serif;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
 }
 
 /* ==========================================================================
-   SIDEBAR (MENU LATÉRAL)
+   2. SIDEBAR ESTRUCTURE
    ========================================================================== */
 .sidebar-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.4);
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
   z-index: 1500;
-  backdrop-filter: blur(2px);
 }
 
 .sidebar-menu {
@@ -47,15 +46,14 @@
   top: 0;
   right: -100%;
   width: 80%;
-  max-width: 400px;
+  max-width: 350px;
   height: 100vh;
-  background-color: var(--color-card);
-  transition: right 0.4s cubic-bezier(0.77,0,0.175,1);
-  z-index: 2000;
-  padding: 40px;
+  background: var(--color-card);
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+  transition: right 0.4s ease-in-out;
+  z-index: 2000;
 }
 
 .sidebar-menu.open { right: 0; }
@@ -64,124 +62,98 @@
   align-self: flex-end;
   background: none;
   border: none;
-  font-size: 2.5rem;
-  cursor: pointer;
-  margin-bottom: 20px;
+  font-size: 2rem;
   color: var(--color-text);
+  cursor: pointer;
 }
 
-/* --- SECTION STATUS & AUTH --- */
-.sidebar-auth-status {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--color-border);
+/* ==========================================================================
+   3. LES ICONES (PANIER, COMPTE, THEME)
+   ========================================================================== */
+.sidebar-icons-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0 30px;
 }
 
-.status-name {
-  font-weight: 700;
-  color: var(--color-secondary);
+/* Le cercle universel pour 🛒, 👤 et 🌙 */
+.sidebar-cart-link, 
+.theme-toggle-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-border);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Important pour éviter les décalages d'émojis */
 }
 
+/* Si tu utilises des émojis dans le JSX */
+.sidebar-cart-link span, 
+.theme-toggle-btn {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* Si tu utilises des images (comme pour le logo ou une icône png) */
+.sidebar-cart-link img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   4. NAVIGATION & BOUTONS
+   ========================================================================== */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  margin-bottom: 40px;
+  gap: 20px;
 }
 
 .nav-link-item {
   text-decoration: none;
   color: var(--color-text);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  transition: 0.3s;
 }
 
-/* ==========================================================================
-   L'ICÔNE PANIER & BOUTON THÈME (LE FIX)
-   ========================================================================== */
-.sidebar-icons-row {
-  display: flex;
-  align-items: center; /* Aligne lune et panier sur la même ligne */
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-/* Style commun pour le bouton Lune et le lien Panier */
-.theme-toggle-btn, .sidebar-cart-link {
-  cursor: pointer;
-  background-color: var(--color-border);
-  border: none;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: 0.3s;
-  text-decoration: none;
-}
-
-.theme-toggle-btn { font-size: 20px; }
-
-/* On cible l'image du panier à l'intérieur du lien */
-.sidebar-cart-link img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-
-/* Inversion de couleur auto pour l'icône panier en Dark Mode */
-[data-theme='dark'] .sidebar-cart-link img {
-  filter: invert(1);
-}
-
-.theme-toggle-btn:hover, .sidebar-cart-link:hover {
-  background-color: var(--color-accent);
-  transform: scale(1.1);
-}
-
-/* --- BOUTONS AUTH --- */
 .btn-auth-sidebar {
+  margin-top: auto;
+  padding: 15px;
   text-align: center;
-  padding: 14px;
   border-radius: 12px;
-  font-weight: 700;
+  font-weight: bold;
   text-decoration: none;
-  display: block;
-  transition: 0.3s;
 }
 
-.btn-login-sidebar { background-color: var(--color-secondary); color: white !important; }
-.btn-logout-sidebar { background-color: #1a1a1a; color: white !important; margin-top: auto; }
+.btn-login-sidebar { background: var(--color-secondary); color: white !important; }
+.btn-logout-sidebar { background: #1a1a1a; color: white !important; }
 
 /* ==========================================================================
-   RESPONSIVE SMARTPHONES (320px - 360px)
+   5. RESPONSIVE 320px (LE VRAI FIX)
    ========================================================================== */
 @media (max-width: 360px) {
-  .header-main {
-    padding: 0 15px;
-    height: 80px;
+  .header-main { height: 70px; padding: 0 15px; }
+  .logo-img { height: 40px; }
+  .menu-toggle-btn { padding: 6px 12px; font-size: 0.9rem; }
+
+  .sidebar-menu { width: 90%; padding: 20px; }
+  
+  /* On réduit la taille des cercles pour que les 3 tiennent sur une ligne de 320px */
+  .sidebar-cart-link, 
+  .theme-toggle-btn {
+    width: 42px;
+    height: 42px;
   }
-
-  .header-main img { height: 45px; }
-
-  .menu-toggle-btn {
-    padding: 8px 15px;
-    font-size: 0.95rem;
-  }
-
-  .sidebar-menu {
-    width: 85%;
-    padding: 30px 20px;
-  }
-
-  .nav-link-item { font-size: 1.15rem; }
-
-  /* Ajustement icônes pour 320px */
-  .theme-toggle-btn, .sidebar-cart-link {
-    width: 40px;
-    height: 40px;
+  
+  .sidebar-cart-link span, 
+  .theme-toggle-btn {
+    font-size: 1.1rem;
   }
 }
