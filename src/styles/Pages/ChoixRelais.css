@@ -1,76 +1,114 @@
-/* src/pages/ChoixRelais.css */
-
+/* ==========================================================================
+   BASE DU CONTENEUR
+   ========================================================================== */
 .relais-container {
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box; /* Crucial pour éviter le débordement horizontal */
 }
 
 .relais-title {
   font-family: 'Playfair Display', serif;
   color: var(--color-primary);
-  font-size: 32px;
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
-.relais-intro {
-  margin-bottom: 20px;
-  color: var(--color-text);
-}
-
-/* Zone du Widget Mondial Relay */
+/* ==========================================================================
+   WIDGET MONDIAL RELAY (FIX RESPONSIVE)
+   ========================================================================== */
 #Zone_Widget {
   margin-bottom: 20px;
-  border-radius: var(--radius-md);
-  overflow: hidden; /* Pour forcer les coins arrondis sur le widget */
+  border-radius: 15px;
+  overflow: hidden;
   border: 1px solid var(--color-border);
+  width: 100% !important; /* Force le widget à ne pas dépasser du parent */
+  min-height: 400px;      /* Sécurité pour le chargement */
 }
 
-/* Encadré de sélection */
+/* Ciblage spécifique pour forcer les éléments internes du widget (jQuery) */
+#Zone_Widget iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* ==========================================================================
+   SELECTION & BOUTONS
+   ========================================================================== */
 .selection-box {
   padding: 15px;
-  background-color: var(--color-active-bg);
+  background-color: var(--color-card);
   border: 1px solid var(--color-secondary);
-  border-radius: var(--radius-md);
-  margin-top: 20px;
-  animation: fadeIn 0.3s ease;
+  border-radius: 12px;
+  margin: 20px 0;
+  text-align: left; /* Plus lisible sur mobile */
 }
 
-.selection-box p {
-  margin: 5px 0;
-}
-
-/* Boutons */
 .relais-btn-group {
   display: flex;
-  gap: 20px;
-  marginTop: 30px;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn-relais-confirm, .btn-relais-back {
+  padding: 15px;
+  border-radius: 50px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
 .btn-relais-confirm {
   flex: 2;
   background-color: var(--color-secondary);
   color: white;
-  padding: 15px;
-  border-radius: var(--radius-btn);
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 .btn-relais-back {
   flex: 1;
-  background-color: var(--color-text-light);
+  background-color: #666;
   color: white;
-  padding: 15px;
-  border-radius: var(--radius-btn);
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
 }
 
-.btn-relais-confirm:hover, .btn-relais-back:hover {
-  opacity: 0.9;
+/* ==========================================================================
+   RESPONSIVE MOBILE (320px - 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .relais-container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .relais-title {
+    font-size: 1.5rem;
+  }
+
+  /* On passe les boutons l'un sur l'autre pour 320px */
+  .relais-btn-group {
+    flex-direction: column; 
+    gap: 10px;
+  }
+
+  .btn-relais-confirm, .btn-relais-back {
+    width: 100%;
+    order: 1; /* Permet de gérer l'ordre visuel */
+  }
+
+  .btn-relais-back {
+    order: 2; /* Le bouton retour passe en dessous */
+    background-color: transparent;
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  /* Ajustement du widget pour les petits écrans */
+  #Zone_Widget {
+    min-height: 500px; /* On donne plus de hauteur car le widget s'étire en longueur */
+  }
 }
