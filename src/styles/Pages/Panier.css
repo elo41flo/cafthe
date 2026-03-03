@@ -1,161 +1,218 @@
-/* src/pages/Panier.css */
-
+/* ==========================================================================
+   STRUCTURE GÉNÉRALE
+   ========================================================================== */
 .panier-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 40px 20px;
   font-family: 'Montserrat', sans-serif;
 }
 
 .panier-main-title {
   font-family: 'Playfair Display', serif;
-  font-size: 42px;
+  font-size: 2.5rem;
   text-align: center;
+  margin-bottom: 40px;
   color: var(--color-text);
 }
 
-.panier-section {
-  margin-top: 50px;
-}
-
-.panier-section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid var(--color-secondary);
-  padding-bottom: 10px;
-  color: var(--color-primary);
-}
-
-/* Table Header */
+/* ==========================================================================
+   TABLEAU DES PRODUITS
+   ========================================================================== */
 .panier-table-header {
   display: flex;
-  color: var(--color-text-light);
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px;
+  align-items: center;
+  padding: 15px;
+  background: var(--color-bg-alt);
+  border-radius: 8px;
+  font-weight: 700;
   text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-bottom: 10px;
 }
 
-/* Ligne Produit */
 .panier-product-row {
   display: flex;
   align-items: center;
-  padding: 20px 10px;
+  padding: 20px 15px;
   border-bottom: 1px solid var(--color-border);
-  transition: background-color 0.2s;
+  gap: 15px;
+  transition: background 0.3s ease;
 }
 
 .panier-product-row:hover {
   background-color: var(--color-active-bg);
 }
 
+/* --- LE FIX DE L'IMAGE --- */
+.panier-item-info-zone {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.panier-item-img {
+  width: 80px;            /* Taille fixe */
+  height: 80px;           /* Taille fixe */
+  object-fit: cover;      /* Coupe proprement sans déformer */
+  border-radius: 12px;
+  flex-shrink: 0;         /* Empêche l'image de s'écraser */
+  border: 1px solid var(--color-border);
+}
+
 .panier-product-name {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.1rem;
-  display: block;
-  color: var(--color-text);
+  color: var(--color-primary);
 }
 
 .panier-format-tag {
-  display: block;
-  font-size: 13px;
+  font-size: 0.85rem;
   color: var(--color-secondary);
   font-style: italic;
-  margin-top: 5px;
 }
 
-/* Contrôles Quantité */
+/* ==========================================================================
+   CONTRÔLES & PRIX
+   ========================================================================== */
+.panier-unit-price {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+}
+
 .panier-qty-controls {
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
 }
 
 .panier-qty-btn {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: none;
-  background-color: var(--color-border);
+  border: 1px solid var(--color-border);
+  background: white;
   cursor: pointer;
-  font-size: 18px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  transition: all 0.2s;
-  color: var(--color-text);
+  justify-content: center;
+  transition: 0.3s;
 }
 
 .panier-qty-btn:hover {
-  background-color: var(--color-secondary);
+  background: var(--color-secondary);
   color: white;
+  border-color: var(--color-secondary);
 }
 
 .panier-delete-btn {
-  width: 40px;
+  color: #ff4d4d;
   background: none;
   border: none;
-  color: #ccc;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: color 0.3s;
+  padding: 10px;
+  transition: transform 0.2s;
 }
 
 .panier-delete-btn:hover {
-  color: var(--color-promo);
+  transform: scale(1.2);
 }
 
-/* Boîte de Règlement */
+/* ==========================================================================
+   RÈGLEMENT (RÉCAPITULATIF)
+   ========================================================================== */
 .panier-reglement-box {
-  background-color: var(--color-white);
+  background: var(--color-card);
   padding: 30px;
-  border-radius: var(--radius-md);
+  border-radius: 20px;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-main);
+  margin-top: 30px;
 }
 
 .panier-flex-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 15px;
-  color: var(--color-text);
+  margin-bottom: 15px;
+}
+
+.panier-hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 20px 0;
 }
 
 .panier-total-row {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
-  font-size: 1.4rem;
-  color: var(--color-text);
-  margin-top: 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
 }
 
 .panier-btn-final {
   width: 100%;
-  background-color: var(--color-secondary);
-  color: white;
-  border: none;
-  border-radius: var(--radius-btn);
+  margin-top: 30px;
   padding: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
+  border-radius: 50px;
+  border: none;
+  background: var(--color-secondary);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
   cursor: pointer;
-  margin-top: 40px;
-  box-shadow: 0 5px 15px rgba(151,175,110,0.3);
-  transition: transform 0.2s, opacity 0.2s;
+  transition: 0.3s;
 }
 
 .panier-btn-final:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
+  background: var(--color-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.panier-empty-text {
-  text-align: center;
-  padding: 50px;
-  color: var(--color-text-light);
+/* ==========================================================================
+   RESPONSIVE MOBILE (320px - 480px)
+   ========================================================================== */
+@media (max-width: 600px) {
+  .panier-table-header { display: none; } /* On cache l'en-tête sur mobile */
+
+  .panier-product-row {
+    flex-direction: column; /* On empile les éléments */
+    align-items: flex-start;
+    padding: 20px 0;
+  }
+
+  .panier-item-info-zone {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .panier-item-img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .panier-unit-price, .panier-qty-controls {
+    width: 100%;
+    justify-content: space-between;
+    flex: none;
+    margin-bottom: 10px;
+  }
+
+  .panier-unit-price::before {
+    content: "Prix : ";
+    font-weight: 400;
+  }
+
+  .panier-qty-controls::before {
+    content: "Quantité : ";
+    font-weight: 400;
+  }
 }
