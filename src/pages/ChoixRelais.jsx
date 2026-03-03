@@ -5,9 +5,11 @@ import "../styles/Pages/ChoixRelais.css";
 const ChoixRelais = () => {
   const navigate = useNavigate();
   const [selectedRelais, setSelectedRelais] = useState(null);
+  const [isWidgetLoaded, setIsWidgetLoaded] = useState(false);
 
   useEffect(() => {
-    const initWidget = () => {
+    // Initialisation sécurisée du Widget
+    const initMR = () => {
       if (window.$ && window.$("#Zone_Widget").MR_ParcelShopPicker) {
         window.$("#Zone_Widget").MR_ParcelShopPicker({
           Target: "#Target_Result",
@@ -16,19 +18,21 @@ const ChoixRelais = () => {
           PostCode: "41000",
           ColLivMod: "24R",
           NbResults: "7",
+          Responsive: true, // Option importante si supportée
           OnParcelShopSelected: (data) => {
             setSelectedRelais(data);
           },
         });
 
-        // Ce timer force la carte à apparaître si elle reste grise/blanche
+        // FIX : On attend que le DOM du widget soit injecté pour forcer le resize
         setTimeout(() => {
+          setIsWidgetLoaded(true);
           window.dispatchEvent(new Event("resize"));
         }, 1000);
       }
     };
 
-    initWidget();
+    initMR();
   }, []);
 
   const handleConfirm = () => {
@@ -36,40 +40,53 @@ const ChoixRelais = () => {
       localStorage.setItem("relais_selected", JSON.stringify(selectedRelais));
       navigate("/paiement");
     } else {
-      alert("Veuillez sélectionner un point relais.");
+      alert("Veuillez sélectionner un point relais sur la carte.");
     }
   };
 
   return (
-    <div className="relais-page-wrapper">
-      <div className="relais-container">
+    <div className="relais-page-container">
+      <div className="relais-header">
         <h1 className="relais-title">Point Relais</h1>
+        <p className="relais-subtitle">Sélectionnez votre lieu de retrait</p>
+      </div>
 
+      {/* Conteneur principal du widget */}
+      <div className="widget-wrapper">
         <div id="Zone_Widget"></div>
+      </div>
 
-        <div className={`selection-status ${selectedRelais ? "selected" : ""}`}>
-          {selectedRelais ? (
-            <p>
-              📍 <strong>{selectedRelais.Nom}</strong>
-              <br />
-              {selectedRelais.Ville}
+      <div
+        className={`relais-selection-card ${selectedRelais ? "active" : ""}`}
+      >
+        {selectedRelais ? (
+          <div className="relais-details">
+            <p className="relais-name">📍 {selectedRelais.Nom}</p>
+            <p className="relais-address">
+              {selectedRelais.Adresse1}, {selectedRelais.Ville}
             </p>
-          ) : (
-            <p>Veuillez choisir un point sur la carte</p>
-          )}
-        </div>
+          </div>
+        ) : (
+          <p className="relais-placeholder">
+            Sélectionnez un point sur la carte pour continuer
+          </p>
+        )}
+      </div>
 
-        <div className="relais-footer-actions">
-          <button onClick={handleConfirm} className="btn-main-relais">
-            Confirmer ce choix
-          </button>
-          <button
-            onClick={() => navigate("/livraisonretrait")}
-            className="btn-link-relais"
-          >
-            Retour
-          </button>
-        </div>
+      <div className="relais-footer">
+        <button
+          onClick={handleConfirm}
+          className="btn-relais-next"
+          disabled={!selectedRelais}
+        >
+          CONFIRMER CE POINT
+        </button>
+        <button
+          onClick={() => navigate("/livraisonretrait")}
+          className="btn-relais-link"
+        >
+          Retour
+        </button>
       </div>
     </div>
   );
