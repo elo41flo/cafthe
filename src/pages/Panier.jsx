@@ -5,13 +5,18 @@ import "../styles/Pages/Panier.css";
 const Panier = () => {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
-
-  // URL de l'API pour récupérer les images
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     const data = localStorage.getItem("panier");
-    if (data) setItems(JSON.parse(data));
+    if (data) {
+      try {
+        setItems(JSON.parse(data));
+      } catch (e) {
+        console.error("Erreur lecture panier", e);
+        setItems([]);
+      }
+    }
   }, []);
 
   const saveAndSync = (nouveauPanier) => {
@@ -23,8 +28,9 @@ const Panier = () => {
   const updateQty = (uniqueId, delta) => {
     const nouveauPanier = items.map((item) => {
       if (item.uniqueId === uniqueId) {
-        const actuelle = Number(item.quantite);
-        return { ...item, quantite: Math.max(1, actuelle + delta) };
+        const actuelle = parseInt(item.quantite) || 1;
+        const nouvelle = actuelle + delta;
+        return { ...item, quantite: nouvelle < 1 ? 1 : nouvelle };
       }
       return item;
     });
@@ -36,34 +42,31 @@ const Panier = () => {
     saveAndSync(nouveauPanier);
   };
 
-  /**
-   * LOGIQUE DE VALIDATION DU TUNNEL
-   * Vérifie si l'utilisateur est connecté avant d'aller plus loin
-   */
   const handleValidation = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const userData = localStorage.getItem("user");
+    // On vérifie l'existence ET la validité du JSON
+    const user = userData ? JSON.parse(userData) : null;
 
     if (user && user.token) {
-      // Cas 1 : Connecté -> Direction livraison
       navigate("/livraisonretrait");
     } else {
-      // Cas 2 : Non connecté -> Direction Register/Login
-      // On passe l'URL de retour en paramètre pour automatiser la redirection après login
+      // Conseil : redirige vers Login, mais assure-toi que ton Login
+      // transmet le paramètre au Register si besoin.
       navigate("/login?redirect=livraisonretrait");
     }
   };
 
-  // Calculs financiers
-  const totalTTC = items.reduce(
-    (acc, item) =>
-      acc + (Number(item.prix) || 0) * (Number(item.quantite) || 0),
-    0,
-  );
+  // Calculs avec sécurité (fallback à 0 pour éviter le NaN)
+  const totalTTC = items.reduce((acc, item) => {
+    const p = parseFloat(item.prix) || 0;
+    const q = parseInt(item.quantite) || 0;
+    return acc + p * q;
+  }, 0);
 
   const totalHT = totalTTC / 1.2;
   const tva = totalTTC - totalHT;
   const livraisonOfferte = totalTTC >= 45;
-  const fraisPort = livraisonOfferte ? 0 : 4.9;
+  const fraisPort = items.length > 0 && !livraisonOfferte ? 4.9 : 0;
 
   return (
     <div className="panier-container">
@@ -72,63 +75,70 @@ const Panier = () => {
       <section className="panier-section fade-in">
         <h2 className="panier-section-title">Récapitulatif des articles</h2>
 
-        <div className="panier-table-header">
-          <span style={{ flex: 3 }}>Produit</span>
-          <span style={{ flex: 1, textAlign: "center" }}>Prix Unitaire</span>
-          <span style={{ flex: 1, textAlign: "center" }}>Quantité</span>
-          <span style={{ width: "40px" }}></span>
-        </div>
-
         {items.length === 0 ? (
-          <p className="panier-empty-text">Votre panier est vide.</p>
+          <div className="panier-empty-container">
+            <p className="panier-empty-text">Votre panier est vide.</p>
+            <button
+              onClick={() => navigate("/boutique")}
+              className="btn-return-shop"
+            >
+              Retour à la boutique
+            </button>
+          </div>
         ) : (
-          items.map((item) => (
-            <div key={item.uniqueId} className="panier-product-row">
-              <div className="panier-item-info-zone">
-                <img
-                  src={`${apiUrl}/images/${item.image || "default.webp"}`}
-                  alt={item.nom}
-                  className="panier-item-img"
-                />
-                <div className="panier-item-text">
-                  <span className="panier-product-name">{item.nom}</span>
-                  <span className="panier-format-tag">
-                    Format : {item.format || "Sachet 250g"}
-                  </span>
-                </div>
-              </div>
-
-              <span className="panier-unit-price">
-                {Number(item.prix).toFixed(2)}€
-              </span>
-
-              <div className="panier-qty-controls">
-                <button
-                  onClick={() => updateQty(item.uniqueId, -1)}
-                  className="panier-qty-btn"
-                >
-                  {" "}
-                  –{" "}
-                </button>
-                <span className="panier-qty-value">{item.quantite}</span>
-                <button
-                  onClick={() => updateQty(item.uniqueId, 1)}
-                  className="panier-qty-btn"
-                >
-                  {" "}
-                  +{" "}
-                </button>
-              </div>
-
-              <button
-                onClick={() => removeItem(item.uniqueId)}
-                className="panier-delete-btn"
-                title="Supprimer l'article"
-              >
-                ✕
-              </button>
+          <>
+            <div className="panier-table-header">
+              <span style={{ flex: 3 }}>Produit</span>
+              <span style={{ flex: 1, textAlign: "center" }}>Prix</span>
+              <span style={{ flex: 1, textAlign: "center" }}>Qté</span>
+              <span style={{ width: "40px" }}></span>
             </div>
-          ))
+
+            {items.map((item) => (
+              <div key={item.uniqueId} className="panier-product-row">
+                <div className="panier-item-info-zone">
+                  <img
+                    src={`${apiUrl}/images/${item.image || "default.webp"}`}
+                    alt={item.nom}
+                    className="panier-item-img"
+                  />
+                  <div className="panier-item-text">
+                    <span className="panier-product-name">{item.nom}</span>
+                    <span className="panier-format-tag">
+                      {item.format || "Sachet 250g"}
+                    </span>
+                  </div>
+                </div>
+
+                <span className="panier-unit-price">
+                  {(parseFloat(item.prix) || 0).toFixed(2)}€
+                </span>
+
+                <div className="panier-qty-controls">
+                  <button
+                    onClick={() => updateQty(item.uniqueId, -1)}
+                    className="panier-qty-btn"
+                  >
+                    –
+                  </button>
+                  <span className="panier-qty-value">{item.quantite}</span>
+                  <button
+                    onClick={() => updateQty(item.uniqueId, 1)}
+                    className="panier-qty-btn"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => removeItem(item.uniqueId)}
+                  className="panier-delete-btn"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </>
         )}
       </section>
 
@@ -147,7 +157,9 @@ const Panier = () => {
               </div>
               <div className="panier-flex-row">
                 <span>Frais de livraison :</span>
-                <span className="panier-shipping-cost">
+                <span
+                  className={`panier-shipping-cost ${livraisonOfferte ? "free" : ""}`}
+                >
                   {livraisonOfferte ? "OFFERT" : "4.90€"}
                 </span>
               </div>
