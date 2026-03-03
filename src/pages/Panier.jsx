@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Pages/Panier.css"; // Import du style
+import "../styles/Pages/Panier.css";
 
 const Panier = () => {
   const [items, setItems] = useState([]);
@@ -17,7 +17,6 @@ const Panier = () => {
   const saveAndSync = (nouveauPanier) => {
     setItems(nouveauPanier);
     localStorage.setItem("panier", JSON.stringify(nouveauPanier));
-    // Notifier les autres composants (ex: le compteur du Header)
     window.dispatchEvent(new Event("cartUpdate"));
   };
 
@@ -35,6 +34,23 @@ const Panier = () => {
   const removeItem = (uniqueId) => {
     const nouveauPanier = items.filter((item) => item.uniqueId !== uniqueId);
     saveAndSync(nouveauPanier);
+  };
+
+  /**
+   * LOGIQUE DE VALIDATION DU TUNNEL
+   * Vérifie si l'utilisateur est connecté avant d'aller plus loin
+   */
+  const handleValidation = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user && user.token) {
+      // Cas 1 : Connecté -> Direction livraison
+      navigate("/livraisonretrait");
+    } else {
+      // Cas 2 : Non connecté -> Direction Register/Login
+      // On passe l'URL de retour en paramètre pour automatiser la redirection après login
+      navigate("/login?redirect=livraisonretrait");
+    }
   };
 
   // Calculs financiers
@@ -68,36 +84,21 @@ const Panier = () => {
         ) : (
           items.map((item) => (
             <div key={item.uniqueId} className="panier-product-row">
-              {/* Zone Produit avec Image et Nom */}
-              <div
-                style={{
-                  flex: 3,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "15px",
-                }}
-              >
+              <div className="panier-item-info-zone">
                 <img
                   src={`${apiUrl}/images/${item.image || "default.webp"}`}
                   alt={item.nom}
                   className="panier-item-img"
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                  }}
                 />
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="panier-item-text">
                   <span className="panier-product-name">{item.nom}</span>
-                  {/* Gestion du format pour éviter le "undefined" */}
                   <span className="panier-format-tag">
-                    Format : {item.format ? item.format : "Sachet 250g"}
+                    Format : {item.format || "Sachet 250g"}
                   </span>
                 </div>
               </div>
 
-              <span style={{ flex: 1, textAlign: "center" }}>
+              <span className="panier-unit-price">
                 {Number(item.prix).toFixed(2)}€
               </span>
 
@@ -106,22 +107,16 @@ const Panier = () => {
                   onClick={() => updateQty(item.uniqueId, -1)}
                   className="panier-qty-btn"
                 >
-                  –
+                  {" "}
+                  –{" "}
                 </button>
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    minWidth: "20px",
-                    textAlign: "center",
-                  }}
-                >
-                  {item.quantite}
-                </span>
+                <span className="panier-qty-value">{item.quantite}</span>
                 <button
                   onClick={() => updateQty(item.uniqueId, 1)}
                   className="panier-qty-btn"
                 >
-                  +
+                  {" "}
+                  +{" "}
                 </button>
               </div>
 
@@ -152,22 +147,11 @@ const Panier = () => {
               </div>
               <div className="panier-flex-row">
                 <span>Frais de livraison :</span>
-                <span
-                  style={{
-                    color: "var(--color-secondary)",
-                    fontWeight: "bold",
-                  }}
-                >
+                <span className="panier-shipping-cost">
                   {livraisonOfferte ? "OFFERT" : "4.90€"}
                 </span>
               </div>
-              <hr
-                style={{
-                  border: "0",
-                  borderTop: "1px solid var(--color-border)",
-                  margin: "15px 0",
-                }}
-              />
+              <hr className="panier-hr" />
               <div className="panier-total-row">
                 <span>Total TTC :</span>
                 <span>{(totalTTC + fraisPort).toFixed(2)}€</span>
@@ -175,10 +159,7 @@ const Panier = () => {
             </div>
           </section>
 
-          <button
-            onClick={() => navigate("/livraisonretrait")}
-            className="panier-btn-final"
-          >
+          <button onClick={handleValidation} className="panier-btn-final">
             VALIDER MA COMMANDE
           </button>
         </div>

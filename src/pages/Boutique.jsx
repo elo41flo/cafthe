@@ -93,7 +93,7 @@ const Boutique = () => {
         </div>
 
         <div className="sort-wrapper">
-          <label className="sort-label">Trier par :</label>
+          <label className="sort-label">Trier par : </label>
           <select
             className="sort-select"
             value={sortOrder}
