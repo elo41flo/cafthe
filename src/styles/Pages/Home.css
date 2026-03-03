@@ -354,3 +354,86 @@
     box-sizing: border-box;
   }
 }
+
+/* ==========================================================================
+   OPTIMISATION SPÉCIFIQUE SMARTPHONES ÉTROITS (320px)
+   ========================================================================== */
+@media (max-width: 360px) {
+  
+  /* --- HERO SECTION --- */
+  .hero-section {
+    height: auto !important;
+    padding: 60px 15px !important; /* On réduit pour gagner de la place */
+  }
+
+  .hero-overlay {
+    padding: 25px 15px !important; /* Padding interne réduit */
+    max-width: 280px !important;   /* Largeur adaptée aux 320px */
+  }
+
+  .hero-h1 {
+    font-size: 1.5rem !important;  /* Plus petit pour éviter les coupures de mots */
+    line-height: 1.1 !important;
+  }
+
+  .hero-p {
+    font-size: 0.9rem !important;
+    margin-bottom: 15px !important;
+  }
+
+  /* --- ENGAGEMENTS --- */
+  .engagement-section {
+    gap: 15px !important;
+    padding: 30px 5px !important;
+  }
+
+  .engagement-icon {
+    font-size: 1.8rem !important; /* Icônes moins imposantes */
+  }
+
+  .engagement-item span {
+    font-size: 0.8rem !important; /* Texte des engagements plus petit */
+  }
+
+  /* --- SECTION BOX --- */
+  .box-section {
+    padding: 50px 15px !important;
+  }
+
+  .box-title {
+    font-size: 1.8rem !important;
+  }
+
+  .box-list li {
+    font-size: 0.9rem !important;
+    gap: 8px !important;
+  }
+
+  .box-img {
+    border-radius: 20px !important; /* Moins d'arrondi sur petit écran */
+  }
+
+  /* --- PÉPITES --- */
+  .pepites-section {
+    padding: 50px 15px !important;
+  }
+
+  .pepites-main-title {
+    font-size: 1.8rem !important;
+    margin-bottom: 30px !important;
+  }
+
+  .pepite-card {
+    padding: 20px !important; /* Moins de vide interne */
+  }
+
+  .pepite-name {
+    font-size: 1.4rem !important;
+  }
+
+  /* --- BOUTONS --- */
+  .btn-home-main, .btn-home-box, .btn-pepite {
+    padding: 14px 20px !important; /* Boutons moins hauts */
+    font-size: 0.8rem !important;
+  }
+}
