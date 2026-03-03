@@ -169,3 +169,73 @@
   border-radius: 50%;
   transition: 0.3s;
 }
+
+/* ==========================================================================
+   BARRE DE NAVIGATION & SIDEBAR - OPTIMISATION 320px
+   ========================================================================== */
+@media (max-width: 360px) {
+
+  /* --- HEADER PRINCIPAL --- */
+  .header-main {
+    padding: 0 15px !important; /* On réduit l'espace sur les côtés */
+    height: 80px !important;    /* Header un peu moins haut pour libérer de la vue */
+  }
+
+  .header-main img {
+    height: 50px !important;    /* On réduit un peu la taille du logo */
+    width: auto;
+  }
+
+  .menu-toggle-btn {
+    padding: 8px 15px !important; /* Bouton Burger plus compact */
+    font-size: 1rem !important;   /* Texte "Menu" plus petit */
+    border-radius: 15px !important;
+  }
+
+  /* --- SIDEBAR MENU --- */
+  .sidebar-menu {
+    width: 85% !important;      /* On prend un peu plus de place pour le confort */
+    padding: 30px 20px !important; /* Réduction des paddings internes */
+  }
+
+  .close-sidebar-btn {
+    font-size: 2rem !important; /* Croix de fermeture moins énorme */
+    margin-bottom: 10px !important;
+  }
+
+  /* --- AUTH STATUS (Bonjour Elo...) --- */
+  .sidebar-auth-status {
+    margin-bottom: 20px !important;
+    padding-bottom: 15px !important;
+  }
+
+  .status-text {
+    font-size: 0.8rem !important; /* Texte d'accueil plus discret */
+  }
+
+  /* --- LIENS DE NAVIGATION --- */
+  .sidebar-nav {
+    gap: 15px !important;       /* On resserre les liens pour éviter de scroller */
+    margin-bottom: 25px !important;
+  }
+
+  .nav-link-item {
+    font-size: 1.1rem !important; /* Taille de police réduite pour tenir sur une ligne */
+  }
+
+  /* --- BOUTONS & ICONES --- */
+  .sidebar-icons-row {
+    gap: 15px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .theme-toggle-btn {
+    padding: 8px !important;
+    font-size: 18px !important;
+  }
+
+  .btn-auth-sidebar {
+    padding: 12px !important;   /* Boutons de connexion plus fins */
+    font-size: 0.9rem !important;
+  }
+}
