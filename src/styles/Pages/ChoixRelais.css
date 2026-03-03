@@ -1,114 +1,122 @@
-/* --- CONTENEUR GLOBAL --- */
+/* ==========================================================================
+   STRUCTURE GÉNÉRALE
+   ========================================================================== */
 .relais-page-wrapper {
   width: 100%;
-  background-color: var(--color-bg);
   min-height: 100vh;
-  overflow-x: hidden;
+  background-color: var(--color-bg);
+  overflow-x: hidden; /* Sécurité ultime */
 }
 
 .relais-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 40px 20px;
-  text-align: center;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .relais-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
   color: var(--color-primary);
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* --- LE WIDGET (LA CARTE) --- */
+/* ==========================================================================
+   LE WIDGET MONDIAL RELAY (CSS AGRESSIF)
+   ========================================================================== */
 #Zone_Widget {
   width: 100% !important;
-  min-height: 500px; /* Hauteur nécessaire pour Leaflet */
-  margin: 30px 0;
+  max-width: 100% !important;
+  min-height: 500px; /* Hauteur nécessaire pour que la carte respire */
+  margin-bottom: 20px;
+  background: #fff;
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  background-color: white;
-  /* On laisse déborder pour que Leaflet calcule ses tuiles */
-  overflow: visible !important;
+  /* On autorise le widget à être visible mais on bride sa largeur */
+  overflow: visible !important; 
 }
 
-/* On s'assure que les div internes du widget ne bloquent rien */
+/* Force tous les éléments internes du widget (tables, divs, iframes) */
+#Zone_Widget *, 
+#Zone_Widget table, 
 #Zone_Widget div {
-  overflow: visible !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  table-layout: fixed !important; /* Empêche les tableaux de pousser les murs */
 }
 
-/* --- BOX DE SELECTION --- */
-.selection-info-box {
-  padding: 20px;
-  background-color: var(--color-card);
-  border: 2px dashed var(--color-border);
-  border-radius: 15px;
-  margin-bottom: 30px;
-  transition: all 0.3s ease;
-  min-height: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* Fix spécifique pour la carte Leaflet interne */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
 }
 
-.selection-info-box.active {
+/* ==========================================================================
+   INFO BOX & BOUTONS
+   ========================================================================== */
+.selection-status {
+  padding: 15px;
+  background: var(--color-card);
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.selection-status.selected {
   border: 2px solid var(--color-secondary);
-  background-color: var(--color-active-bg);
+  background: var(--color-active-bg);
 }
 
-.placeholder-text {
-  font-style: italic;
-  opacity: 0.6;
-}
-
-/* --- BOUTONS --- */
-.relais-actions {
+.relais-footer-actions {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.btn-confirm-relais {
+.btn-main-relais {
   background-color: var(--color-secondary);
   color: white;
-  padding: 18px;
-  border: none;
+  padding: 16px;
   border-radius: 50px;
+  border: none;
   font-weight: bold;
-  font-size: 1rem;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-main);
 }
 
-.btn-back-relais {
+.btn-link-relais {
   background: none;
   border: none;
   color: var(--color-text);
   text-decoration: underline;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
-/* --- MOBILE OPTIMISATION (320px) --- */
+/* ==========================================================================
+   OPTIMISATION 320px
+   ========================================================================== */
 @media (max-width: 360px) {
   .relais-container {
-    padding: 20px 10px;
-  }
-
-  .relais-title {
-    font-size: 1.6rem;
+    padding: 15px 10px;
   }
 
   #Zone_Widget {
-    min-height: 450px;
-    border-radius: 0; /* Plus d'espace sur petit écran */
+    min-height: 480px;
+    border-radius: 0; /* On colle aux bords pour gagner de la place */
     border-left: none;
     border-right: none;
   }
-
-  .btn-confirm-relais {
-    padding: 15px;
-    font-size: 0.9rem;
+  
+  /* On réduit la taille des polices internes du widget qui sont souvent trop grosses */
+  #Zone_Widget .MR-List {
+    font-size: 0.8rem !important;
   }
 }
