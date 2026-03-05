@@ -1,32 +1,45 @@
-/* src/pages/Univers.css */
-
+/* ==========================================================================
+   PAGE UNIVERS - STRUCTURE
+   ========================================================================= */
 .univers-container {
-  background-color: var(--color-white);
+  background-color: var(--color-bg);
   color: var(--color-text);
-  padding-bottom: 100px;
+  padding-bottom: 60px;
 }
 
+/* ==========================================================================
+   HEADER AVEC IMAGE DE FOND
+   ========================================================================= */
 .univers-header {
   text-align: center;
-  padding: 100px 20px;
+  padding: 120px 20px;
+  /* Dégradé léger pour la lisibilité du titre */
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.863)), 
+              url('/image_univers.webp') no-repeat center center;
+  background-size: cover;
+  margin-bottom: 40px;
 }
 
 .univers-main-title {
   font-family: 'Playfair Display', serif;
-  font-size: 48px;
+  font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 20px;
+  color: var(--color-primary);
 }
 
 .univers-intro-text {
   font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
+  font-size: 1.2rem;
   color: var(--color-text);
   max-width: 800px;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* Sections */
+/* ==========================================================================
+   SECTIONS & CONTENU
+   ========================================================================= */
 .univers-section {
   max-width: 900px;
   margin: 0 auto 80px auto;
@@ -35,55 +48,36 @@
 
 .univers-h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  margin-bottom: 10px;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: var(--color-primary);
 }
 
 .univers-h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  margin: 0;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
-.univers-subtitle {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  color: var(--color-text-light);
-  margin-bottom: 30px;
-}
-
-/* Listes */
-.univers-list {
-  list-style: none;
-  padding: 0;
-}
-
-.univers-list-item {
+/* Listes avec icônes */
+.univers-list-item, .univers-list-item-small {
   display: flex;
   align-items: flex-start;
   gap: 15px;
   margin-bottom: 20px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
   line-height: 1.6;
 }
 
-.univers-list-item-small {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-}
-
 .univers-bullet {
-  font-size: 12px;
-  margin-top: 6px;
   color: var(--color-secondary);
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
-/* Tableau */
+/* ==========================================================================
+   TABLEAU (LE DÉFI RESPONSIVE)
+   ========================================================================= */
 .univers-table {
   width: 100%;
   border-collapse: collapse;
@@ -93,13 +87,69 @@
 
 .univers-table th {
   text-align: left;
-  font-size: 20px;
-  padding-bottom: 20px;
+  font-size: 1.2rem;
+  padding: 15px 10px;
   border-bottom: 2px solid var(--color-primary);
+  color: var(--color-primary);
 }
 
 .univers-table td {
-  padding: 15px 0;
-  font-size: 16px;
+  padding: 15px 10px;
+  font-size: 1rem;
   border-bottom: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   RESPONSIVE SMARTPHONES (320px - 480px)
+   ========================================================================= */
+@media (max-width: 600px) {
+  .univers-header {
+    padding: 80px 15px;
+  }
+
+  .univers-main-title {
+    font-size: 2.2rem;
+  }
+
+  .univers-intro-text {
+    font-size: 1rem;
+  }
+
+  .univers-h2 {
+    font-size: 1.8rem;
+  }
+
+  /* TRANSFORMATION DU TABLEAU EN CARTES */
+  .univers-table, .univers-table thead, .univers-table tbody, .univers-table th, .univers-table td, .univers-table tr {
+    display: block;
+  }
+
+  .univers-table thead {
+    display: none; /* Cache les titres du tableau sur mobile */
+  }
+
+  .univers-table tr {
+    margin-bottom: 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 10px;
+    background: var(--color-card);
+  }
+
+  .univers-table td {
+    border: none;
+    padding: 5px 10px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* On peut ajouter des labels auto si besoin via :before, 
+     mais ici on laisse le contenu simple pour la lisibilité */
+}
+
+@media (max-width: 360px) {
+  .univers-main-title {
+    font-size: 1.8rem;
+  }
 }
