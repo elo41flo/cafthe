@@ -15,57 +15,55 @@
    ========================================================================== */
 .auth-card {
     background-color: var(--color-card);
-    padding: 40px;
+    padding: 50px 40px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-main);
     border: 1px solid var(--color-border);
     width: 100%;
     max-width: 420px;
     text-align: center;
-    position: relative;
+    box-sizing: border-box;
 }
 
 .auth-logo {
     height: 90px;
     width: auto;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 40px auto;
     display: block;
 }
 
+/* ==========================================================================
+   INPUTS (EMOJIS ALIGNÉS À GAUCHE)
+   ========================================================================== */
 .auth-input-group {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
-    display: flex;
-    align-items: center; /* Centre verticalement le contenu */
 }
 
 .auth-input-icon {
     position: absolute;
     left: 20px;
-    /* On utilise flex pour centrer l'emoji parfaitement */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 25px;
-    height: 25px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 18px;
+    z-index: 5;
     pointer-events: none;
-    z-index: 10;
 }
 
 .auth-input {
     width: 100%;
     height: 55px;
-    /* On augmente le padding-left (65px) pour laisser de la place à l'emoji */
-    padding: 0 20px 0 65px !important;
+    padding: 0 20px 0 60px !important; /* Laisse la place pour l'emoji */
     border-radius: 30px;
-    border: 1px solid var(--color-secondary); /* Ton vert */
-    background-color: #f0f7ff; /* Le bleu clair qu'on voit sur ta photo */
+    border: 1px solid var(--color-border);
+    background-color: #f0f7ff; /* Ton bleu clair */
+    color: var(--color-text);
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    outline: none;
     box-sizing: border-box;
+    outline: none;
+    transition: 0.3s ease;
 }
 
 .auth-input:focus {
@@ -74,7 +72,54 @@
 }
 
 /* ==========================================================================
-   LIENS & TEXTES
+   BOUTONS AVEC EMOJIS CALÉS AU DÉBUT
+   ========================================================================== */
+.auth-btn, .auth-btn-visitor {
+    width: 100%;
+    height: 55px;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centre le texte */
+    position: relative;      /* Permet de placer l'emoji par rapport au bouton */
+    transition: 0.3s ease;
+    border: none;
+    margin-bottom: 15px;
+}
+
+/* Ciblage de l'emoji à l'intérieur du bouton */
+.auth-btn span, .auth-btn-visitor span {
+    position: absolute;
+    left: 25px; /* Calé à l'intérieur du début du bouton */
+    font-size: 20px;
+}
+
+.auth-btn {
+    background-color: var(--color-secondary);
+    color: white !important;
+}
+
+.auth-btn:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.auth-btn-visitor {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+.auth-btn-visitor:hover {
+    background-color: var(--color-border);
+}
+
+/* ==========================================================================
+   TEXTES & LIENS
    ========================================================================== */
 .auth-forgot-link {
     display: block;
@@ -85,98 +130,24 @@
     text-decoration: none;
 }
 
-.auth-forgot-link:hover {
-    color: var(--color-primary);
-    text-decoration: underline;
-}
-
 .auth-footer-text {
-    margin-top: 25px;
+    margin-top: 20px;
     font-size: 14px;
-    color: var(--color-text-light);
-}
-
-/* --- BOUTON PRINCIPAL (CONNEXION) --- */
-.auth-btn {
-    width: 100%;
-    background-color: var(--color-secondary);
-    color: white !important;
-    border: none;
-    border-radius: 50px;
-    height: 55px; /* On donne une hauteur fixe pour l'alignement */
-    font-weight: 700;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s ease;
-    
-    /* LE FIX POUR L'EMOJI */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative; /* Pour permettre de décaler l'icône si besoin */
-    gap: 10px; /* Espace entre l'emoji et le texte */
-}
-
-/* Si tu veux que l'emoji soit vraiment collé à gauche mais le texte centré */
-.auth-btn::before {
-    content: "🚀"; /* Tu peux changer l'emoji ici ou le mettre dans le HTML */
-    font-size: 20px;
-}
-
-/* --- BOUTON VISITEUR (DESIGN ALIGNÉ) --- */
-.auth-btn-visitor {
-    width: 100%;
-    height: 50px;
-    background-color: transparent;
-    color: var(--color-text);
-    border-radius: 50px;
-    border: 1px solid var(--color-border);
-    margin-top: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    
-    /* ALIGNEMENT FLEX */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
 }
 
 /* ==========================================================================
-   ERREURS
+   RESPONSIVE (320px)
    ========================================================================== */
-.auth-error {
-    background-color: #fff1f0;
-    color: #f5222d;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    border: 1px solid #ffa39e;
-}
-
-/* ==========================================================================
-   RESPONSIVE (320px - 768px)
-   ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .auth-container {
-        align-items: flex-start; /* Évite d'être masqué par le clavier */
-        padding-top: 40px;
+        align-items: flex-start;
+        padding-top: 30px;
     }
 
     .auth-card {
         padding: 30px 20px;
         border: none;
         box-shadow: none;
-        background-color: transparent; /* Fond plat sur mobile pour gagner de l'espace */
-    }
-
-    .auth-logo {
-        height: 70px;
-    }
-
-    .auth-forgot-link {
-        text-align: center;
-        margin-right: 0;
+        background-color: transparent;
     }
 }

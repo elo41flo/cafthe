@@ -71,7 +71,6 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            autoComplete="username"
           />
         </div>
 
@@ -84,20 +83,16 @@ const Login = () => {
             value={motDePasse}
             onChange={(e) => setMotDePasse(e.target.value)}
             required
-            autoComplete="current-password"
           />
         </div>
 
-        <Link
-          to="/forgot-password"
-          alphabet="small"
-          className="auth-forgot-link"
-        >
+        <Link to="/forgot-password" className="auth-forgot-link">
           Mot de passe oublié ?
         </Link>
 
-        <button type="submit" className="auth-btn" style={{ width: "100%" }}>
-          Se connecter
+        {/* Emojis dans des spans pour le positionnement CSS */}
+        <button type="submit" className="auth-btn">
+          <span>🔑</span> Se connecter
         </button>
 
         <button
@@ -105,12 +100,11 @@ const Login = () => {
           onClick={handleVisitor}
           className="auth-btn-visitor"
         >
-          Continuer en tant que visiteur
+          <span>👀</span> Continuer en tant que visiteur
         </button>
 
         <p className="auth-footer-text">
           Pas encore de compte ?{" "}
-          {/* On fait suivre le paramètre redirect au lien d'inscription aussi ! */}
           <Link
             to={
               redirectPath ? `/register?redirect=${redirectPath}` : "/register"
