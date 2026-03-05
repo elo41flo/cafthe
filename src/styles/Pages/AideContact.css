@@ -1,33 +1,44 @@
-/* src/pages/AideContact.css */
-
+/* ==========================================================================
+   PAGE AIDE & CONTACT - STRUCTURE
+   ========================================================================== */
 .aide-container {
   background-color: var(--color-bg);
   color: var(--color-text);
-  padding-bottom: 100px;
+  padding-bottom: 60px; /* Réduit un peu pour mobile */
 }
 
-/* Header Section */
+/* ==========================================================================
+   HEADER AVEC IMAGE DE FOND (L'AJOUT)
+   ========================================================================== */
 .aide-header {
   text-align: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
+  /* J'ai ajouté un dégradé blanc par-dessus pour que ton titre reste lisible */
+  background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
+              url('/image_aide.webp') no-repeat center center;
+  background-size: cover;
+  margin-bottom: 40px;
 }
 
 .aide-main-title {
   font-family: 'Playfair Display', serif;
-  font-size: 48px;
+  font-size: 3rem; /* Utilisation de rem pour le responsive */
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .aide-intro-text {
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 1.1rem;
   color: var(--color-text);
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* Sections communes */
+/* ==========================================================================
+   SECTIONS COMMUNES
+   ========================================================================== */
 .aide-section {
   max-width: 900px;
   margin: 0 auto 60px auto;
@@ -36,18 +47,21 @@
 
 .aide-h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 32px;
+  font-size: 2rem;
   margin-bottom: 10px;
+  color: var(--color-primary);
 }
 
 .aide-subtitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
+  font-size: 0.9rem;
   color: var(--color-text-light);
   margin-bottom: 30px;
 }
 
-/* FAQ */
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
 .faq-wrapper {
   margin-top: 30px;
 }
@@ -55,35 +69,39 @@
 .faq-item {
   display: flex;
   gap: 15px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .faq-bullet {
-  font-size: 12px;
-  margin-top: 8px;
+  font-size: 0.8rem;
+  margin-top: 6px;
   color: var(--color-primary);
 }
 
 .faq-category-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
+  font-size: 1.2rem;
   text-decoration: underline;
   margin-bottom: 15px;
+  color: var(--color-text);
 }
 
 .faq-question {
   font-weight: 700;
-  font-size: 16px;
-  margin-top: 15px;
-}
-
-.faq-answer {
-  font-size: 15px;
-  color: var(--color-text);
+  font-size: 1.1rem;
   margin-bottom: 10px;
 }
 
-/* --- FORMULAIRE --- */
+.faq-answer {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   FORMULAIRE DE CONTACT
+   ========================================================================== */
 .aide-form {
   display: flex;
   flex-direction: column;
@@ -91,21 +109,20 @@
   max-width: 500px;
 }
 
-/* On ajuste les inputs pour qu'ils soient lisibles en dark mode */
 .aide-input, .aide-textarea {
-  background-color: var(--color-card); /* Utilise la variable card pour le relief */
+  background-color: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: 20px;
   padding: 15px 25px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--color-text);
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .aide-input:focus, .aide-textarea:focus {
-  border-color: var(--color-secondary); /* Petit rappel de vert au clic */
+  border-color: var(--color-secondary);
 }
 
 .aide-textarea {
@@ -113,12 +130,12 @@
   resize: vertical;
 }
 
-/* --- LE BOUTON AVEC HOVER JAUNE --- */
+/* --- BOUTON AVEC HOVER JAUNE (FIXÉ) --- */
 .aide-btn {
-  background-color: var(--color-secondary); /* Vert #97af6e */
-  color: #ffffff !important; /* Texte blanc par défaut */
+  background-color: var(--color-secondary); /* Vert signature */
+  color: #ffffff !important;
   border: none;
-  border-radius: 30px; /* Plus arrondi pour matcher la home */
+  border-radius: 30px;
   padding: 14px 40px;
   width: fit-content;
   font-family: 'Montserrat', sans-serif;
@@ -131,21 +148,20 @@
 }
 
 .aide-btn:hover {
-  background-color: var(--color-accent) !important; /* Jaune #ffeb9c */
+  background-color: var(--color-accent) !important; /* Jaune signature */
   color: #2d241c !important; /* Texte sombre pour la lisibilité sur le jaune */
-  transform: translateY(-3px); /* Petit effet de levée */
-  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4); /* Halo lumineux jaune */
-  opacity: 1; /* On annule l'ancienne règle d'opacité */
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 235, 156, 0.4);
 }
 
-.aide-btn:hover {
-  opacity: 0.8;
-}
+/* J'AI SUPPRIMÉ LA DEUXIÈME RÈGLE DU HOVER QUI S'ANNULAIT */
 
-/* Localisation */
+/* ==========================================================================
+   LOCALISATION (INFO BOX & MAP)
+   ========================================================================== */
 .info-box {
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 20px;
 }
@@ -154,4 +170,40 @@
   border: 0;
   border-radius: 20px;
   margin-top: 20px;
+  width: 100%; /* S'assure que la map prend toute la largeur */
+}
+
+/* ==========================================================================
+   RESPONSIVE SMARTPHONES (320px - 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .aide-header {
+    padding: 60px 15px;
+    margin-bottom: 30px;
+  }
+
+  .aide-main-title {
+    font-size: 2.2rem;
+  }
+
+  .aide-intro-text {
+    font-size: 1rem;
+  }
+
+  .aide-h2 {
+    font-size: 1.8rem;
+  }
+
+  .faq-item {
+    flex-direction: column; /* Bullet au-dessus sur mobile */
+    gap: 5px;
+  }
+
+  .faq-bullet {
+    margin-top: 0;
+  }
+
+  .aide-btn {
+    width: 100%; /* Bouton pleine largeur sur mobile */
+  }
 }
