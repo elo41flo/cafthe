@@ -195,7 +195,7 @@ const Register = () => {
         <div className="auth-footer-text">
           <p>Vous avez déjà un compte ?</p>
           <Link
-            to="/login"
+            to="/panier"
             style={{ fontWeight: "bold", color: "var(--color-primary)" }}
           >
             Se connecter
