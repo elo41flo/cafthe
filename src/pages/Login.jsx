@@ -29,13 +29,21 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
+        // CAS SPÉCIAL : Client créé en magasin sans MDP (isNewFromStore renvoyé par le back)
+        if (response.status === 403 && data.isNewFromStore) {
+          navigate(`/setup-password?email=${encodeURIComponent(email)}`);
+          return;
+        }
+
         setErrorMsg(data.message || "Identifiants incorrects");
         return;
       }
 
+      // Connexion réussie
       localStorage.setItem("token", data.token);
       login(data.token, data.client);
 
+      // Redirection
       if (redirectPath) {
         navigate(`/${redirectPath}`);
       } else {
