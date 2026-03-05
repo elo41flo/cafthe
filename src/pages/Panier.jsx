@@ -42,21 +42,25 @@ const Panier = () => {
     saveAndSync(nouveauPanier);
   };
 
+  /**
+   * ACTION DU BOUTON : VALIDER MA COMMANDE
+   */
   const handleValidation = () => {
-    const userData = localStorage.getItem("user");
-    // On vérifie l'existence ET la validité du JSON
-    const user = userData ? JSON.parse(userData) : null;
+    // On vérifie le token et l'objet user (ou client selon ton back)
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
 
-    if (user && user.token) {
+    console.log("Token présent :", !!token);
+    console.log("User présent :", !!user);
+
+    if (token) {
       navigate("/livraisonretrait");
     } else {
-      // Conseil : redirige vers Login, mais assure-toi que ton Login
-      // transmet le paramètre au Register si besoin.
+      // Si pas de token, on va au login
       navigate("/login?redirect=livraisonretrait");
     }
   };
 
-  // Calculs avec sécurité (fallback à 0 pour éviter le NaN)
   const totalTTC = items.reduce((acc, item) => {
     const p = parseFloat(item.prix) || 0;
     const q = parseInt(item.quantite) || 0;
@@ -171,6 +175,7 @@ const Panier = () => {
             </div>
           </section>
 
+          {/* C'est ici que l'action se passe */}
           <button onClick={handleValidation} className="panier-btn-final">
             VALIDER MA COMMANDE
           </button>
