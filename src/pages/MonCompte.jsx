@@ -374,7 +374,9 @@ const MonCompte = () => {
 
         {/* ZONE DE DANGER */}
         <section className="account-section delete-account-zone">
-          <h2 className="account-section-title danger-title">Zone de danger</h2>
+          <h2 className="account-section-title danger-title">
+            Supprimez votre compte
+          </h2>
           <div className="delete-box">
             <p>
               La suppression de votre compte est définitive. Toutes vos données
