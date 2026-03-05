@@ -1,74 +1,113 @@
-/* src/components/Footer.css */
-
+/* ==========================================================================
+   STRUCTURE GÉNÉRALE
+   ========================================================================== */
 .footer-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px 60px;
-  background-color: var(--color-white);
-  border-top: 1px solid var(--color-border);
-  margin-top: auto;
+    display: flex;
+    justify-content: space-between; /* Un bloc à gauche, un au centre, un à droite */
+    align-items: center;
+    padding: 50px 60px;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    margin-top: auto; /* Pousse le footer en bas si la page est courte */
+    box-sizing: border-box;
+    width: 100%;
 }
 
+/* --- LOGO (Bloc Gauche) --- */
 .footer-logo-wrapper {
-  flex: 1;
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .footer-logo {
-  height: 100px;
-  object-fit: contain;
+    height: 80px; /* Taille harmonisée */
+    width: auto;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
 }
 
+.footer-logo:hover {
+    opacity: 0.8;
+}
+
+/* --- NAVIGATION (Bloc Centre) --- */
 .footer-links-wrapper {
-  display: flex;
-  gap: 30px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  margin-right: 40px;
+    flex: 2; /* Prend plus de place pour rester bien au centre */
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .footer-link {
-  text-decoration: underline;
-  color: var(--color-text);
-  font-weight: 400;
-  transition: color 0.2s ease;
+    text-decoration: none; /* Plus moderne sans le souligné permanent */
+    color: var(--color-text-light);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Empêche les liens de revenir à la ligne bizarrement */
 }
 
 .footer-link:hover {
-  color: var(--color-secondary);
+    color: var(--color-primary);
+    text-decoration: underline; /* Le souligné n'apparaît qu'au survol */
 }
 
+/* --- RÉSEAUX SOCIAUX (Bloc Droite) --- */
 .footer-socials {
-  display: flex;
-  gap: 20px;
-  align-items: center;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    align-items: center;
 }
 
 .footer-social-icon {
-  color: var(--color-text);
-  transition: transform 0.2s ease, color 0.2s ease;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
+    color: var(--color-text);
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
 .footer-social-icon:hover {
-  transform: scale(1.1);
-  color: var(--color-secondary);
+    transform: translateY(-3px); /* Petit effet de levée plus sympa que le scale */
+    color: var(--color-secondary);
 }
 
-/* Responsive mobile */
+/* ==========================================================================
+   RESPONSIVE (Tablettes et Mobiles 320px)
+   ========================================================================== */
+@media (max-width: 900px) {
+    .footer-container {
+        padding: 40px 20px;
+    }
+    .footer-links-wrapper {
+        gap: 15px;
+    }
+}
+
 @media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 30px;
-    padding: 40px 20px;
-    text-align: center;
-  }
-  
-  .footer-links-wrapper {
-    flex-direction: column;
-    gap: 15px;
-    margin-right: 0;
-  }
+    .footer-container {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .footer-logo-wrapper, 
+    .footer-links-wrapper, 
+    .footer-socials {
+        justify-content: center; /* Tout centré sur mobile */
+        flex: none;
+        width: 100%;
+    }
+
+    .footer-links-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        height: 70px;
+    }
 }
