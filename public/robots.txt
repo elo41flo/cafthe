@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cafthe.vercel.app/sitemap.xml
