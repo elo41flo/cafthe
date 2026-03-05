@@ -69,7 +69,6 @@ const Home = () => {
             </Link>
           </div>
           <div className="box-image-wrapper">
-            {/* Le "/" au début dit à Vercel de regarder à la racine du dossier public */}
             <img
               src="/image_accueil.webp"
               alt="Box Caf'Thé"

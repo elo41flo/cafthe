@@ -1,97 +1,123 @@
-/* src/pages/Pepite.css */
-
+/* ==========================================================================
+   PAGE PÉPITE - STRUCTURE
+   ========================================================================== */
 .pepite-page {
   background-color: var(--color-white);
-  padding-bottom: 100px;
+  padding-bottom: 60px;
 }
 
+/* FIX : Correction du chemin de l'image (pas de backslash en CSS) */
 .pepite-header {
   text-align: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
+  background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
+              url('/image_pepite.webp') no-repeat center center;
+  background-size: cover;
+  margin-bottom: 40px;
 }
 
 .pepite-main-title {
   font-family: 'Playfair Display', serif;
-  font-size: 48px;
-  margin-bottom: 20px;
+  font-size: 3rem; /* Utilisation de rem pour le responsive */
+  margin-bottom: 15px;
   color: var(--color-text);
 }
 
 .pepite-main-subtitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
-  margin-bottom: 40px;
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
   color: var(--color-text-light);
 }
 
-/* Container de la carte */
+/* ==========================================================================
+   LA CARTE PÉPITE (BANNIÈRE MARRON)
+   ========================================================================== */
 .pepite-card-container {
   max-width: 900px;
   margin: 0 auto 60px auto;
   padding: 0 20px;
 }
 
-.pepite-card-h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  margin-bottom: 5px;
-  color: var(--color-text);
-}
-
-.pepite-card-desc-intro {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: var(--color-text-light);
-}
-
-/* La bannière marron */
 .pepite-banner {
-  background-color: var(--color-primary); /* Ton marron signature */
-  border-radius: var(--radius-md);
+  background-color: var(--color-primary); /* Marron signature */
+  border-radius: 20px;
   padding: 40px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  color: #000; /* Garde le texte noir sur le marron pour le contraste */
+  align-items: center; /* Aligné au centre pour plus d'équilibre */
+  color: white; /* Passage en blanc pour le contraste sur marron foncé */
   box-shadow: var(--shadow-main);
+  transition: transform 0.3s ease;
+}
+
+.pepite-banner:hover {
+  transform: translateY(-5px);
 }
 
 .pepite-product-name {
   font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  fontWeight: bold;
+  font-size: 1.8rem;
+  font-weight: 700;
   margin-bottom: 15px;
 }
 
+/* Correction du fontWeight (pas de majuscule en CSS standard) */
 .pepite-expert-text {
   font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-  margin-bottom: 10px;
-  line-height: 1.4;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
 .pepite-btn {
-  background-color: var(--color-secondary); /* Ton vert signature */
+  background-color: var(--color-secondary); /* Vert signature */
+  color: white;
   border: none;
-  border-radius: var(--radius-md);
-  padding: 12px 25px;
+  border-radius: 50px;
+  padding: 15px 35px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
-  transition: transform 0.2s, opacity 0.2s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  flex-shrink: 0; /* Empêche le bouton de s'écraser */
 }
 
-.pepite-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-/* Responsive mobile */
+/* ==========================================================================
+   RESPONSIVE (TABLETTES & MOBILES 320px)
+   ========================================================================== */
 @media (max-width: 768px) {
+  .pepite-header {
+    padding: 60px 15px;
+  }
+
+  .pepite-main-title {
+    font-size: 2.2rem;
+  }
+
   .pepite-banner {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    text-align: center;
+    padding: 30px 20px;
+    gap: 25px;
+  }
+
+  .pepite-btn {
+    width: 100%; /* Bouton pleine largeur sur mobile */
+  }
+}
+
+@media (max-width: 360px) {
+  .pepite-main-title {
+    font-size: 1.8rem;
+  }
+
+  .pepite-banner {
+    padding: 20px 15px;
+  }
+
+  .pepite-product-name {
+    font-size: 1.4rem;
   }
 }
