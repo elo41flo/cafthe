@@ -55,8 +55,11 @@ const Login = () => {
     <div className="auth-container">
       <form onSubmit={handleSubmit} className="auth-card fade-in">
         <img src="/logo_2.webp" alt="Logo Caf'Thé" className="auth-logo" />
+        <h1 className="auth-title">Connexion</h1>
 
         {errorMsg && <p className="auth-error">⚠️ {errorMsg}</p>}
+
+        <p className="auth-section-title">Vos identifiants</p>
 
         <div className="auth-input-group">
           <span className="auth-input-icon">@</span>
@@ -100,8 +103,8 @@ const Login = () => {
           Continuer en tant que visiteur
         </button>
 
-        <p className="auth-footer-text">
-          Pas encore de compte ?{" "}
+        <div className="auth-footer-text">
+          <p>Pas encore de compte ?</p>
           <Link
             to={
               redirectPath ? `/register?redirect=${redirectPath}` : "/register"
@@ -110,7 +113,7 @@ const Login = () => {
           >
             S’inscrire
           </Link>
-        </p>
+        </div>
       </form>
     </div>
   );
