@@ -26,31 +26,56 @@ const Register = () => {
 
   const validateForm = () => {
     const errors = {};
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Regex Email : doit contenir un @ et un . (avec des caractères autour)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Regex Mot de passe : 1 Majuscule, 1 Chiffre, 1 Caractère spécial
+    const mdpRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
+
+    // Validation Identité
     if (formData.nom_client.trim().length < 2)
       errors.nom_client = "Nom requis.";
     if (formData.prenom_client.trim().length < 2)
       errors.prenom_client = "Prénom requis.";
-    if (!emailRegex.test(formData.email_client))
-      errors.email_client = "Email invalide.";
-    if (formData.mdp_client.length < 12)
-      errors.mdp_client = "12 caractères minimum.";
+
+    // Validation Email
+    if (!formData.email_client) {
+      errors.email_client = "Email requis.";
+    } else if (!emailRegex.test(formData.email_client)) {
+      errors.email_client = "L'email doit contenir un '@' et un '.'.";
+    }
+
+    // Validation Mot de passe
+    if (!formData.mdp_client) {
+      errors.mdp_client = "Mot de passe requis.";
+    } else if (!mdpRegex.test(formData.mdp_client)) {
+      errors.mdp_client =
+        "Requis : 12 caractères, 1 Majuscule, 1 Chiffre et 1 Caractère spécial (@$!%*?&).";
+    }
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
     if (!validateForm()) return;
+
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
     try {
       const response = await fetch(`${baseUrl}/api/clients/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      if (response.ok) navigate("/login");
-      else {
+
+      if (response.ok) {
+        navigate("/login");
+      } else {
         const data = await response.json();
         setErrorMsg(data.message || "Erreur lors de l'inscription");
       }
@@ -133,7 +158,7 @@ const Register = () => {
             name="adresse_livraison"
             placeholder="Adresse de livraison"
             className="auth-input"
-            style={{ paddingLeft: "20px" }} // Pas d'icône ici pour rester droit
+            style={{ paddingLeft: "20px" }}
             onChange={handleChange}
           />
         </div>
