@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/Pages/Register.css"; // Import du style commun
+import "../styles/Pages/Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [formErrors, setFormErrors] = useState({});
-
   const [formData, setFormData] = useState({
     nom_client: "",
     prenom_client: "",
@@ -28,45 +27,31 @@ const Register = () => {
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
     if (formData.nom_client.trim().length < 2)
       errors.nom_client = "Nom requis.";
     if (formData.prenom_client.trim().length < 2)
       errors.prenom_client = "Prénom requis.";
-
-    if (!formData.email_client) {
-      errors.email_client = "Email requis.";
-    } else if (!emailRegex.test(formData.email_client)) {
-      errors.email_client = "Format d'email invalide.";
-    }
-
-    if (formData.mdp_client.length < 12) {
-      errors.mdp_client = "Le mot de passe doit faire au moins 12 caractères.";
-    }
-
+    if (!emailRegex.test(formData.email_client))
+      errors.email_client = "Email invalide.";
+    if (formData.mdp_client.length < 12)
+      errors.mdp_client = "12 caractères minimum.";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg("");
     if (!validateForm()) return;
-
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
     try {
       const response = await fetch(`${baseUrl}/api/clients/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        navigate("/login");
-      } else {
+      if (response.ok) navigate("/login");
+      else {
+        const data = await response.json();
         setErrorMsg(data.message || "Erreur lors de l'inscription");
       }
     } catch (error) {
@@ -76,60 +61,18 @@ const Register = () => {
 
   return (
     <div className="auth-container">
-      <form
-        onSubmit={handleSubmit}
-        className="auth-card fade-in"
-        style={{ maxWidth: "450px" }}
-      >
+      <form onSubmit={handleSubmit} className="auth-card fade-in">
         <img
           src="/logo_2.webp"
           alt="Caf'Thé"
           className="auth-logo"
-          style={{ height: "80px" }}
+          height="80"
         />
         <h1 className="auth-title">S’inscrire</h1>
 
-        {errorMsg && <p className="shop-alert error">{errorMsg}</p>}
+        {errorMsg && <p className="auth-error">⚠️ {errorMsg}</p>}
 
-        <p className="auth-section-title">
-          IDENTITÉ <span style={{ color: "red" }}>*</span>
-        </p>
-
-        <div className="auth-input-group">
-          <span className="auth-input-icon">👤</span>
-          <input
-            type="text"
-            name="nom_client"
-            placeholder="Nom *"
-            className={`auth-input ${formErrors.nom_client ? "has-error" : ""}`}
-            style={{ paddingLeft: "55px" }}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          {formErrors.nom_client && (
-            <span className="auth-validation-error">
-              {formErrors.nom_client}
-            </span>
-          )}
-        </div>
-
-        <div className="auth-input-group">
-          <span className="auth-input-icon">📇</span>
-          <input
-            type="text"
-            name="prenom_client"
-            placeholder="Prénom *"
-            className={`auth-input ${formErrors.prenom_client ? "has-error" : ""}`}
-            style={{ paddingLeft: "55px" }}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          {formErrors.prenom_client && (
-            <span className="auth-validation-error">
-              {formErrors.prenom_client}
-            </span>
-          )}
-        </div>
+        <p className="auth-section-title">Identité</p>
 
         <div className="auth-input-group">
           <span className="auth-input-icon">@</span>
@@ -138,7 +81,6 @@ const Register = () => {
             name="email_client"
             placeholder="E-mail *"
             className={`auth-input ${formErrors.email_client ? "has-error" : ""}`}
-            style={{ paddingLeft: "55px" }}
             onChange={handleChange}
             autoComplete="email"
           />
@@ -154,9 +96,8 @@ const Register = () => {
           <input
             type="password"
             name="mdp_client"
-            placeholder="Mot de passe (12 car. min) *"
+            placeholder="Mot de passe *"
             className={`auth-input ${formErrors.mdp_client ? "has-error" : ""}`}
-            style={{ paddingLeft: "55px" }}
             onChange={handleChange}
             autoComplete="new-password"
           />
@@ -167,30 +108,42 @@ const Register = () => {
           )}
         </div>
 
-        <p className="auth-section-title">ADRESSES</p>
+        <div className="shop-row">
+          <input
+            type="text"
+            name="nom_client"
+            placeholder="Nom *"
+            className={`auth-input ${formErrors.nom_client ? "has-error" : ""}`}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="prenom_client"
+            placeholder="Prénom *"
+            className={`auth-input ${formErrors.prenom_client ? "has-error" : ""}`}
+            onChange={handleChange}
+          />
+        </div>
+
+        <p className="auth-section-title">Adresses</p>
 
         <div className="auth-input-group">
-          <span className="auth-input-icon">🚚</span>
           <input
             type="text"
             name="adresse_livraison"
             placeholder="Adresse de livraison"
             className="auth-input"
-            style={{ paddingLeft: "55px" }}
+            style={{ paddingLeft: "20px" }} // Pas d'icône ici pour rester droit
             onChange={handleChange}
           />
         </div>
 
-        <div
-          className="shop-row"
-          style={{ width: "100%", marginBottom: "10px" }}
-        >
+        <div className="shop-row">
           <input
             type="text"
             name="cp_livraison"
-            placeholder="Code Postal"
+            placeholder="CP"
             className="auth-input"
-            style={{ paddingLeft: "20px" }}
             onChange={handleChange}
           />
           <input
@@ -198,7 +151,6 @@ const Register = () => {
             name="ville_livraison"
             placeholder="Ville"
             className="auth-input"
-            style={{ paddingLeft: "20px" }}
             onChange={handleChange}
           />
         </div>
@@ -206,25 +158,12 @@ const Register = () => {
         <div className="auth-checkbox-wrapper">
           <input type="checkbox" id="cgu" required />
           <label htmlFor="cgu" className="auth-checkbox-label">
-            J’accepte les{" "}
-            <Link
-              to="/cgv"
-              style={{ fontWeight: "bold", color: "var(--color-text)" }}
-            >
-              CGV
-            </Link>{" "}
-            et la{" "}
-            <Link
-              to="/politique-de-confidentialite"
-              style={{ fontWeight: "bold", color: "var(--color-text)" }}
-            >
-              Politique de confidentialité
-            </Link>
-            .
+            J’accepte les <strong>CGV</strong> et la{" "}
+            <strong>Politique de confidentialité</strong>.
           </label>
         </div>
 
-        <button type="submit" className="auth-btn" style={{ width: "100%" }}>
+        <button type="submit" className="auth-btn">
           Créer mon compte
         </button>
 

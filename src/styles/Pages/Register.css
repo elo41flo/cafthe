@@ -1,42 +1,180 @@
-/* Ajouts pour Register dans Auth.css */
+/* ==========================================================================
+   STRUCTURE ET ALIGNEMENT
+   ========================================================================== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg);
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
 
+.auth-card {
+    background-color: var(--color-card);
+    padding: 40px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-main);
+    border: 1px solid var(--color-border);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.auth-logo {
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+.auth-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: var(--color-text);
+}
+
+/* ==========================================================================
+   SECTIONS ET INPUTS
+   ========================================================================== */
 .auth-section-title {
-  width: 100%;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  margin: 15px 0 10px 15px;
-  text-align: left;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 25px 0 15px 5px;
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.auth-input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: left; /* Pour aligner les erreurs sous l'input */
+}
+
+.auth-input-icon {
+    position: absolute;
+    left: 20px;
+    top: 27px; /* Fixé par rapport à la hauteur de l'input */
+    transform: translateY(-50%);
+    font-size: 16px;
+    z-index: 5;
+    color: var(--color-text-light);
+}
+
+.auth-input {
+    width: 100%;
+    height: 55px;
+    padding: 0 20px 0 55px;
+    border-radius: 30px;
+    border: 1px solid var(--color-border);
+    background-color: #f0f7ff;
+    color: var(--color-text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Cas particulier pour CP et Ville (sans icônes) */
+.shop-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.shop-row .auth-input {
+    padding: 0 20px !important;
+}
+
+.auth-input:focus {
+    border-color: var(--color-secondary);
 }
 
 .auth-input.has-error {
-  border: 2px solid var(--color-promo);
-  margin-bottom: 0px;
+    border-color: var(--color-promo);
 }
 
+/* Erreurs de validation */
 .auth-validation-error {
-  color: var(--color-promo);
-  font-size: 12px;
-  margin-left: 20px;
-  font-weight: bold;
-  display: block;
-  text-align: left;
+    color: var(--color-promo);
+    font-size: 11px;
+    font-weight: 600;
+    margin: 5px 0 0 20px;
+    display: block;
 }
 
+/* ==========================================================================
+   CHECKBOX ET BOUTON
+   ========================================================================== */
 .auth-checkbox-wrapper {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin: 15px 0;
-  width: 100%;
-  text-align: left;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: 20px 5px;
+    text-align: left;
+}
+
+.auth-checkbox-wrapper input {
+    margin-top: 3px;
+    cursor: pointer;
 }
 
 .auth-checkbox-label {
-  font-size: 13px;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.4;
-  color: var(--color-text);
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    color: var(--color-text);
+}
+
+.auth-btn {
+    width: 100%;
+    height: 55px;
+    background-color: var(--color-secondary);
+    color: white !important;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.auth-footer-text {
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--color-text-light);
+}
+
+/* ==========================================================================
+   RESPONSIVE (320px)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .auth-container {
+        padding-top: 20px;
+        align-items: flex-start;
+    }
+    .auth-card {
+        padding: 30px 15px;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+    .shop-row {
+        flex-direction: column;
+    }
 }
