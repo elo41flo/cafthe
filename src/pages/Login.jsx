@@ -1,14 +1,13 @@
 import React, { useContext, useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom"; // On ajoute useLocation
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
 import "../styles/Pages/Login.css";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation(); // On récupère l'objet location pour lire l'URL
+  const location = useLocation();
 
-  // On extrait le paramètre "redirect" de l'URL (ex: /login?redirect=livraisonretrait)
   const queryParams = new URLSearchParams(location.search);
   const redirectPath = queryParams.get("redirect");
 
@@ -37,9 +36,6 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       login(data.token, data.client);
 
-      // --- LA LOGIQUE DE REDIRECTION ---
-      // Si redirectPath existe (ex: "livraisonretrait"), on y va.
-      // Sinon, on va à l'accueil "/"
       if (redirectPath) {
         navigate(`/${redirectPath}`);
       } else {
@@ -71,6 +67,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="username"
           />
         </div>
 
@@ -83,6 +80,7 @@ const Login = () => {
             value={motDePasse}
             onChange={(e) => setMotDePasse(e.target.value)}
             required
+            autoComplete="current-password"
           />
         </div>
 
@@ -90,9 +88,8 @@ const Login = () => {
           Mot de passe oublié ?
         </Link>
 
-        {/* Emojis dans des spans pour le positionnement CSS */}
         <button type="submit" className="auth-btn">
-          <span>🔑</span> Se connecter
+          Se connecter
         </button>
 
         <button
@@ -100,7 +97,7 @@ const Login = () => {
           onClick={handleVisitor}
           className="auth-btn-visitor"
         >
-          <span>👀</span> Continuer en tant que visiteur
+          Continuer en tant que visiteur
         </button>
 
         <p className="auth-footer-text">
@@ -109,7 +106,7 @@ const Login = () => {
             to={
               redirectPath ? `/register?redirect=${redirectPath}` : "/register"
             }
-            style={{ fontWeight: "bold", color: "var(--color-text)" }}
+            className="auth-register-link"
           >
             S’inscrire
           </Link>
