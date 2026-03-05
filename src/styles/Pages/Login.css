@@ -1,87 +1,89 @@
-/* --- CONTENEUR GLOBAL --- */
+/* ==========================================================================
+   CONTENEUR GLOBAL
+   ========================================================================== */
 .auth-container {
     min-height: 100vh;
     display: flex;
-    align-items: center; /* Centré verticalement sur PC */
+    align-items: center;
     justify-content: center;
     background-color: var(--color-bg);
     padding: 20px;
-    transition: background-color 0.3s ease;
 }
 
-/* --- CARTE DE CONNEXION --- */
+/* ==========================================================================
+   CARTE DE CONNEXION
+   ========================================================================== */
 .auth-card {
     background-color: var(--color-card);
-    padding: 50px 40px;
+    padding: 40px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-main);
     border: 1px solid var(--color-border);
     width: 100%;
-    max-width: 450px;
+    max-width: 420px;
     text-align: center;
-    transition: all 0.3s ease;
+    position: relative;
 }
 
 .auth-logo {
-    height: 100px;
+    height: 90px;
     width: auto;
-    margin: 0 auto 40px auto;
+    margin: 0 auto 30px auto;
     display: block;
-    filter: drop-shadow(0 0 5px rgba(0,0,0,0.1));
 }
 
-/* --- INPUTS (LE FIX DES EMOJIS) --- */
+/* ==========================================================================
+   INPUTS ET ICÔNES (LE FIX)
+   ========================================================================== */
 .auth-input-group {
-    position: relative; /* Référentiel pour l'icône */
+    position: relative;
     width: 100%;
     margin-bottom: 20px;
 }
 
 .auth-input-icon {
     position: absolute;
-    left: 20px; /* Position fixe à gauche */
+    left: 18px;
     top: 50%;
-    transform: translateY(-50%); /* Centrage vertical mathématique */
-    z-index: 10;
-    font-size: 20px;
-    pointer-events: none; /* L'icône ne bloque pas le clic */
-    line-height: 1;
+    transform: translateY(-50%);
+    z-index: 5;
+    font-size: 18px;
+    color: var(--color-text);
+    pointer-events: none;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .auth-input {
     width: 100%;
-    height: 55px; /* Hauteur fixe pour un rendu propre */
-    box-sizing: border-box;
-    /* TRÈS IMPORTANT : Le padding-left doit être assez grand pour l'icône + un espace */
-    padding: 0 20px 0 60px !important; 
+    height: 55px;
+    padding: 0 20px 0 55px !important; /* On réserve l'espace pour l'icône */
     border-radius: 30px;
     border: 1px solid var(--color-border);
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    transition: all 0.3s ease;
+    box-sizing: border-box;
     outline: none;
+    transition: all 0.3s ease;
 }
 
 .auth-input:focus {
     border-color: var(--color-secondary);
-    box-shadow: 0 0 0 3px rgba(151, 175, 110, 0.2);
+    box-shadow: 0 0 0 3px rgba(151, 175, 110, 0.15);
 }
 
-/* --- LIENS & TEXTES --- */
+/* ==========================================================================
+   LIENS & TEXTES
+   ========================================================================== */
 .auth-forgot-link {
     display: block;
     text-align: right;
     font-size: 13px;
-    color: var(--color-text);
-    opacity: 0.8;
-    margin-top: -10px;
-    margin-bottom: 25px;
-    transition: color 0.3s;
+    color: var(--color-text-light);
+    margin: -10px 10px 25px 0;
+    text-decoration: none;
 }
 
 .auth-forgot-link:hover {
@@ -92,28 +94,30 @@
 .auth-footer-text {
     margin-top: 25px;
     font-size: 14px;
-    color: var(--color-text);
+    color: var(--color-text-light);
 }
 
-/* --- BOUTONS --- */
+/* ==========================================================================
+   BOUTONS
+   ========================================================================== */
 .auth-btn {
     width: 100%;
     background-color: var(--color-secondary);
     color: white !important;
     border: none;
-    border-radius: var(--radius-btn);
+    border-radius: 50px;
     padding: 16px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .auth-btn:hover {
-    background-color: var(--color-accent) !important;
-    color: #2d241c !important;
+    background-color: var(--color-primary) !important;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .auth-btn-visitor {
@@ -121,69 +125,54 @@
     background-color: transparent;
     color: var(--color-text);
     padding: 14px;
-    border-radius: var(--radius-btn);
-    border: 1px solid var(--color-secondary);
+    border-radius: 50px;
+    border: 1px solid var(--color-border);
     cursor: pointer;
     margin-top: 15px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: 0.3s;
 }
 
 .auth-btn-visitor:hover {
-    background-color: rgba(151, 175, 110, 0.1);
-}
-
-/* --- GESTION DES ERREURS --- */
-.auth-error {
-    background-color: rgba(255, 0, 0, 0.1);
-    color: #ff5252;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    border: 1px solid rgba(255, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    background-color: var(--color-border);
 }
 
 /* ==========================================================================
-   RESPONSIVE (Mobiles et Tablettes)
+   ERREURS
    ========================================================================== */
+.auth-error {
+    background-color: #fff1f0;
+    color: #f5222d;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border: 1px solid #ffa39e;
+}
 
+/* ==========================================================================
+   RESPONSIVE (320px - 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
     .auth-container {
-        align-items: flex-start; /* Évite d'être caché par le clavier mobile */
-        padding-top: 60px;
+        align-items: flex-start; /* Évite d'être masqué par le clavier */
+        padding-top: 40px;
     }
 
     .auth-card {
-        padding: 40px 20px;
-        max-width: 100%;
-        border: none; /* Plus épuré sur mobile */
-        box-shadow: none; /* On peut laisser le fond plat sur mobile */
+        padding: 30px 20px;
+        border: none;
+        box-shadow: none;
+        background-color: transparent; /* Fond plat sur mobile pour gagner de l'espace */
     }
 
     .auth-logo {
-        height: 80px;
-        margin-bottom: 30px;
-    }
-
-    .auth-input {
-        height: 50px;
-        padding-left: 55px !important; /* Ajustement léger pour mobile */
+        height: 70px;
     }
 
     .auth-forgot-link {
-        text-align: center; /* Plus simple à viser au doigt */
-        margin-top: 5px;
-        margin-bottom: 30px;
-    }
-}
-
-@media (max-width: 380px) {
-    .auth-card {
-        padding: 30px 15px;
+        text-align: center;
+        margin-right: 0;
     }
 }
