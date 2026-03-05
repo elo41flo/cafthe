@@ -97,45 +97,50 @@
     color: var(--color-text-light);
 }
 
-/* ==========================================================================
-   BOUTONS
-   ========================================================================== */
+/* --- BOUTON PRINCIPAL (CONNEXION) --- */
 .auth-btn {
     width: 100%;
     background-color: var(--color-secondary);
     color: white !important;
     border: none;
     border-radius: 50px;
-    padding: 16px;
+    height: 55px; /* On donne une hauteur fixe pour l'alignement */
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
     cursor: pointer;
     transition: 0.3s ease;
+    
+    /* LE FIX POUR L'EMOJI */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Pour permettre de décaler l'icône si besoin */
+    gap: 10px; /* Espace entre l'emoji et le texte */
 }
 
-.auth-btn:hover {
-    background-color: var(--color-primary) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+/* Si tu veux que l'emoji soit vraiment collé à gauche mais le texte centré */
+.auth-btn::before {
+    content: "🚀"; /* Tu peux changer l'emoji ici ou le mettre dans le HTML */
+    font-size: 20px;
 }
 
+/* --- BOUTON VISITEUR (DESIGN ALIGNÉ) --- */
 .auth-btn-visitor {
     width: 100%;
+    height: 50px;
     background-color: transparent;
     color: var(--color-text);
-    padding: 14px;
     border-radius: 50px;
     border: 1px solid var(--color-border);
-    cursor: pointer;
     margin-top: 15px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.auth-btn-visitor:hover {
-    background-color: var(--color-border);
+    font-weight: 600;
+    cursor: pointer;
+    
+    /* ALIGNEMENT FLEX */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 /* ==========================================================================
