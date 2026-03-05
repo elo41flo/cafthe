@@ -42,9 +42,9 @@
 
 .auth-input-icon {
     position: absolute;
-    left: 22px;
+    left: 15px;
     /* Aligné précisément */
-    top: 60%;
+    top: 40%;
     transform: translateY(-50%);
     font-size: 18px;
     color: var(--color-text-light);
