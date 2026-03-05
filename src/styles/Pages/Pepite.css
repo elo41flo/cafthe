@@ -10,7 +10,7 @@
 .pepite-header {
   text-align: center;
   padding: 100px 20px;
-  background: linear-gradient(rgba(255, 255, 255, 0.89), rgba(255,255,255,0.7)), 
+  background: linear-gradient(rgba(255, 255, 255, 0.89), rgba(255, 255, 255, 0.863)), 
               url('/image_pepite.webp') no-repeat center center;
   background-size: cover;
   margin-bottom: 40px;
