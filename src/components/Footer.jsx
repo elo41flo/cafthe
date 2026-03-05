@@ -1,96 +1,58 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Pages/PlanDuSite.css";
+import "../styles/Components/Footer.css";
 
-const PlanDuSite = () => {
+const Footer = () => {
   return (
-    <div className="sitemap-container">
-      <h1 className="sitemap-main-title">Plan du site</h1>
-      <p className="sitemap-intro">
-        Retrouvez ici l'ensemble des rubriques de la boutique Caf’Thé.
-      </p>
-
-      <div className="sitemap-grid">
-        {/* SECTION 1 : LA BOUTIQUE */}
-        <section className="sitemap-section">
-          <h2 className="sitemap-h2">Notre Boutique</h2>
-          <ul className="sitemap-list">
-            <li>
-              <Link to="/boutique">Tous nos produits</Link>
-            </li>
-            <li>
-              <Link to="/boutique?categorie=café">Cafés de Terroirs</Link>
-            </li>
-            <li>
-              <Link to="/boutique?categorie=thé">Thés d'Exception</Link>
-            </li>
-            <li>
-              <Link to="/pepite">La Pépite du moment</Link>
-            </li>
-          </ul>
-        </section>
-
-        {/* SECTION 2 : VOTRE ESPACE */}
-        <section className="sitemap-section">
-          <h2 className="sitemap-h2">Votre Espace</h2>
-          <ul className="sitemap-list">
-            <li>
-              <Link to="/login">Connexion</Link>
-            </li>
-            <li>
-              <Link to="/register">Création de compte</Link>
-            </li>
-            <li>
-              <Link to="/panier">Mon Panier</Link>
-            </li>
-            <li>
-              <Link to="/mon-compte">Mes Commandes</Link>
-            </li>
-          </ul>
-        </section>
-
-        {/* SECTION 3 : L'UNIVERS CAF'THÉ */}
-        <section className="sitemap-section">
-          <h2 className="sitemap-h2">L'Univers Caf'Thé</h2>
-          <ul className="sitemap-list">
-            <li>
-              <Link to="/">Accueil</Link>
-            </li>
-            <li>
-              <Link to="/">Pepite</Link>
-            </li>
-            <li>
-              <Link to="/univers">Notre Univers</Link>
-            </li>
-            <li>
-              <Link to="/aide-contact">Mon compte</Link>
-            </li>
-            <li>
-              <Link to="/aide-contact">Aide & Contact</Link>
-            </li>
-          </ul>
-        </section>
-
-        {/* SECTION 4 : INFORMATIONS LÉGALES */}
-        <section className="sitemap-section">
-          <h2 className="sitemap-h2">Informations Légales</h2>
-          <ul className="sitemap-list">
-            <li>
-              <Link to="/mentions-legales">Mentions Légales</Link>
-            </li>
-            <li>
-              <Link to="/cgv">Conditions Générales de Vente</Link>
-            </li>
-            <li>
-              <Link to="/politique-de-confidentialite">
-                Politique de Confidentialité
-              </Link>
-            </li>
-          </ul>
-        </section>
+    <footer className="footer-container">
+      {/* GAUCHE : LOGO */}
+      <div className="footer-logo-wrapper">
+        <Link to="/">
+          <img src="/logo.webp" alt="Caf'Thé Logo" className="footer-logo" />
+        </Link>
       </div>
-    </div>
+
+      {/* CENTRE : LIENS STRATÉGIQUES */}
+      <nav className="footer-links-wrapper">
+        <Link to="/mentions-legales" className="footer-link">
+          Mentions légales
+        </Link>
+        <Link to="/cgv" className="footer-link">
+          CGV
+        </Link>
+        <Link to="/politique-de-confidentialite" className="footer-link">
+          Confidentialité
+        </Link>
+        <Link to="/plan-du-site" className="footer-link">
+          Plan du site
+        </Link>
+      </nav>
+
+      {/* DROITE : RÉSEAUX SOCIAUX */}
+      <div className="footer-socials">
+        <a
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-social-icon"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z" />
+          </svg>
+        </a>
+        <a
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-social-icon"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.412.56.216.96.474 1.38.894.42.42.678.82.894 1.38.163.422.358 1.057.412 2.227.059 1.266.071 1.646.071 4.85s-.012 3.584-.07 4.85c-.054 1.17-.249 1.805-.412 2.227-.216.56-.474.96-.894 1.38-.42.42-.82.678-1.38.894-.422.163-1.057.358-2.227.412-1.266.059-1.646.071-4.85.071s-3.584-.012-4.85-.07c-1.17-.054-1.805-.249-2.227-.412-.56-.216-.96-.474-1.38-.894-.42-.42-.678-.82-.894-1.38-.163-.422-.358-1.057-.412-2.227-.059-1.266-.071-1.646-.071-4.85s.012-3.584.07-4.85c.054-1.17.249-1.805.412-2.227.216-.56.474-.96.894-1.38.42-.42.82-.678 1.38-.894.422-.163 1.057-.358 2.227-.412 1.266-.059 1.646-.071 4.85-.071M12 0C8.741 0 8.333.014 7.053.072 5.775.131 4.907.333 4.145.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.145c-.297.762-.5 1.63-.558 2.908C.014 8.333 0 8.741 0 12s.014 3.667.072 4.947c.059 1.278.261 2.146.558 2.908.306.789.717 1.459 1.384 2.126s1.336 1.079 2.126 1.384c.762.297 1.63.5 2.908.558C8.333 23.986 8.741 24 12 24s3.667-.014 4.947-.072c1.278-.059 2.146-.261 2.908-.558.789-.306 1.459-.717 2.126-1.384s1.079-1.336 1.384-2.126c.297-.762.5-1.63.558-2.908.058-1.28.072-1.687.072-4.947s-.014-3.667-.072-4.947c-.059-1.278-.261-2.146-.558-2.908-.306-.789-.717-1.459-1.384-2.126s-1.336-1.079-2.126-1.384c-.762-.297-1.63-.5-2.908-.558C15.667.014 15.259 0 12 0z" />
+          </svg>
+        </a>
+      </div>
+    </footer>
   );
 };
 
-export default PlanDuSite;
+export default Footer;
