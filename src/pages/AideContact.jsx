@@ -1,12 +1,10 @@
+// Importations
 import React from "react";
-import "../styles/Pages/AideContact.css"; // Import des styles personnalisés
+import "../styles/Pages/AideContact.css";
 
 const AideContact = () => {
   return (
     <div className="aide-container">
-      {/* --- HEADER --- 
-          Utilisation de <header> pour la sémantique. Les <br /> sont conservés pour le design desktop.
-      */}
       <header className="aide-header">
         <h1 className="aide-main-title">
           Besoin d’aide ? On <br /> s’occupe de tout.
@@ -18,7 +16,10 @@ const AideContact = () => {
         </p>
       </header>
 
-      {/* --- SECTION FAQ --- */}
+      {/* 
+        SECTION FAQ 
+        Organisation des questions fréquentes sous forme de blocs pour une lecture rapide.
+      */}
       <section className="aide-section">
         <h2 className="aide-h2">Foire Aux Questions (FAQ)</h2>
         <p className="aide-subtitle">
@@ -26,7 +27,6 @@ const AideContact = () => {
         </p>
 
         <div className="faq-wrapper">
-          {/* Bloc Livraison */}
           <div className="faq-item">
             <span className="faq-bullet">●</span>
             <div className="faq-content">
@@ -46,7 +46,6 @@ const AideContact = () => {
             </div>
           </div>
 
-          {/* Bloc Produits */}
           <div className="faq-item">
             <span className="faq-bullet">●</span>
             <div className="faq-content">
@@ -68,7 +67,10 @@ const AideContact = () => {
         </div>
       </section>
 
-      {/* --- SECTION FORMULAIRE --- */}
+      {/* 
+          SECTION FORMULAIRE
+          J'utilise Formspree pour gérer l'envoi des mails sans avoir besoin d'un serveur backend complet.
+      */}
       <section className="aide-section">
         <h2 className="aide-h2">Nous envoyer un message</h2>
         <p className="aide-subtitle">
@@ -80,13 +82,14 @@ const AideContact = () => {
           method="POST"
           className="aide-form fade-in"
         >
+          {/* Grille pour aligner proprement les champs Nom, Sujet et Email */}
           <div className="aide-form-grid">
             <input
               type="text"
               name="sujet"
               placeholder="Sujet de votre demande"
               className="aide-input"
-              required
+              required // Le champ doit être rempli pour soumettre le formulaire
             />
             <input
               type="text"
@@ -110,7 +113,7 @@ const AideContact = () => {
             required
           />
 
-          {/* AJOUT : Case de consentement RGPD */}
+          {/* AJOUT RGPD */}
           <div className="aide-form-rgpd">
             <input
               type="checkbox"
@@ -131,7 +134,10 @@ const AideContact = () => {
         </form>
       </section>
 
-      {/* --- SECTION LOCALISATION --- */}
+      {/* 
+          SECTION LOCALISATION 
+          Affichage des infos pratiques et intégration d'une carte interactive.
+      */}
       <section className="aide-section">
         <h2 className="aide-h2">Nous trouver à Blois</h2>
         <p className="aide-subtitle">
@@ -152,12 +158,13 @@ const AideContact = () => {
           </p>
         </div>
 
-        {/* Intégration de la Google Maps avec l'URL corrigée pour React. 
-            Note : On utilise {{ border: 0 }} car l'attribut style attend un objet en JSX.
+        {/* 
+            Intégration de Google Maps via une iframe. 
+            J'utilise l'attribut loading="lazy" pour ne charger la carte que si l'utilisateur descend sur la page (Eco-conception).
         */}
         <div className="map-wrapper">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.136896264906!2d1.3259833768853754!3d47.58410298950435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47fb0664e52b217d%3A0xc3f8f11736b42b10!2sBlois!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.123!2d1.33!3d47.58!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDM0JzQ4LjAiTiAxwrAxOSc0OC4wIkU!5e0!3m2!1sfr!2sfr!4v123456789"
             width="100%"
             height="450"
             className="google-map"

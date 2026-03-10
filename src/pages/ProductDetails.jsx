@@ -1,10 +1,14 @@
+// Importations
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import "../styles/Pages/ProductDetails.css";
 
 const ProductDetails = () => {
+  // Je récupère l'ID du produit directement depuis l'URL
   const { id } = useParams();
+
+  // Mes états pour gérer les données, le chargement et les options choisies
   const [produit, setProduit] = useState(null);
   const [loading, setLoading] = useState(true);
   const [format, setFormat] = useState(null);
@@ -16,6 +20,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduit = async () => {
       try {
+        // Je récupère la liste des produits pour trouver celui qui correspond à l'ID
         const response = await fetch(`${apiUrl}/api/produits`);
         const data = await response.json();
         if (data && data.produits) {
@@ -23,6 +28,7 @@ const ProductDetails = () => {
             (p) => p.numero_produit === parseInt(id),
           );
           setProduit(found);
+          // Si c'est du café, je sélectionne "Grain" par défaut
           if (found && found.categorie === "Cafe") setFormat("Grain");
         }
       } catch (error) {
@@ -32,25 +38,30 @@ const ProductDetails = () => {
       }
     };
     fetchProduit();
+    // Remonte automatiquement en haut de page lors de l'affichage
     window.scrollTo(0, 0);
   }, [id, apiUrl]);
 
+  // Fonction pour ajouter le produit configuré dans le localStorage
   const handleAddToCart = () => {
     if (!produit) return;
     const panier = JSON.parse(localStorage.getItem("panier")) || [];
     const isCafe = produit.categorie === "Cafe";
 
-    // LOGIQUE DE POIDS (Identique à ta ProductCard pour être raccord)
-    const id = Number(produit.numero_produit);
+    // On définit 100g pour le thé et 250g pour le café
+    const productId = Number(produit.numero_produit);
     const estUnThe =
-      (id >= 201 && id <= 230) ||
+      (productId >= 201 && productId <= 230) ||
       (produit.nom_produit || "").toLowerCase().includes("the");
     const poidsValeur = estUnThe ? 100 : 250;
 
-    // Identifiant unique qui inclut le format pour ne pas mélanger Grain et Capsule dans le panier
+    // Je crée un ID unique qui combine l'ID et le format (ex: 101-Grain)
+    // Cela permet d'avoir deux fois le même café mais dans des formats différents dans le panier
     const uniqueId = isCafe
       ? `${produit.numero_produit}-${format}`
       : `${produit.numero_produit}`;
+
+    // Calcul du prix unitaire TTC
     const prixUnitaire =
       Number(produit.prix_ttc) || Number(produit.prix_unitaire_HT) * 1.2;
 
@@ -59,31 +70,33 @@ const ProductDetails = () => {
     );
 
     if (existingIndex !== -1) {
+      // Si le produit exact existe déjà, on augmente simplement la quantité
       panier[existingIndex].quantite += quantite;
     } else {
+      // Sinon, on ajoute un nouvel objet "article" au tableau
       panier.push({
         uniqueId,
         id: produit.numero_produit,
         nom: produit.nom_produit,
-        // ON ENVOIE JUSTE LE NOM DE L'IMAGE (Le CartDrawer s'occupe de l'URL)
         image: produit.image,
-
-        // ON SÉPARE FORMAT ET POIDS
         format: isCafe ? format : null,
         poids_sachet: poidsValeur,
-
         prix: prixUnitaire,
         quantite: quantite,
       });
     }
 
+    // Sauvegarde et notification pour mettre à jour les composants Header/Drawer
     localStorage.setItem("panier", JSON.stringify(panier));
     window.dispatchEvent(new Event("cartUpdate"));
     window.dispatchEvent(new Event("openCartDrawer"));
   };
 
+  // Affichage pendant le chargement des données
   if (loading)
     return <div className="details-loader">Chargement de votre pépite...</div>;
+
+  // Sécurité si le produit n'existe pas en base
   if (!produit)
     return (
       <div className="details-error">
@@ -112,7 +125,6 @@ const ProductDetails = () => {
       </Link>
 
       <div className="details-layout fade-in">
-        {/* COLONNE GAUCHE : IMAGE */}
         <div className="details-image-side">
           <div className="details-image-wrapper">
             <img
@@ -120,13 +132,13 @@ const ProductDetails = () => {
               alt={produit.nom_produit}
               className="details-image"
             />
+            {/* Alerte visuelle pour créer un sentiment d'urgence si le stock est bas */}
             {stock < 5 && stock > 0 && (
               <div className="stock-badge-alert">Dernières unités !</div>
             )}
           </div>
         </div>
 
-        {/* COLONNE DROITE : INFOS */}
         <div className="details-info-side">
           {produit.origine && (
             <span className="details-origin-tag">
@@ -141,6 +153,7 @@ const ProductDetails = () => {
             <span className="details-tva">TVA incluse</span>
           </div>
 
+          {/* Indicateur de stock dynamique */}
           <p
             className={`details-stock-status ${stock > 0 ? "in-stock" : "out-of-stock"}`}
           >
@@ -149,7 +162,6 @@ const ProductDetails = () => {
               : "○ Rupture de stock"}
           </p>
 
-          {/* SÉLECTEUR DE FORMAT (CAFÉ UNIQUEMENT) */}
           {produit.categorie === "Cafe" && (
             <div className="details-option-section">
               <p className="details-label">CHOISIR LE FORMAT :</p>
@@ -167,7 +179,6 @@ const ProductDetails = () => {
             </div>
           )}
 
-          {/* SÉLECTEUR DE QUANTITÉ */}
           <div className="details-option-section">
             <p className="details-label">QUANTITÉ :</p>
             <div className="details-qty-picker">
@@ -187,6 +198,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
+          {/* Bouton d'action principal, désactivé si le stock est à zéro */}
           <button
             onClick={handleAddToCart}
             className="btn-add-to-cart-main"
@@ -195,7 +207,7 @@ const ProductDetails = () => {
             {stock > 0 ? "AJOUTER AU PANIER" : "BIENTÔT DE RETOUR"}
           </button>
 
-          {/* DESCRIPTION RSE / HISTOIRE */}
+          {/* Section Histoire/RSE pour valoriser le produit */}
           <div className="details-description-box">
             <h3 className="description-box-title">L'histoire de ce produit</h3>
             <p className="description-content">{produit.description}</p>

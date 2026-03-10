@@ -1,14 +1,13 @@
+// Importations
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Pages/MonCompte.css";
-
-// Import des sous-composants
 import FormProfil from "../pages/FormProfil.jsx";
 import FormAdresse from "../pages/FormAdress.jsx";
 import FormPassword from "../pages/FormPassword.jsx";
 
-/**
- * Simule le statut de livraison Mondial Relay en fonction de la date
+/*
+    Simule le statut de livraison Mondial Relay en fonction de la date
  */
 const getDeliveryStatus = (dateCommande, typeLivraison) => {
   if (typeLivraison === "magasin" || !typeLivraison) {
@@ -25,8 +24,8 @@ const getDeliveryStatus = (dateCommande, typeLivraison) => {
   return { label: "Disponible au point relais", class: "status-delivered" };
 };
 
-/**
- * Calcule les infos d'abonnement
+/*
+  Calcule les infos d'abonnement
  */
 const getSubscriptionDetails = (dateDebut, dureeMois) => {
   if (!dateDebut || !dureeMois) return null;
@@ -94,8 +93,6 @@ const MonCompte = () => {
     fetchData();
   }, [fetchData]);
 
-  // --- MODIFICATION 1 : FONCTION POUR RECOMMANDER ---
-  // --- MODIFICATION : FONCTION POUR RECOMMANDER CORRIGÉE ---
   const handleReorder = async (orderId) => {
     try {
       const token = localStorage.getItem("token");
@@ -116,7 +113,6 @@ const MonCompte = () => {
           const formattedItems = items.map((item) => {
             const productId = item.id || item.numero_produit;
             return {
-              // ON AJOUTE LE uniqueId INDISPENSABLE POUR TON PANIER
               uniqueId: `${productId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
               id: productId,
               nom: item.nom || item.nom_produit,
@@ -372,7 +368,7 @@ const MonCompte = () => {
           </div>
         </section>
 
-        {/* ZONE DE DANGER */}
+        {/* Suppression du compte */}
         <section className="account-section delete-account-zone">
           <h2 className="account-section-title danger-title">
             Supprimez votre compte

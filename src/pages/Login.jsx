@@ -1,3 +1,4 @@
+// Importations
 import React, { useContext, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
@@ -29,7 +30,7 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // CAS SPÉCIAL : Client créé en magasin sans MDP (isNewFromStore renvoyé par le back)
+        // Client créé en magasin sans MDP (isNewFromStore renvoyé par le back)
         if (response.status === 403 && data.isNewFromStore) {
           navigate(`/setup-password?email=${encodeURIComponent(email)}`);
           return;

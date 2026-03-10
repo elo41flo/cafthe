@@ -1,6 +1,7 @@
+// Importations
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Pages/LivraisonRetrait.css"; // Import des styles
+import "../styles/Pages/LivraisonRetrait.css";
 
 const LivraisonRetrait = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const LivraisonRetrait = () => {
     <div className="delivery-container">
       <h1 className="delivery-title">Mode de Livraison</h1>
 
-      {/* --- SECTION COORDONNÉES --- */}
+      {/* SECTION COORDONNÉES */}
       <div className="coord-section">
         <h2 className="section-title">Mes coordonnées pour cette commande</h2>
 
@@ -126,7 +127,7 @@ const LivraisonRetrait = () => {
         )}
       </div>
 
-      {/* --- OPTIONS DE LIVRAISON --- */}
+      {/* OPTIONS DE LIVRAISON */}
       <div className="delivery-options">
         <div
           className={`method-card ${method === "domicile" ? "active" : ""}`}

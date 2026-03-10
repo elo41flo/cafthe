@@ -1,16 +1,16 @@
+// Importations
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Pour la navigation dynamique
+import { Link } from "react-router-dom";
 import "../styles/Pages/Pepite.css";
 
 const Pepite = () => {
-  // --- ÉTATS (States) ---
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Récupération de l'URL API depuis les variables d'environnement
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // --- LOGIQUE DE RÉCUPÉRATION ---
+  // LOGIQUE DE RÉCUPÉRATION
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,11 +32,9 @@ const Pepite = () => {
     fetchData();
   }, [apiUrl]);
 
-  // --- FONCTION UTILITAIRE ---
-  // Cherche un produit spécifique dans le tableau par son ID (numero_produit)
+  // Cherche un produit spécifique dans le tableau par son ID
   const findById = (id) => produits.find((p) => p.numero_produit === id);
 
-  // --- AFFICHAGE ÉTAT CHARGEMENT ---
   if (loading) {
     return (
       <div className="pepite-loading">
@@ -47,7 +45,6 @@ const Pepite = () => {
 
   return (
     <div className="pepite-page">
-      {/* Header de la page */}
       <header className="pepite-header">
         <h1 className="pepite-main-title">Les Pépites de Caf’Thé</h1>
         <p className="pepite-main-subtitle">
@@ -90,12 +87,8 @@ const Pepite = () => {
   );
 };
 
-/**
- * Sous-composant pour les cartes "Pépites"
- * Utilise la destructuration pour récupérer les props
- */
 const PépiteCard = ({ titre, sousTitre, produit, labelBtn }) => {
-  // Sécurité : si le produit n'a pas pu être récupéré via l'API, on n'affiche rien
+  // Si le produit n'a pas pu être récupéré via l'API, on n'affiche rien
   if (!produit) return null;
 
   return (

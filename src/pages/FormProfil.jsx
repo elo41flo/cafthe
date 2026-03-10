@@ -1,35 +1,44 @@
+// Importations
 import React, { useState } from "react";
-import "../styles/Pages/FormProfil.css"; // Import des styles
+import "../styles/Pages/FormProfil.css";
 
 const FormProfil = ({ user, onBack, apiUrl, fetchUserData }) => {
+  // Initialisation de l'état avec les données actuelles de l'utilisateur
   const [formData, setFormData] = useState({
     nom: user?.nom_client || "",
     prenom: user?.prenom_client || "",
     telephone: user?.telephone || "",
   });
 
+  // Fonction pour envoyer les modifications au serveur
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // On empêche le rechargement de la page au clic sur le bouton
     try {
+      // Récupération du token JWT pour prouver que l'utilisateur est bien connecté
       const token = localStorage.getItem("token");
+
+      // Appel API en PUT
       const res = await fetch(`${apiUrl}/api/clients/update-profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // On envoie le token pour sécuriser l'accès
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // On transforme l'objet JS en chaîne JSON
       });
 
       if (res.ok) {
         alert("Profil mis à jour !");
-        await fetchUserData(); // Rafraîchit les données dans le composant parent
+        // Je demande au composant parent de rafraîchir les données pour mettre à jour l'affichage
+        await fetchUserData();
+        // Je rappelle la fonction onBack pour quitter le formulaire
         onBack();
       } else {
         alert("Erreur lors de la mise à jour.");
       }
     } catch (err) {
-      console.error(err);
+      // Log de l'erreur dans la console pour faciliter le débogage
+      console.error("Erreur update-profile:", err);
     }
   };
 
@@ -41,6 +50,7 @@ const FormProfil = ({ user, onBack, apiUrl, fetchUserData }) => {
 
       <h2 className="profile-title">Modifier mon profil</h2>
 
+      {/* Début du formulaire de modification */}
       <form onSubmit={handleSubmit} className="profile-form">
         <label htmlFor="nom">Nom</label>
         <input
@@ -63,6 +73,7 @@ const FormProfil = ({ user, onBack, apiUrl, fetchUserData }) => {
         <label htmlFor="tel">Téléphone</label>
         <input
           id="tel"
+          type="tel"
           className="profile-input"
           value={formData.telephone}
           onChange={(e) =>

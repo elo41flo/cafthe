@@ -1,10 +1,7 @@
-// Importation
+// Importations
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Pages/Home.css";
-
-// CORRECTION : ON SUPPRIME L'IMPORT DE L'IMAGE ICI
-
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

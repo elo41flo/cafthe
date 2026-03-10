@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Pages/Legals.css"; // On importe le style commun aux pages légales
+import "../styles/Pages/Legals.css";
 
 const CGV = () => {
   return (

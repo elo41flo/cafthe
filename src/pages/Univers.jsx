@@ -1,10 +1,9 @@
 import React from "react";
-import "../styles/Pages/Univers.css"; // Import du style
+import "../styles/Pages/Univers.css";
 
 const Univers = () => {
   return (
     <div className="univers-container">
-      {/* SECTION HEADER */}
       <header className="univers-header">
         <h1 className="univers-main-title">
           L’Art de la Dégustation <br /> & Nos Engagements
@@ -15,7 +14,6 @@ const Univers = () => {
         </p>
       </header>
 
-      {/* SECTION NOS ENGAGEMENTS */}
       <section className="univers-section">
         <h2 className="univers-h2">Nos Engagements pour la Planète</h2>
         <p className="univers-subtitle">
@@ -50,7 +48,6 @@ const Univers = () => {
         </ul>
       </section>
 
-      {/* SECTION GUIDE BARISTA : CAFÉ */}
       <section className="univers-section">
         <h2 className="univers-h2">Le Guide du Barista : Réussir son Café</h2>
         <p className="univers-subtitle">
@@ -91,7 +88,6 @@ const Univers = () => {
         </div>
       </section>
 
-      {/* SECTION RITUEL DU THÉ */}
       <section className="univers-section">
         <h2 className="univers-h2">Le Rituel du Thé : L’Infusion Parfaite</h2>
         <p className="univers-subtitle">
@@ -129,7 +125,6 @@ const Univers = () => {
         </table>
       </section>
 
-      {/* SECTION ENTRETIEN */}
       <section className="univers-section">
         <h2 className="univers-h2">Entretenir son Matériel</h2>
         <p className="univers-subtitle">

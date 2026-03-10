@@ -1,3 +1,4 @@
+// Importations
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PayPalButtons } from "@paypal/react-paypal-js";
@@ -16,7 +17,7 @@ const Paiement = () => {
   // Configuration de l'URL API (Localhost ou Production)
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // --- LOGIQUE DE CALCUL ---
+  // LOGIQUE DE CALCUL
   const sousTotal = cartItems.reduce(
     (acc, item) =>
       acc + (Number(item.prix) || 0) * (Number(item.quantite) || 0),
@@ -83,7 +84,7 @@ const Paiement = () => {
       <div className="paypal-button-container">
         <PayPalButtons
           style={{ layout: "vertical", shape: "pill", label: "pay" }}
-          // 1. Création de la commande côté PayPal
+          // Création de la commande côté PayPal
           createOrder={(data, actions) => {
             return actions.order.create({
               purchase_units: [
@@ -97,7 +98,7 @@ const Paiement = () => {
               ],
             });
           }}
-          // 2. Exécution après validation du paiement PayPal
+          // Exécution après validation du paiement PayPal
           onApprove={async (data, actions) => {
             try {
               // Capture du paiement
