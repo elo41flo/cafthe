@@ -5,35 +5,41 @@ import "../styles/Pages/ChoixRelais.css";
 
 const ChoixRelais = () => {
   const navigate = useNavigate();
-  // État pour stocker les infos du point relais choisi sur la carte
+  
+  // 1. État pour stocker les infos du point relais choisi
+  // Cet état permet de lier le widget (externe) à l'interface React
   const [selectedRelais, setSelectedRelais] = useState(null);
 
-  // useEffect pour initialiser le widget Mondial Relay au chargement du composant
+  // 2. Initialisation du widget Mondial Relay
   useEffect(() => {
-    // Je vérifie que jQuery et le script de Mondial Relay sont bien chargés dans la fenêtre
+    // Sécurité : Je vérifie que jQuery ($) et le script du widget sont bien chargés
+    // C'est crucial car React charge plus vite que les scripts externes du index.html
     if (window.$ && window.$("#Zone_Widget").MR_ParcelShopPicker) {
-      // Configuration du widget selon la documentation technique de Mondial Relay
+      
+      // Configuration du widget selon la documentation technique officielle
       window.$("#Zone_Widget").MR_ParcelShopPicker({
-        Target: "#Target_Result",
-        Brand: "BDTEST  ", // Mon code enseigne de test
+        Target: "#Target_Result", 
+        Brand: "BDTEST  ", // Code enseigne (test ici, à remplacer en production)
         Country: "FR",
-        PostCode: "41000", // Ville de Blois par défaut
-        ColLivMod: "24R", // Mode de livraison standard en point relais
+        PostCode: "41000", // Localisation par défaut (Blois)
+        ColLivMod: "24R",  // Mode de livraison (Point Relais L)
         NbResults: "7",
-        Responsive: true, // Option importante pour que la carte s'adapte aux mobiles
+        Responsive: true,  // Adaptabilité automatique aux écrans mobiles
         ShowResultsOnMap: true,
-        // Cette fonction s'exécute quand l'utilisateur clique sur un relais
+        
+        // 3. Callback : Fonction exécutée lors de la sélection d'un point
+        // C'est ici que l'on récupère les données "brutes" du widget pour React
         OnParcelShopSelected: (data) => {
-          setSelectedRelais(data); // Je stocke les infos du relais dans mon état
+          setSelectedRelais(data); 
         },
       });
     }
-  }, []); // Le tableau vide [] fait que l'initialisation ne se lance qu'une seule fois
+  }, []); // Exécution unique au montage du composant
 
-  // Fonction pour enregistrer le choix et passer à l'étape suivante
+  // 4. Gestion de la confirmation
   const handleConfirm = () => {
     if (selectedRelais) {
-      // Je sauvegarde le choix dans le localStorage pour le récupérer sur la page de paiement
+      // Persistance du choix pour l'étape finale du tunnel d'achat
       localStorage.setItem("relais_selected", JSON.stringify(selectedRelais));
       navigate("/paiement");
     }
@@ -46,27 +52,26 @@ const ChoixRelais = () => {
         <p>Sélectionnez votre lieu de retrait</p>
       </div>
 
-      {/* Conteneur où le script externe va injecter la carte et la liste */}
+      {/* 5. Conteneur d'injection */}
+      {/* C'est ici que le script externe vient "dessiner" la carte et la liste */}
       <div id="Zone_Widget" className="MRW-Widget"></div>
 
-      {/* Barre de validation fixe en bas de l'écran pour l'ergonomie mobile */}
+      {/* 6. Feedback utilisateur (UX) */}
+      {/* Barre de validation fixe (Sticky) pour une meilleure ergonomie sur mobile */}
       <div className="relais-footer-sticky">
         {selectedRelais ? (
-          // Si un relais est sélectionné, j'affiche son nom et sa ville
           <div className="relais-info-mini">
             <strong>{selectedRelais.Nom}</strong>
             <p>{selectedRelais.Ville}</p>
           </div>
         ) : (
-          // Sinon, j'affiche un petit message d'aide
           <p className="relais-hint">Cliquez sur un point de la carte</p>
         )}
 
-        {/* Le bouton est désactivé tant que l'utilisateur n'a pas choisi de relais */}
         <button
           onClick={handleConfirm}
           className="btn-relais-next"
-          disabled={!selectedRelais}
+          disabled={!selectedRelais} // Empêche de valider sans sélection
         >
           Valider ce choix
         </button>
