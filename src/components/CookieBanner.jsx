@@ -17,7 +17,6 @@ const CookieBanner = () => {
     setIsVisible(false);
 
     if (status === "accepted") {
-      // Ici, tu peux lancer tes scripts (PayPal, Analytics, etc.)
       console.log("Cookies acceptés");
     }
   };
