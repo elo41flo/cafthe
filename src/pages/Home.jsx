@@ -67,7 +67,7 @@ const Home = () => {
           </div>
           <div className="box-image-wrapper">
             <img
-              src="/public/image_accueil_3.webp"
+              src="/image_accueil_3.webp"
               alt="Box Caf'Thé"
               className="box-img"
             />
