@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Components/ProductCard.css"; // Importation des nouveaux styles
+import "../styles/Components/ProductCard.css";
 
 const ProductCard = ({ produit, onQuickView }) => {
+  // Configuration de l'environnement et des données de base
   const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:3000";
   const imageUrl = `${apiUrl}/images/${produit.image}`;
   const stock = Number(produit.stock);
-
-  // --- LOGIQUE DE POIDS ---
   const id = Number(produit.numero_produit);
   const nomBas = (produit.nom_produit || "").toLowerCase();
+  
   let poidsTexte = "";
   let poidsValeur = 1;
 
+  // On catégorise les produits pour adapter l'affichage du poids/format
   const estUnThe =
     (id >= 201 && id <= 230) ||
     nomBas.includes("the") ||
@@ -30,11 +31,14 @@ const ProductCard = ({ produit, onQuickView }) => {
     poidsTexte = "vendu à l'unité";
     poidsValeur = 1;
   } else {
+    // Par défaut
     poidsTexte = "le sachet de 250g";
     poidsValeur = 250;
   }
 
+  // Gestion de l'ajout au panier
   const handleAddToCart = () => {
+    // Récupération du panier existant ou création d'un tableau vide
     const currentCart = JSON.parse(localStorage.getItem("panier")) || [];
 
     const itemToAdd = {
@@ -42,33 +46,34 @@ const ProductCard = ({ produit, onQuickView }) => {
       id: produit.numero_produit,
       nom: produit.nom_produit,
       prix: parseFloat(produit.prix_ttc) || 0,
-      image: produit.image, // Juste le nom du fichier
+      image: produit.image,
       quantite: 1,
-      // ON UTILISE CETTE CLÉ UNIQUE :
       poids_sachet: poidsValeur,
+      // Création d'un ID unique pour éviter les conflits dans le panier
       uniqueId: Date.now() + Math.random(),
     };
 
+    // Sauvegarde dans le localStorage
     localStorage.setItem("panier", JSON.stringify([...currentCart, itemToAdd]));
+    
+    // Émission d'événements personnalisés pour mettre à jour l'interface
     window.dispatchEvent(new Event("cartUpdate"));
     window.dispatchEvent(new Event("openCartDrawer"));
   };
 
   return (
     <div className="product-card">
+      {/* Gestion visuelle des stocks */}
       {stock === 0 && <div className="product-card-badge">RUPTURE</div>}
 
       <div className="product-image-container">
-        <img
-          src={imageUrl}
-          alt={produit.nom_produit}
-          className="product-image"
-        />
+        <img src={imageUrl} alt={produit.nom_produit} className="product-image" />
       </div>
 
       <div className="product-card-content">
         <h3 className="product-card-title">{produit.nom_produit}</h3>
 
+        {/* Alerte de stock faible pour inciter à l'achat */}
         {stock > 0 && stock < 5 && (
           <p className="product-stock-alert">⚠️ Plus que {stock} en stock !</p>
         )}
@@ -84,28 +89,16 @@ const ProductCard = ({ produit, onQuickView }) => {
           </div>
 
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            {/* Affichage conditionnel selon la disponibilité */}
             {stock > 0 ? (
               <>
-                <button
-                  onClick={onQuickView}
-                  className="product-icon-btn"
-                  title="Aperçu rapide"
-                >
+                <button onClick={onQuickView} className="product-icon-btn" title="Aperçu rapide">
                   👁️
                 </button>
-
-                <button
-                  onClick={handleAddToCart}
-                  className="product-icon-btn"
-                  title="Ajouter au panier"
-                >
+                <button onClick={handleAddToCart} className="product-icon-btn" title="Ajouter au panier">
                   🛒
                 </button>
-
-                <Link
-                  to={`/produit/${produit.numero_produit}`}
-                  className="product-btn-details"
-                >
+                <Link to={`/produit/${produit.numero_produit}`} className="product-btn-details">
                   Détails
                 </Link>
               </>

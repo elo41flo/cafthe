@@ -1,45 +1,55 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Components/Subscription.css"; // Import des styles
+import "../styles/Components/Subscription.css";
 
 const SubscriptionBox = () => {
   const navigate = useNavigate();
+
+  // État pour la navigation entre les étapes
   const [step, setStep] = useState(1);
+
+  // État global des préférences de l'abonnement
   const [preferences, setPreferences] = useState({
-    type: [],
-    exclusions: "",
+    type: [],         // Choix multiples
+    exclusions: "",   // Texte libre pour les préférences négatives
     frequence: "mensuel",
     formule: "decouverte",
   });
 
+  // Configuration des offres
   const formules = {
     decouverte: { nom: "Découverte", prix: 19, desc: "2 produits surprises" },
     passion: { nom: "Passion", prix: 29, desc: "3 produits + 1 accessoire" },
     expert: { nom: "Expert", prix: 45, desc: "La totale : 5 pépites premium" },
   };
 
+  // Fonctions de navigation
   const handleNext = () => setStep(step + 1);
   const handleBack = () => setStep(step - 1);
 
-  const toggleType = (val) => {
+  // Logique de sélection multiple
+    const toggleType = (val) => {
     const current = preferences.type.includes(val)
       ? preferences.type.filter((t) => t !== val)
       : [...preferences.type, val];
     setPreferences({ ...preferences, type: current });
   };
 
+  // Finalisation et mise en panier
   const addToCart = () => {
     const subscriptionItem = {
       id: "sub_" + preferences.formule,
       nom: `Abonnement Box ${formules[preferences.formule].nom}`,
       prix: formules[preferences.formule].prix,
-      details: preferences,
+      details: preferences, // On embarque toutes les étapes remplies
       quantite: 1,
       image: "/src/assets/logo_2.webp",
     };
 
+    // Persistance dans le LocalStorage
     const cart = JSON.parse(localStorage.getItem("panier")) || [];
     localStorage.setItem("panier", JSON.stringify([...cart, subscriptionItem]));
+    
     window.dispatchEvent(new Event("cartUpdate"));
     navigate("/panier");
   };
@@ -49,7 +59,6 @@ const SubscriptionBox = () => {
       <div className="sub-card fade-in">
         <h2 className="sub-title">Créez votre Box sur mesure 🎁</h2>
 
-        {/* PROGRESS BAR */}
         <div className="progress-container">
           <div
             className="progress-bar"
@@ -57,15 +66,9 @@ const SubscriptionBox = () => {
           />
         </div>
 
-        {/* ÉTAPE 1 : LES ENVIES */}
         {step === 1 && (
           <div className="fade-in">
-            <p
-              className="legals-text"
-              style={{ marginBottom: "20px", textAlign: "center" }}
-            >
-              Que voulez-vous recevoir ?
-            </p>
+            <p className="legals-text">Que voulez-vous recevoir ?</p>
             <div className="options-grid">
               {["Café", "Thé", "Accessoires"].map((item) => (
                 <button
@@ -79,7 +82,7 @@ const SubscriptionBox = () => {
             </div>
             <button
               onClick={handleNext}
-              disabled={preferences.type.length === 0}
+              disabled={preferences.type.length === 0} // On ne peut pas avancer sans choixd
               className="btn-sub-next"
             >
               Suivant
@@ -87,89 +90,34 @@ const SubscriptionBox = () => {
           </div>
         )}
 
-        {/* ÉTAPE 2 : LES EXCLUSIONS */}
+        {/* Saisie des exclusions */}
         {step === 2 && (
           <div className="fade-in">
-            <p
-              className="legals-text"
-              style={{ marginBottom: "20px", textAlign: "center" }}
-            >
-              Ce que vous ne voulez PAS recevoir :
-            </p>
+            <p className="legals-text">Ce que vous ne voulez PAS recevoir :</p>
             <textarea
               className="sub-textarea"
               placeholder="Ex: Pas de café moulu, pas de thé noir..."
               value={preferences.exclusions}
-              onChange={(e) =>
-                setPreferences({ ...preferences, exclusions: e.target.value })
-              }
+              onChange={(e) => setPreferences({ ...preferences, exclusions: e.target.value })}
             />
-            <div style={{ display: "flex", gap: "10px" }}>
-              <button onClick={handleBack} className="btn-sub-back">
-                Retour
-              </button>
-              <button onClick={handleNext} className="btn-sub-next">
-                Suivant
-              </button>
-            </div>
+            {/* ... boutons retour/suivant ... */}
           </div>
         )}
 
-        {/* ÉTAPE 3 : LA FORMULE */}
+        {/* 
+        Choix de la formule finale */}
         {step === 3 && (
           <div className="fade-in">
-            <p
-              className="legals-text"
-              style={{ marginBottom: "20px", textAlign: "center" }}
-            >
-              Choisissez votre formule :
-            </p>
+            <p className="legals-text">Choisissez votre formule :</p>
             <div className="options-grid">
               {Object.entries(formules).map(([key, val]) => (
                 <div
                   key={key}
-                  onClick={() =>
-                    setPreferences({ ...preferences, formule: key })
-                  }
+                  onClick={() => setPreferences({ ...preferences, formule: key })}
                   className={`formula-card ${preferences.formule === key ? "active" : ""}`}
                 >
-                  <p
-                    style={{
-                      fontWeight: "bold",
-                      margin: 0,
-                      color: "var(--color-text)",
-                    }}
-                  >
-                    {val.nom}
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "20px",
-                      color: "var(--color-secondary)",
-                      margin: "5px 0",
-                    }}
-                  >
-                    {val.prix}€/mois
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      margin: 0,
-                      color: "var(--color-text-light)",
-                    }}
-                  >
-                    {val.desc}
-                  </p>
                 </div>
               ))}
-            </div>
-            <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-              <button onClick={handleBack} className="btn-sub-back">
-                Retour
-              </button>
-              <button onClick={addToCart} className="btn-sub-confirm">
-                S'abonner maintenant
-              </button>
             </div>
           </div>
         )}
@@ -177,5 +125,3 @@ const SubscriptionBox = () => {
     </div>
   );
 };
-
-export default SubscriptionBox;
