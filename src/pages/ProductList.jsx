@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProductCard from "../components/ProductCard";
-import "../styles/Pages/ProductList.css"; // Import du style
+import "../styles/Pages/ProductList.css";
 
 const ProductList = () => {
   const [produits, setProduits] = useState([]);

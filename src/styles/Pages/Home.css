@@ -20,7 +20,7 @@
   position: relative;
   min-height: 85vh;
   width: 100%;
-  background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2070');
+  background-image: url('/public/image_accueil_1.webp');
   background-size: cover;
   background-position: center;
   
