@@ -70,6 +70,8 @@ const Home = () => {
               src="/image_accueil_3.webp"
               alt="Box Caf'Thé"
               className="box-img"
+              fetchpriority="high"
+              loading="eager"
             />
           </div>
         </div>
