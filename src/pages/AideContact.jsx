@@ -16,8 +16,7 @@ const AideContact = () => {
         </p>
       </header>
 
-      {/* 
-        SECTION FAQ 
+      {/* SECTION FAQ 
         Organisation des questions fréquentes sous forme de blocs pour une lecture rapide.
       */}
       <section className="aide-section">
@@ -67,8 +66,7 @@ const AideContact = () => {
         </div>
       </section>
 
-      {/* 
-          SECTION FORMULAIRE
+      {/* SECTION FORMULAIRE
           J'utilise Formspree pour gérer l'envoi des mails sans avoir besoin d'un serveur backend complet.
       */}
       <section className="aide-section">
@@ -84,21 +82,35 @@ const AideContact = () => {
         >
           {/* Grille pour aligner proprement les champs Nom, Sujet et Email */}
           <div className="aide-form-grid">
+            <label htmlFor="sujet" className="sr-only">
+              Sujet :
+            </label>
             <input
+              id="sujet"
               type="text"
               name="sujet"
               placeholder="Sujet de votre demande"
               className="aide-input"
               required // Le champ doit être rempli pour soumettre le formulaire
             />
+
+            <label htmlFor="nom" className="sr-only">
+              Nom :
+            </label>
             <input
+              id="nom"
               type="text"
               name="nom"
               placeholder="Votre nom complet"
               className="aide-input"
               required
             />
+
+            <label htmlFor="email" className="sr-only">
+              E-mail :
+            </label>
             <input
+              id="email"
               type="email"
               name="email"
               placeholder="Votre adresse email"
@@ -106,7 +118,12 @@ const AideContact = () => {
               required
             />
           </div>
+
+          <label htmlFor="message" className="sr-only">
+            Message :
+          </label>
           <textarea
+            id="message"
             name="message"
             placeholder="Comment pouvons-nous vous aider ?"
             className="aide-textarea"
@@ -134,8 +151,7 @@ const AideContact = () => {
         </form>
       </section>
 
-      {/* 
-          SECTION LOCALISATION 
+      {/* SECTION LOCALISATION 
           Affichage des infos pratiques et intégration d'une carte interactive.
       */}
       <section className="aide-section">
@@ -158,8 +174,7 @@ const AideContact = () => {
           </p>
         </div>
 
-        {/* 
-            Intégration de Google Maps via une iframe. 
+        {/* Intégration de Google Maps via une iframe. 
             J'utilise l'attribut loading="lazy" pour ne charger la carte que si l'utilisateur descend sur la page (Eco-conception).
         */}
         <div className="map-wrapper">

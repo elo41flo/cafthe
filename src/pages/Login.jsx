@@ -30,21 +30,17 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // Client créé en magasin sans MDP (isNewFromStore renvoyé par le back)
         if (response.status === 403 && data.isNewFromStore) {
           navigate(`/setup-password?email=${encodeURIComponent(email)}`);
           return;
         }
-
         setErrorMsg(data.message || "Identifiants incorrects");
         return;
       }
 
-      // Connexion réussie
       localStorage.setItem("token", data.token);
       login(data.token, data.client);
 
-      // Redirection
       if (redirectPath) {
         navigate(`/${redirectPath}`);
       } else {
@@ -71,8 +67,12 @@ const Login = () => {
         <p className="auth-section-title">Vos identifiants</p>
 
         <div className="auth-input-group">
+          <label htmlFor="email" className="sr-only">
+            E-mail :
+          </label>
           <span className="auth-input-icon">@</span>
           <input
+            id="email"
             type="email"
             placeholder="E-mail"
             className="auth-input"
@@ -84,8 +84,12 @@ const Login = () => {
         </div>
 
         <div className="auth-input-group">
+          <label htmlFor="password" className="sr-only">
+            Mot de passe :
+          </label>
           <span className="auth-input-icon">🔒</span>
           <input
+            id="password"
             type="password"
             placeholder="Mot de passe"
             className="auth-input"
