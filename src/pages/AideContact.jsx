@@ -1,8 +1,33 @@
 // Importations
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Pages/AideContact.css";
 
 const AideContact = () => {
+  // État pour gérer l'affichage du message de succès après l'envoi
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Fonction pour intercepter la soumission et envoyer les données via fetch
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true); // Déclenche l'affichage du message de succès
+        form.reset(); // Réinitialise les champs du formulaire
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi :", error);
+    }
+  };
+
   return (
     <div className="aide-container">
       <header className="aide-header">
@@ -75,80 +100,91 @@ const AideContact = () => {
           Julien et Thomas vous répondent personnellement sous 24h.
         </p>
 
-        <form
-          action="https://formspree.io/f/xojnwark"
-          method="POST"
-          className="aide-form fade-in"
-        >
-          {/* Grille pour aligner proprement les champs Nom, Sujet et Email */}
-          <div className="aide-form-grid">
-            <label htmlFor="sujet" className="sr-only">
-              Sujet :
-            </label>
-            <input
-              id="sujet"
-              type="text"
-              name="sujet"
-              placeholder="Sujet de votre demande"
-              className="aide-input"
-              required // Le champ doit être rempli pour soumettre le formulaire
-            />
-
-            <label htmlFor="nom" className="sr-only">
-              Nom :
-            </label>
-            <input
-              id="nom"
-              type="text"
-              name="nom"
-              placeholder="Votre nom complet"
-              className="aide-input"
-              required
-            />
-
-            <label htmlFor="email" className="sr-only">
-              E-mail :
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="Votre adresse email"
-              className="aide-input"
-              required
-            />
+        {/* Affichage conditionnel : Message de succès ou Formulaire */}
+        {isSubmitted ? (
+          <div className="aide-success-message fade-in">
+            <p>✅ Votre message a bien été envoyé. Merci !</p>
+            <button onClick={() => setIsSubmitted(false)} className="aide-btn">
+              Envoyer un autre message
+            </button>
           </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            action="https://formspree.io/f/xojnwark"
+            method="POST"
+            className="aide-form fade-in"
+          >
+            {/* Grille pour aligner proprement les champs Nom, Sujet et Email */}
+            <div className="aide-form-grid">
+              <label htmlFor="sujet" className="sr-only">
+                Sujet :
+              </label>
+              <input
+                id="sujet"
+                type="text"
+                name="sujet"
+                placeholder="Sujet de votre demande"
+                className="aide-input"
+                required
+              />
 
-          <label htmlFor="message" className="sr-only">
-            Message :
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Comment pouvons-nous vous aider ?"
-            className="aide-textarea"
-            required
-          />
+              <label htmlFor="nom" className="sr-only">
+                Nom :
+              </label>
+              <input
+                id="nom"
+                type="text"
+                name="nom"
+                placeholder="Votre nom complet"
+                className="aide-input"
+                required
+              />
 
-          {/* AJOUT RGPD */}
-          <div className="aide-form-rgpd">
-            <input
-              type="checkbox"
-              id="rgpd-consent"
-              name="consentement_rgpd"
+              <label htmlFor="email" className="sr-only">
+                E-mail :
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Votre adresse email"
+                className="aide-input"
+                required
+              />
+            </div>
+
+            <label htmlFor="message" className="sr-only">
+              Message :
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Comment pouvons-nous vous aider ?"
+              className="aide-textarea"
               required
             />
-            <label htmlFor="rgpd-consent">
-              J'accepte que mes données soient utilisées pour répondre à ma
-              demande conformément à la{" "}
-              <strong>politique de confidentialité</strong>.
-            </label>
-          </div>
 
-          <button type="submit" className="aide-btn">
-            Envoyer le message
-          </button>
-        </form>
+            {/* AJOUT RGPD */}
+            <div className="aide-form-rgpd">
+              <input
+                type="checkbox"
+                id="rgpd-consent"
+                name="consentement_rgpd"
+                required
+              />
+              <label htmlFor="rgpd-consent">
+                J'accepte que mes données soient utilisées pour répondre à ma
+                demande conformément à la{" "}
+                <strong>politique de confidentialité</strong>.
+              </label>
+            </div>
+
+            <button type="submit" className="aide-btn">
+              Envoyer le message
+            </button>
+          </form>
+        )}
       </section>
 
       {/* SECTION LOCALISATION 
