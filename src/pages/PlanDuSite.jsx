@@ -9,7 +9,7 @@ const PlanDuSite = () => {
       links: [
         { name: "Accueil", path: "/" },
         { name: "Boutique", path: "/boutique" },
-        { name: "Sélection du moment", path: "/selection" },
+        { name: "Sélection du moment", path: "/pepite" },
         { name: "Notre univers", path: "/univers" },
         { name: "Aide & Contact", path: "/contact" },
       ],
@@ -20,16 +20,16 @@ const PlanDuSite = () => {
         { name: "Mon Panier", path: "/panier" },
         { name: "Se connecter", path: "/login" },
         { name: "Créer un compte", path: "/register" },
-        { name: "Mon Compte", path: "/moncompte" },
+        { name: "Mon Compte", path: "/mon-compte" },
       ],
     },
     {
       title: "Informations Légales",
       links: [
-        { name: "Mentions Légales", path: "/mentions-legales" },
+        { name: "Mentions Légales", path: "/MentionsLegales" },
         {
           name: "Politique de Confidentialité",
-          path: "/politique-de-confidentialite",
+          path: "/Politiqueconfidentialite",
         },
         { name: "Conditions Générales de Vente (CGV)", path: "/cgv" },
       ],
