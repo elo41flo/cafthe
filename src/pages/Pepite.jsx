@@ -61,21 +61,21 @@ const Pepite = () => {
           produit={findById(101)}
           labelBtn="Découvrir ce café"
         />
-
+        <br />
         <PépiteCard
           titre="La Sélection Thé de Thomas"
           sousTitre="Une immersion printanière dans les jardins de l'Himalaya, un thé d'exception."
           produit={findById(201)}
           labelBtn="Découvrir ce thé"
         />
-
+        <br />
         <PépiteCard
           titre="L’Accessoire du Moment"
           sousTitre="L'outil indispensable pour sublimer vos grains et libérer tous leurs arômes."
           produit={findById(301)}
           labelBtn="Voir l'accessoire"
         />
-
+        <br />
         <PépiteCard
           titre="Le Coffret Découverte"
           sousTitre="Le boost naturel idéal pour vos journées intenses, sélectionné par Mounia."
