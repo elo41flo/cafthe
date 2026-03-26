@@ -1,30 +1,91 @@
-// Importations
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Pages/Pepite.css";
+
+// --- CONFIGURATION DES CONTENUS ---
+// On centralise les textes pour aérer le composant principal
+const PEPITES_CONFIG = [
+  {
+    id: 101,
+    label: "Découvrir ce café",
+    titre: (
+      <>
+        Le Coup de Cœur <br /> de Julien
+      </>
+    ),
+    sousTitre: (
+      <>
+        Julien a sélectionné ce Moka pour sa finesse <br /> légendaire et ses
+        notes florales.
+      </>
+    ),
+  },
+  {
+    id: 201,
+    label: "Découvrir ce thé",
+    titre: (
+      <>
+        La Sélection Thé <br /> de Thomas
+      </>
+    ),
+    sousTitre: (
+      <>
+        Une immersion printanière dans les jardins <br /> de l'Himalaya, un thé
+        d'exception.
+      </>
+    ),
+  },
+  {
+    id: 301,
+    label: "Voir l'accessoire",
+    titre: (
+      <>
+        L’Accessoire <br /> du Moment
+      </>
+    ),
+    sousTitre: (
+      <>
+        L'outil indispensable pour sublimer vos grains <br /> et libérer tous
+        leurs arômes.
+      </>
+    ),
+  },
+  {
+    id: 408,
+    label: "Voir le coffret",
+    titre: (
+      <>
+        Le Coffret <br /> Découverte
+      </>
+    ),
+    sousTitre: (
+      <>
+        Le boost naturel idéal pour vos journées <br /> intenses, sélectionné
+        par Mounia.
+      </>
+    ),
+  },
+];
 
 const Pepite = () => {
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Récupération de l'URL API depuis les variables d'environnement
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // LOGIQUE DE RÉCUPÉRATION
+  // --- LOGIQUE DE RÉCUPÉRATION (API) ---
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/produits`);
         const data = await response.json();
 
-        // On vérifie que la structure reçue correspond bien à ce qu'on attend
         if (data && data.produits) {
           setProduits(data.produits);
         }
       } catch (error) {
-        console.error("Erreur lors de la récupération des pépites:", error);
+        console.error("Erreur API :", error);
       } finally {
-        // Qu'il y ait une erreur ou non, on arrête le chargement
         setLoading(false);
       }
     };
@@ -32,17 +93,20 @@ const Pepite = () => {
     fetchData();
   }, [apiUrl]);
 
-  // Cherche un produit spécifique dans le tableau par son ID
+  // --- UTILITAIRES ---
   const findById = (id) => produits.find((p) => p.numero_produit === id);
 
+  // --- RENDU : ÉTAT CHARGEMENT ---
   if (loading) {
     return (
       <div className="pepite-loading">
+        <div className="loader"></div> {/* Optionnel : pour un spinner CSS */}
         <p>Chargement de la sélection des experts...</p>
       </div>
     );
   }
 
+  // --- RENDU : PAGE PRINCIPALE ---
   return (
     <div className="pepite-page">
       <header className="pepite-header">
@@ -53,42 +117,30 @@ const Pepite = () => {
         </p>
       </header>
 
-      {/* Liste des Pépites mise en avant */}
       <main className="pepite-list">
-        <PépiteCard
-          titre="Le Coup de Cœur de Julien <br />"
-          sousTitre="Julien a sélectionné ce Moka pour sa finesse légendaire et ses notes florales. </ br>"
-          produit={findById(101)}
-          labelBtn="Découvrir ce café"
-        />
-        <br />
-        <PépiteCard
-          titre="La Sélection Thé de Thomas <br />"
-          sousTitre="Une immersion printanière dans les jardins de l'Himalaya, un thé d'exception. </ br>"
-          produit={findById(201)}
-          labelBtn="Découvrir ce thé"
-        />
-        <br />
-        <PépiteCard
-          titre="L’Accessoire du Moment <br />"
-          sousTitre="L'outil indispensable pour sublimer vos grains et libérer tous leurs arômes. <br />"
-          produit={findById(301)}
-          labelBtn="Voir l'accessoire"
-        />
-        <br />
-        <PépiteCard
-          titre="Le Coffret Découverte <br />"
-          sousTitre="Le boost naturel idéal pour vos journées intenses, sélectionné par Mounia. <br />"
-          produit={findById(408)}
-          labelBtn="Voir le coffret"
-        />
+        {PEPITES_CONFIG.map((config) => (
+          <PépiteCard
+            key={config.id}
+            titre={config.titre}
+            sousTitre={config.sousTitre}
+            produit={findById(config.id)}
+            labelBtn={config.label}
+          />
+        ))}
+
+        {/* Message de secours si aucun produit n'est trouvé */}
+        {produits.length === 0 && (
+          <p className="pepite-empty">
+            Aucune pépite n'est disponible pour le moment.
+          </p>
+        )}
       </main>
     </div>
   );
 };
 
+// --- SOUS-COMPOSANT : CARTE PRODUIT ---
 const PépiteCard = ({ titre, sousTitre, produit, labelBtn }) => {
-  // Si le produit n'a pas pu être récupéré via l'API, on n'affiche rien
   if (!produit) return null;
 
   return (
@@ -113,7 +165,6 @@ const PépiteCard = ({ titre, sousTitre, produit, labelBtn }) => {
           )}
         </div>
 
-        {/* Navigation dynamique vers la fiche produit détaillée */}
         <Link to={`/produit/${produit.numero_produit}`} className="pepite-btn">
           {labelBtn}
         </Link>
