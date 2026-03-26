@@ -1,34 +1,34 @@
 /* ==========================================================================
-   VARIABLES GLOBALES & THÈMES
+   1. VARIABLES & THÈMES (DESIGN SYSTEM)
    ========================================================================== */
 :root {
   /* Charte Graphique */
-  --color-primary: #aa8d74;    /* Marron */
-  --color-secondary: #97af6e;  /* Vert */
-  --color-accent: #ffeb9c;     /* Jaune */
-  --color-promo: #e63946;      /* Rouge Alerte */
+  --color-primary: #aa8d74;    /* Marron Caf'Thé */
+  --color-secondary: #97af6e;  /* Vert Caf'Thé */
+  --color-accent: #ffeb9c;     /* Jaune Accent */
+  --color-promo: #e63946;      /* Rouge Alerte/Erreur */
   
-  /* Mode Clair (Par défaut) */
+  /* Mode Clair (Default) */
   --color-bg: #ffffff;
   --color-card: #ffffff;
-  --color-text: #2d241c;       /* Marron sombre très lisible */
-  --color-text-light: #757575; /* Gris pour placeholders */
-  --color-border: #f0f0f0;
-  --color-input-bg: #f8fbff;   /* Bleu très léger pour l'aspect propre */
+  --color-text: #2d241c;       /* Marron sombre pour contraste max */
+  --color-text-light: #666666; /* Gris placeholders conforme WCAG */
+  --color-border: #eeeeee;
+  --color-input-bg: #f8fbff;   /* Teinte bleutée pour les champs */
   
   --radius-md: 15px;
   --radius-btn: 30px;
   --shadow-main: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
-/* Dark Mode */
+/* Mode Sombre */
 [data-theme='dark'] {
   --color-bg: #0a0a0a;
   --color-card: #1c1c1c;
-  --color-text: #ffffff;       /* Texte blanc pur */
-  --color-text-light: #aaaaaa;
+  --color-text: #ffffff;       /* Blanc pur pour lisibilité */
+  --color-text-light: #bbbbbb;
   --color-border: #333333;
-  --color-input-bg: #1a1a1a;   /* Fond d'input sombre */
+  --color-input-bg: #252525;   /* Gris foncé pour détacher l'input */
   
   --color-primary: #d4bc9c;
   --color-secondary: #b2c98a;
@@ -36,7 +36,7 @@
 }
 
 /* ==========================================================================
-   STRUCTURE ET ALIGNEMENT
+   2. MISE EN PAGE GLOBALE (AUTH)
    ========================================================================== */
 .auth-container {
     min-height: 100vh;
@@ -76,31 +76,7 @@
 }
 
 /* ==========================================================================
-   MESSAGES D'ÉTAT (Alertes globales)
-   ========================================================================== */
-.auth-error, .auth-success {
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.auth-error {
-    background-color: rgba(230, 57, 70, 0.1);
-    color: var(--color-promo);
-    border: 1px solid var(--color-promo);
-}
-
-.auth-success {
-    background-color: rgba(46, 125, 50, 0.1);
-    color: #2e7d32;
-    border: 1px solid #2e7d32;
-}
-
-/* ==========================================================================
-   INPUTS ET LISIBILITÉ (CORRIGÉ)
+   3. FORMULAIRE ET INPUTS (CORRECTIFS LISIBILITÉ)
    ========================================================================== */
 .auth-section-title {
     width: 100%;
@@ -126,11 +102,11 @@
 .auth-input-icon {
     position: absolute;
     left: 20px;
-    top: 27px;
+    top: 50%;
     transform: translateY(-50%);
     font-size: 18px;
-    z-index: 5;
-    color: var(--color-primary); /* Icônes plus visibles */
+    z-index: 10;
+    color: var(--color-primary);
     pointer-events: none;
 }
 
@@ -140,52 +116,53 @@
     padding: 0 20px 0 55px;
     border-radius: 30px;
     border: 2px solid var(--color-border);
-    background-color: var(--color-input-bg);
+    background-color: var(--color-input-bg) !important;
     
-    /* FIX LISIBILITÉ : Force la couleur du texte */
+    /* CRITIQUE : Force la couleur pour éviter le texte invisible */
     color: var(--color-text) !important; 
     
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px; /* Évite le zoom auto sur iOS */
+    font-size: 16px; /* Prévention zoom iOS */
     box-sizing: border-box;
     outline: none;
     transition: all 0.2s ease;
 }
 
 .auth-input::placeholder {
-    color: var(--color-text-light);
-    opacity: 0.8;
+    color: var(--color-text-light) !important;
+    opacity: 0.9;
 }
 
-/* Style sans icône (Nom/Prénom) */
+/* Suppression icône pour les champs Nom/Prénom */
 .auth-input-wrapper .auth-input {
     padding: 0 25px !important;
 }
 
+/* Focus : Accessibilité et Design */
 .auth-input:focus {
     border-color: var(--color-secondary);
-    background-color: var(--color-card);
+    background-color: var(--color-card) !important;
     box-shadow: 0 0 0 4px rgba(151, 175, 110, 0.15);
 }
 
-/* Style d'erreur sur l'input */
+/* Erreur : Feedback visuel immédiat */
 .auth-input.has-error {
     border-color: var(--color-promo) !important;
-    background-color: rgba(230, 57, 70, 0.03);
+    background-color: rgba(230, 57, 70, 0.05) !important;
 }
 
 .error-text {
     color: var(--color-promo);
     font-size: 11px;
     font-weight: 700;
-    margin: 5px 0 0 15px;
+    margin: 6px 0 0 20px;
     display: block;
     font-family: 'Montserrat', sans-serif;
     animation: slideIn 0.3s ease-out;
 }
 
 /* ==========================================================================
-   BOUTONS ET INTERACTIONS
+   4. BOUTONS, ÉTATS ET RESPONSIVE
    ========================================================================== */
 .shop-row {
     display: flex;
@@ -212,41 +189,37 @@
 
 .auth-btn:hover {
     background-color: var(--color-accent);
-    color: #2d241c !important; /* On devient sombre sur le jaune */
+    color: #2d241c !important; /* Texte sombre sur bouton jaune */
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 235, 156, 0.3);
 }
 
-.auth-switch {
-    margin-top: 25px;
-    font-family: 'Montserrat', sans-serif;
+.auth-error, .auth-success {
+    padding: 12px;
+    border-radius: 8px;
     font-size: 14px;
-    color: var(--color-text-light);
+    margin-bottom: 20px;
+    font-weight: 600;
+    role: alert;
 }
 
-.auth-link {
-    color: var(--color-primary);
-    font-weight: 700;
-    text-decoration: none;
+.auth-error {
+    background-color: rgba(230, 57, 70, 0.1);
+    color: var(--color-promo);
+    border: 1px solid var(--color-promo);
 }
 
-.auth-link:hover {
-    text-decoration: underline;
+.auth-success {
+    background-color: rgba(46, 125, 50, 0.1);
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
 }
 
-/* ==========================================================================
-   ACCESSIBILITÉ & RESPONSIVE
-   ========================================================================== */
 .sr-only {
     position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+    width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    white-space: nowrap; border-width: 0;
 }
 
 @keyframes slideIn {
@@ -254,12 +227,8 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.fade-in { animation: fadeIn 0.5s ease-in; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
 @media (max-width: 480px) {
     .auth-container { padding: 20px 10px; align-items: flex-start; }
-    .auth-card { padding: 30px 20px; border: none; box-shadow: none; background: transparent; }
-    .auth-title { font-size: 24px; }
+    .auth-card { padding: 30px 15px; border: none; box-shadow: none; background: transparent; }
     .shop-row { flex-direction: column; gap: 0; }
 }
