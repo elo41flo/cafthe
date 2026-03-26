@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/Pages/Pepite.css";
 
 // --- CONFIGURATION DES CONTENUS ---
-// On centralise les textes pour aérer le composant principal
 const PEPITES_CONFIG = [
   {
     id: 101,
@@ -13,12 +12,8 @@ const PEPITES_CONFIG = [
         Le Coup de Cœur <br /> de Julien
       </>
     ),
-    sousTitre: (
-      <>
-        Julien a sélectionné ce Moka pour sa finesse <br /> légendaire et ses
-        notes florales.
-      </>
-    ),
+    sousTitre:
+      "Julien a sélectionné ce Moka pour sa finesse légendaire et ses notes florales.",
   },
   {
     id: 201,
@@ -28,12 +23,8 @@ const PEPITES_CONFIG = [
         La Sélection Thé <br /> de Thomas
       </>
     ),
-    sousTitre: (
-      <>
-        Une immersion printanière dans les jardins <br /> de l'Himalaya, un thé
-        d'exception.
-      </>
-    ),
+    sousTitre:
+      "Une immersion printanière dans les jardins de l'Himalaya, un thé d'exception.",
   },
   {
     id: 301,
@@ -43,12 +34,8 @@ const PEPITES_CONFIG = [
         L’Accessoire <br /> du Moment
       </>
     ),
-    sousTitre: (
-      <>
-        L'outil indispensable pour sublimer vos grains <br /> et libérer tous
-        leurs arômes.
-      </>
-    ),
+    sousTitre:
+      "L'outil indispensable pour sublimer vos grains et libérer tous leurs arômes.",
   },
   {
     id: 408,
@@ -58,28 +45,21 @@ const PEPITES_CONFIG = [
         Le Coffret <br /> Découverte
       </>
     ),
-    sousTitre: (
-      <>
-        Le boost naturel idéal pour vos journées <br /> intenses, sélectionné
-        par Mounia.
-      </>
-    ),
+    sousTitre:
+      "Le boost naturel idéal pour vos journées intenses, sélectionné par Mounia.",
   },
 ];
 
 const Pepite = () => {
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // --- LOGIQUE DE RÉCUPÉRATION (API) ---
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/produits`);
         const data = await response.json();
-
         if (data && data.produits) {
           setProduits(data.produits);
         }
@@ -89,24 +69,19 @@ const Pepite = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [apiUrl]);
 
-  // --- UTILITAIRES ---
   const findById = (id) => produits.find((p) => p.numero_produit === id);
 
-  // --- RENDU : ÉTAT CHARGEMENT ---
   if (loading) {
     return (
       <div className="pepite-loading">
-        <div className="loader"></div> {/* Optionnel : pour un spinner CSS */}
         <p>Chargement de la sélection des experts...</p>
       </div>
     );
   }
 
-  // --- RENDU : PAGE PRINCIPALE ---
   return (
     <div className="pepite-page">
       <header className="pepite-header">
@@ -127,19 +102,11 @@ const Pepite = () => {
             labelBtn={config.label}
           />
         ))}
-
-        {/* Message de secours si aucun produit n'est trouvé */}
-        {produits.length === 0 && (
-          <p className="pepite-empty">
-            Aucune pépite n'est disponible pour le moment.
-          </p>
-        )}
       </main>
     </div>
   );
 };
 
-// --- SOUS-COMPOSANT : CARTE PRODUIT ---
 const PépiteCard = ({ titre, sousTitre, produit, labelBtn }) => {
   if (!produit) return null;
 
@@ -153,18 +120,15 @@ const PépiteCard = ({ titre, sousTitre, produit, labelBtn }) => {
       <div className="pepite-banner">
         <div className="pepite-product-info">
           <h3 className="pepite-product-name">{produit.nom_produit}</h3>
-
           <p className="pepite-expert-text">
             <strong>L'avis de l'expert :</strong> {produit.description}
           </p>
-
           {produit.origine && (
             <p className="pepite-expert-text">
               <strong>Origine :</strong> {produit.origine}
             </p>
           )}
         </div>
-
         <Link to={`/produit/${produit.numero_produit}`} className="pepite-btn">
           {labelBtn}
         </Link>
