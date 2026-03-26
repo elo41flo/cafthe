@@ -56,29 +56,29 @@ const Pepite = () => {
       {/* Liste des Pépites mise en avant */}
       <main className="pepite-list">
         <PépiteCard
-          titre="Le Coup de Cœur de Julien"
-          sousTitre="Julien a sélectionné ce Moka pour sa finesse légendaire et ses notes florales."
+          titre="Le Coup de Cœur de Julien <br />"
+          sousTitre="Julien a sélectionné ce Moka pour sa finesse légendaire et ses notes florales. </ br>"
           produit={findById(101)}
           labelBtn="Découvrir ce café"
         />
         <br />
         <PépiteCard
-          titre="La Sélection Thé de Thomas"
-          sousTitre="Une immersion printanière dans les jardins de l'Himalaya, un thé d'exception."
+          titre="La Sélection Thé de Thomas <br />"
+          sousTitre="Une immersion printanière dans les jardins de l'Himalaya, un thé d'exception. </ br>"
           produit={findById(201)}
           labelBtn="Découvrir ce thé"
         />
         <br />
         <PépiteCard
-          titre="L’Accessoire du Moment"
-          sousTitre="L'outil indispensable pour sublimer vos grains et libérer tous leurs arômes."
+          titre="L’Accessoire du Moment <br />"
+          sousTitre="L'outil indispensable pour sublimer vos grains et libérer tous leurs arômes. <br />"
           produit={findById(301)}
           labelBtn="Voir l'accessoire"
         />
         <br />
         <PépiteCard
-          titre="Le Coffret Découverte"
-          sousTitre="Le boost naturel idéal pour vos journées intenses, sélectionné par Mounia."
+          titre="Le Coffret Découverte <br />"
+          sousTitre="Le boost naturel idéal pour vos journées intenses, sélectionné par Mounia. <br />"
           produit={findById(408)}
           labelBtn="Voir le coffret"
         />
