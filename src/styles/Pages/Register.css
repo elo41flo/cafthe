@@ -18,21 +18,47 @@
     box-shadow: var(--shadow-main);
     border: 1px solid var(--color-border);
     width: 100%;
-    max-width: 450px;
+    max-width: 480px; /* Légèrement élargi pour le confort des erreurs */
     text-align: center;
     box-sizing: border-box;
+    transition: transform 0.3s ease;
 }
 
 .auth-logo {
     display: block;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 15px auto;
+    object-fit: contain;
 }
 
 .auth-title {
     font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 28px;
+    margin-bottom: 25px;
     color: var(--color-text);
+}
+
+/* ==========================================================================
+   MESSAGES D'ÉTAT (Alertes globales)
+   ========================================================================== */
+.auth-error, .auth-success {
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.auth-error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--color-promo); /* Ton rouge/rose alerte */
+    border: 1px solid var(--color-promo);
+}
+
+.auth-success {
+    background-color: rgba(0, 128, 0, 0.1);
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
 }
 
 /* ==========================================================================
@@ -41,30 +67,33 @@
 .auth-section-title {
     width: 100%;
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--color-primary);
-    margin: 25px 0 15px 5px;
+    margin: 20px 0 15px 5px;
     text-align: left;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
 }
 
-.auth-input-group {
+.auth-input-group, .auth-input-wrapper {
     position: relative;
     width: 100%;
-    margin-bottom: 15px;
-    text-align: left; /* Pour aligner les erreurs sous l'input */
+    margin-bottom: 18px; /* Espace pour le message d'erreur en dessous */
+    text-align: left;
 }
 
 .auth-input-icon {
     position: absolute;
     left: 20px;
-    top: 27px; /* Fixé par rapport à la hauteur de l'input */
+    top: 27px;
     transform: translateY(-50%);
     font-size: 16px;
     z-index: 5;
     color: var(--color-text-light);
+    pointer-events: none;
 }
 
 .auth-input {
@@ -73,64 +102,50 @@
     padding: 0 20px 0 55px;
     border-radius: 30px;
     border: 1px solid var(--color-border);
-    background-color: #f0f7ff;
+    background-color: #f8fbff; /* Bleu très léger pour l'aspect propre */
     color: var(--color-text);
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
     box-sizing: border-box;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-/* Cas particulier pour CP et Ville (sans icônes) */
-.shop-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.shop-row .auth-input {
+/* Inputs sans icônes (dans les colonnes Nom/Prénom) */
+.auth-input-wrapper .auth-input {
     padding: 0 20px !important;
 }
 
 .auth-input:focus {
     border-color: var(--color-secondary);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(var(--color-secondary-rgb), 0.1);
 }
 
+/* Style d'erreur sur l'input */
 .auth-input.has-error {
-    border-color: var(--color-promo);
+    border-color: var(--color-promo) !important;
+    background-color: #fffafb;
 }
 
-/* Erreurs de validation */
-.auth-validation-error {
+/* Texte d'erreur sous les champs */
+.error-text {
     color: var(--color-promo);
     font-size: 11px;
     font-weight: 600;
-    margin: 5px 0 0 20px;
+    margin: 4px 0 0 15px;
     display: block;
+    font-family: 'Montserrat', sans-serif;
+    animation: slideIn 0.3s ease-out;
 }
 
 /* ==========================================================================
-   CHECKBOX ET BOUTON
+   BOUTON ET LIENS
    ========================================================================== */
-.auth-checkbox-wrapper {
+.shop-row {
     display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    margin: 20px 5px;
-    text-align: left;
-}
-
-.auth-checkbox-wrapper input {
-    margin-top: 3px;
-    cursor: pointer;
-}
-
-.auth-checkbox-label {
-    font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.5;
-    color: var(--color-text);
+    gap: 15px;
+    margin-bottom: 5px;
 }
 
 .auth-btn {
@@ -144,49 +159,83 @@
     font-weight: 700;
     text-transform: uppercase;
     font-size: 14px;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.3s;
-    margin-top: 10px;
+    transition: all 0.3s ease;
+    margin-top: 15px;
 }
 
 .auth-btn:hover {
     background-color: var(--color-primary);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.auth-footer-text {
+.auth-switch {
     margin-top: 25px;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     color: var(--color-text-light);
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+.auth-link {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.auth-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
 }
 
 /* ==========================================================================
-   RESPONSIVE (320px)
+   ACCESSIBILITÉ ET ANIMATIONS
+   ========================================================================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ==========================================================================
+   RESPONSIVE
    ========================================================================== */
 @media (max-width: 480px) {
     .auth-container {
-        padding-top: 20px;
+        padding: 20px 10px;
         align-items: flex-start;
     }
     .auth-card {
-        padding: 30px 15px;
-        border: none;
-        box-shadow: none;
-        background: transparent;
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+    .auth-title {
+        font-size: 22px;
     }
     .shop-row {
         flex-direction: column;
+        gap: 0;
     }
 }
