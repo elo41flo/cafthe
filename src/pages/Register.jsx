@@ -5,14 +5,14 @@ import "../styles/Pages/Register.css";
 const Register = () => {
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState(""); // Ajouté pour le test de succès
+  const [successMsg, setSuccessMsg] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({
     nom_client: "",
     prenom_client: "",
     email_client: "",
     mdp_client: "",
-    confirm_mdp: "", // Ajouté pour le test
+    confirm_mdp: "",
     adresse_livraison: "",
     ville_livraison: "",
     cp_livraison: "",
@@ -43,7 +43,6 @@ const Register = () => {
         "Requis : 12 caractères, 1 Majuscule, 1 Chiffre et 1 Caractère spécial (@$!%*?&).";
     }
 
-    // Validation de correspondance pour les tests
     if (formData.mdp_client !== formData.confirm_mdp) {
       setErrorMsg("Les mots de passe ne correspondent pas");
       return false;
@@ -69,7 +68,7 @@ const Register = () => {
       });
 
       if (response.ok) {
-        setSuccessMsg("Compte créé avec succès !"); // Attendu par le test
+        setSuccessMsg("Compte créé avec succès !");
         setTimeout(() => navigate("/login"), 2000);
       } else {
         const data = await response.json();
@@ -131,7 +130,6 @@ const Register = () => {
           />
         </div>
 
-        {/* NOUVEAU CHAMP : Ajouté pour correspondre à ton fichier de test */}
         <div className="auth-input-group">
           <label htmlFor="confirm_mdp" className="sr-only">
             Confirmer le mot de passe :
@@ -179,6 +177,14 @@ const Register = () => {
         <button type="submit" className="auth-btn">
           S'inscrire
         </button>
+
+        {/* LIEN DE CONNEXION RÉINSÉRÉ ICI */}
+        <p className="auth-switch">
+          Déjà un compte ?{" "}
+          <Link to="/login" className="auth-link">
+            Se connecter
+          </Link>
+        </p>
       </form>
     </div>
   );
