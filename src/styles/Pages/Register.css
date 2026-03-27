@@ -1,234 +1,97 @@
 /* ==========================================================================
-   1. VARIABLES & THÈMES (DESIGN SYSTEM)
+   5. CHECKBOX RGPD (AJOUTÉ)
    ========================================================================== */
-:root {
-  /* Charte Graphique */
-  --color-primary: #aa8d74;    /* Marron Caf'Thé */
-  --color-secondary: #97af6e;  /* Vert Caf'Thé */
-  --color-accent: #ffeb9c;     /* Jaune Accent */
-  --color-promo: #e63946;      /* Rouge Alerte/Erreur */
-  
-  /* Mode Clair (Default) */
-  --color-bg: #ffffff;
-  --color-card: #ffffff;
-  --color-text: #2d241c;       /* Marron sombre pour contraste max */
-  --color-text-light: #666666; /* Gris placeholders conforme WCAG */
-  --color-border: #eeeeee;
-  --color-input-bg: #f8fbff;   /* Teinte bleutée pour les champs */
-  
-  --radius-md: 15px;
-  --radius-btn: 30px;
-  --shadow-main: 0 15px 35px rgba(0, 0, 0, 0.08);
+.auth-checkbox-group {
+    margin: 10px 0 20px 5px;
+    text-align: left;
+    animation: fadeIn 0.5s ease-in;
 }
 
-/* Mode Sombre */
-[data-theme='dark'] {
-  --color-bg: #0a0a0a;
-  --color-card: #1c1c1c;
-  --color-text: #ffffff;       /* Blanc pur pour lisibilité */
-  --color-text-light: #bbbbbb;
-  --color-border: #333333;
-  --color-input-bg: #252525;   /* Gris foncé pour détacher l'input */
-  
-  --color-primary: #d4bc9c;
-  --color-secondary: #b2c98a;
-  --shadow-main: 0 15px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* ==========================================================================
-   2. MISE EN PAGE GLOBALE (AUTH)
-   ========================================================================== */
-.auth-container {
-    min-height: 100vh;
+.auth-checkbox-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-bg);
-    padding: 40px 20px;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease;
+    align-items: flex-start; /* Aligne la case avec le haut du texte */
+    gap: 12px;
+    cursor: pointer;
 }
 
-.auth-card {
-    background-color: var(--color-card);
-    padding: 40px;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-main);
-    border: 1px solid var(--color-border);
-    width: 100%;
-    max-width: 480px;
-    text-align: center;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-.auth-logo {
-    display: block;
-    margin: 0 auto 15px auto;
-    object-fit: contain;
-}
-
-.auth-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    margin-bottom: 25px;
-    color: var(--color-text);
-}
-
-/* ==========================================================================
-   3. FORMULAIRE ET INPUTS (CORRECTIFS LISIBILITÉ)
-   ========================================================================== */
-.auth-section-title {
-    width: 100%;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--color-primary);
-    margin: 20px 0 15px 5px;
-    text-align: left;
-    letter-spacing: 1.5px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 5px;
-}
-
-.auth-input-group, .auth-input-wrapper {
-    position: relative;
-    width: 100%;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.auth-input-icon {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    z-index: 10;
-    color: var(--color-primary);
-    pointer-events: none;
-}
-
-.auth-input {
-    width: 100%;
-    height: 55px;
-    padding: 0 20px 0 55px;
-    border-radius: 30px;
+.auth-checkbox-wrapper input[type="checkbox"] {
+    appearance: none; /* On reset le style par défaut */
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
     border: 2px solid var(--color-border);
-    background-color: var(--color-input-bg) !important;
-    
-    /* CRITIQUE : Force la couleur pour éviter le texte invisible */
-    color: var(--color-text) !important; 
-    
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px; /* Prévention zoom iOS */
-    box-sizing: border-box;
-    outline: none;
+    border-radius: 4px;
+    background-color: var(--color-input-bg);
+    cursor: pointer;
+    position: relative;
+    margin-top: 2px; /* Ajustement vertical pour le texte */
     transition: all 0.2s ease;
+    flex-shrink: 0; /* Empêche la case de s'écraser */
 }
 
-.auth-input::placeholder {
-    color: var(--color-text-light) !important;
-    opacity: 0.9;
-}
-
-/* Suppression icône pour les champs Nom/Prénom */
-.auth-input-wrapper .auth-input {
-    padding: 0 25px !important;
-}
-
-/* Focus : Accessibilité et Design */
-.auth-input:focus {
+/* État coché */
+.auth-checkbox-wrapper input[type="checkbox"]:checked {
+    background-color: var(--color-secondary);
     border-color: var(--color-secondary);
-    background-color: var(--color-card) !important;
-    box-shadow: 0 0 0 4px rgba(151, 175, 110, 0.15);
 }
 
-/* Erreur : Feedback visuel immédiat */
-.auth-input.has-error {
-    border-color: var(--color-promo) !important;
-    background-color: rgba(230, 57, 70, 0.05) !important;
+/* Le petit "check" blanc quand c'est coché */
+.auth-checkbox-wrapper input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.error-text {
-    color: var(--color-promo);
-    font-size: 11px;
-    font-weight: 700;
-    margin: 6px 0 0 20px;
-    display: block;
+.auth-checkbox-label {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-text);
     font-family: 'Montserrat', sans-serif;
-    animation: slideIn 0.3s ease-out;
+    cursor: pointer;
+}
+
+/* Lien spécifique dans le label (Politique de confidentialité) */
+.auth-link-small {
+    color: var(--color-primary);
+    text-decoration: underline;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.auth-link-small:hover {
+    color: var(--color-secondary);
+}
+
+/* Style si erreur sur la checkbox */
+.auth-checkbox-wrapper input.checkbox-error {
+    border-color: var(--color-promo);
+    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
 }
 
 /* ==========================================================================
-   4. BOUTONS, ÉTATS ET RESPONSIVE
+   RAPPEL DES AUTRES MODIFICATIONS NÉCESSAIRES
    ========================================================================== */
+
+/* Ajustement de la shop-row pour éviter que le RGPD soit collé aux inputs */
 .shop-row {
     display: flex;
     gap: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Réduit pour laisser de la place au bloc RGPD */
 }
 
-.auth-btn {
-    width: 100%;
-    height: 55px;
-    background-color: var(--color-secondary);
-    color: #ffffff !important;
-    border: none;
-    border-radius: var(--radius-btn);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 15px;
+/* On s'assure que les messages d'erreurs sous la checkbox sont bien placés */
+.auth-checkbox-group .error-text {
+    margin-left: 30px; /* Aligné avec le début du texte du label, pas la case */
+    margin-top: 5px;
 }
 
-.auth-btn:hover {
-    background-color: var(--color-accent);
-    color: #2d241c !important; /* Texte sombre sur bouton jaune */
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 235, 156, 0.3);
-}
-
-.auth-error, .auth-success {
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    role: alert;
-}
-
-.auth-error {
-    background-color: rgba(230, 57, 70, 0.1);
-    color: var(--color-promo);
-    border: 1px solid var(--color-promo);
-}
-
-.auth-success {
-    background-color: rgba(46, 125, 50, 0.1);
-    color: #2e7d32;
-    border: 1px solid #2e7d32;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0, 0, 0, 0);
-    white-space: nowrap; border-width: 0;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* Correction responsive pour mobile */
 @media (max-width: 480px) {
-    .auth-container { padding: 20px 10px; align-items: flex-start; }
-    .auth-card { padding: 30px 15px; border: none; box-shadow: none; background: transparent; }
-    .shop-row { flex-direction: column; gap: 0; }
+    .auth-checkbox-label {
+        font-size: 12px; /* Un peu plus petit sur mobile */
+    }
 }

@@ -7,32 +7,35 @@ const Register = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [formErrors, setFormErrors] = useState({});
+
   const [formData, setFormData] = useState({
     nom_client: "",
     prenom_client: "",
     email_client: "",
     mdp_client: "",
     confirm_mdp: "",
+    acceptRGPD: false, // État initial de la checkbox
   });
 
-  // Gestion des changements dans les champs
+  // Gestion des changements (Input texte et Checkbox)
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Efface l'erreur du champ dès que l'utilisateur recommence à taper
-    if (formErrors[e.target.name]) {
-      setFormErrors({ ...formErrors, [e.target.name]: "" });
+    const { name, value, type, checked } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+
+    // Nettoie l'erreur dès que l'utilisateur modifie le champ
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: "" });
     }
   };
 
-  // Validation du formulaire avec Regex robustes
+  // Validation du formulaire
   const validateForm = () => {
     const errors = {};
-
-    // Regex Email : vérifie la structure et l'extension (2 à 6 lettres)
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-
-    // Regex Mot de passe : 12 caractères, 1 Maj, 1 Chiffre, 1 Spécial
-    // (Conforme aux recommandations CNIL que tu peux citer au jury)
     const mdpRegex =
       /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
 
@@ -43,14 +46,20 @@ const Register = () => {
       errors.prenom_client = "Prénom requis (2 caractères min).";
     }
     if (!emailRegex.test(formData.email_client)) {
-      errors.email_client = "Format d'email invalide (ex: info@caf-the.fr).";
+      errors.email_client = "Format d'email invalide.";
     }
     if (!mdpRegex.test(formData.mdp_client)) {
       errors.mdp_client =
-        "Requis : 12 caractères, 1 Majuscule, 1 Chiffre et 1 Spécial.";
+        "Requis : 12 caractères, 1 Maj, 1 Chiffre et 1 Spécial.";
     }
     if (formData.mdp_client !== formData.confirm_mdp) {
       errors.confirm_mdp = "Les mots de passe ne correspondent pas.";
+    }
+
+    // Validation obligatoire du RGPD
+    if (!formData.acceptRGPD) {
+      errors.acceptRGPD =
+        "Vous devez accepter la politique de confidentialité.";
     }
 
     setFormErrors(errors);
@@ -67,10 +76,13 @@ const Register = () => {
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
     try {
+      // On envoie les données (sans confirm_mdp et acceptRGPD si ton API n'en a pas besoin)
+      const { confirm_mdp, acceptRGPD, ...dataToSend } = formData;
+
       const response = await fetch(`${baseUrl}/api/clients/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       if (response.ok) {
@@ -96,7 +108,6 @@ const Register = () => {
         />
         <h1 className="auth-title">S’inscrire</h1>
 
-        {/* Messages d'état globaux */}
         {errorMsg && (
           <p className="auth-error" role="alert">
             ⚠️ {errorMsg}
@@ -110,7 +121,7 @@ const Register = () => {
 
         <p className="auth-section-title">Identité & Connexion</p>
 
-        {/* Champ Email */}
+        {/* Email */}
         <div className="auth-input-group">
           <label htmlFor="email_client" className="sr-only">
             E-mail :
@@ -133,7 +144,7 @@ const Register = () => {
           )}
         </div>
 
-        {/* Champ Mot de passe */}
+        {/* Mot de passe */}
         <div className="auth-input-group">
           <label htmlFor="mdp_client" className="sr-only">
             Mot de passe :
@@ -155,10 +166,10 @@ const Register = () => {
           )}
         </div>
 
-        {/* Confirmation Mot de passe */}
+        {/* Confirmation */}
         <div className="auth-input-group">
           <label htmlFor="confirm_mdp" className="sr-only">
-            Confirmer le mot de passe :
+            Confirmer :
           </label>
           <span className="auth-input-icon" aria-hidden="true">
             🔒
@@ -177,12 +188,9 @@ const Register = () => {
           )}
         </div>
 
-        {/* Nom et Prénom sur la même ligne */}
+        {/* Nom & Prénom */}
         <div className="shop-row">
           <div className="auth-input-wrapper">
-            <label htmlFor="nom_client" className="sr-only">
-              Nom :
-            </label>
             <input
               id="nom_client"
               type="text"
@@ -196,9 +204,6 @@ const Register = () => {
             )}
           </div>
           <div className="auth-input-wrapper">
-            <label htmlFor="prenom_client" className="sr-only">
-              Prénom :
-            </label>
             <input
               id="prenom_client"
               type="text"
@@ -211,6 +216,30 @@ const Register = () => {
               <span className="error-text">{formErrors.prenom_client}</span>
             )}
           </div>
+        </div>
+
+        {/* --- BLOC RGPD --- */}
+        <div className="auth-checkbox-group">
+          <div className="auth-checkbox-wrapper">
+            <input
+              id="acceptRGPD"
+              type="checkbox"
+              name="acceptRGPD"
+              checked={formData.acceptRGPD}
+              onChange={handleChange}
+            />
+            <label htmlFor="acceptRGPD" className="auth-checkbox-label">
+              J'accepte que mes données soient collectées pour la gestion de mon
+              compte conformément à la{" "}
+              <Link to="/Politiqueconfidentialite" className="auth-link-small">
+                politique de confidentialité
+              </Link>{" "}
+              *
+            </label>
+          </div>
+          {formErrors.acceptRGPD && (
+            <span className="error-text">{formErrors.acceptRGPD}</span>
+          )}
         </div>
 
         <button type="submit" className="auth-btn">
