@@ -1,21 +1,149 @@
 /* ==========================================================================
-   5. CHECKBOX RGPD (AJOUTÉ)
+   1. VARIABLES & THÈMES (DESIGN SYSTEM)
+   ========================================================================== */
+:root {
+  /* Charte Graphique */
+  --color-primary: #aa8d74;    /* Marron Caf'Thé */
+  --color-secondary: #97af6e;  /* Vert Caf'Thé */
+  --color-accent: #ffeb9c;     /* Jaune Accent */
+  --color-promo: #e63946;      /* Rouge Alerte/Erreur */
+  
+  /* Mode Clair (Default) */
+  --color-bg: #ffffff;
+  --color-card: #ffffff;
+  --color-text: #2d241c;       /* Marron sombre */
+  --color-text-light: #666666; /* Gris placeholders */
+  --color-border: #eeeeee;
+  --color-input-bg: #f8fbff;   
+  
+  --radius-md: 15px;
+  --radius-btn: 30px;
+  --shadow-main: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] {
+  --color-bg: #0a0a0a;
+  --color-card: #1c1c1c;
+  --color-text: #ffffff;
+  --color-text-light: #bbbbbb;
+  --color-border: #333333;
+  --color-input-bg: #252525;
+  
+  --color-primary: #d4bc9c;
+  --color-secondary: #b2c98a;
+  --shadow-main: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   2. STRUCTURE DE BASE
+   ========================================================================== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg);
+    padding: 40px 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.auth-card {
+    background-color: var(--color-card);
+    padding: 40px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-main);
+    border: 1px solid var(--color-border);
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.auth-logo {
+    display: block;
+    margin: 0 auto 15px auto;
+}
+
+.auth-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: var(--color-text);
+}
+
+/* ==========================================================================
+   3. INPUTS & ICÔNES (CORRECTION CHEVAUCHEMENT)
+   ========================================================================== */
+.auth-input-group, .auth-input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.auth-input-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Centrage vertical parfait */
+    font-size: 18px;
+    z-index: 10;
+    color: var(--color-primary);
+    pointer-events: none;
+}
+
+.auth-input {
+    width: 100%;
+    height: 55px;
+    /* FIX : 55px de padding-left pour laisser la place à l'icône */
+    padding: 0 20px 0 55px !important; 
+    border-radius: 30px;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-input-bg) !important;
+    color: var(--color-text) !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.auth-input::placeholder {
+    color: var(--color-text-light) !important;
+}
+
+/* Champs sans icônes (Nom / Prénom) */
+.auth-input-wrapper .auth-input {
+    padding: 0 25px !important;
+}
+
+.auth-input:focus {
+    border-color: var(--color-secondary);
+    background-color: var(--color-card) !important;
+}
+
+.auth-input.has-error {
+    border-color: var(--color-promo) !important;
+}
+
+/* ==========================================================================
+   4. BLOC RGPD (CHECKBOX)
    ========================================================================== */
 .auth-checkbox-group {
     margin: 10px 0 20px 5px;
     text-align: left;
-    animation: fadeIn 0.5s ease-in;
 }
 
 .auth-checkbox-wrapper {
     display: flex;
-    align-items: flex-start; /* Aligne la case avec le haut du texte */
+    align-items: flex-start;
     gap: 12px;
     cursor: pointer;
 }
 
 .auth-checkbox-wrapper input[type="checkbox"] {
-    appearance: none; /* On reset le style par défaut */
+    appearance: none;
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
@@ -24,18 +152,16 @@
     background-color: var(--color-input-bg);
     cursor: pointer;
     position: relative;
-    margin-top: 2px; /* Ajustement vertical pour le texte */
-    transition: all 0.2s ease;
-    flex-shrink: 0; /* Empêche la case de s'écraser */
+    margin-top: 3px;
+    flex-shrink: 0;
+    transition: all 0.2s;
 }
 
-/* État coché */
 .auth-checkbox-wrapper input[type="checkbox"]:checked {
     background-color: var(--color-secondary);
     border-color: var(--color-secondary);
 }
 
-/* Le petit "check" blanc quand c'est coché */
 .auth-checkbox-wrapper input[type="checkbox"]:checked::after {
     content: '✔';
     position: absolute;
@@ -50,48 +176,64 @@
     font-size: 13px;
     line-height: 1.5;
     color: var(--color-text);
-    font-family: 'Montserrat', sans-serif;
-    cursor: pointer;
-}
-
-/* Lien spécifique dans le label (Politique de confidentialité) */
-.auth-link-small {
-    color: var(--color-primary);
-    text-decoration: underline;
-    font-weight: 700;
-    transition: color 0.2s;
-}
-
-.auth-link-small:hover {
-    color: var(--color-secondary);
-}
-
-/* Style si erreur sur la checkbox */
-.auth-checkbox-wrapper input.checkbox-error {
-    border-color: var(--color-promo);
-    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
 }
 
 /* ==========================================================================
-   RAPPEL DES AUTRES MODIFICATIONS NÉCESSAIRES
+   5. BOUTONS & ERREURS
    ========================================================================== */
+.error-text {
+    color: var(--color-promo);
+    font-size: 11px;
+    font-weight: 700;
+    margin: 5px 0 0 15px;
+    display: block;
+}
 
-/* Ajustement de la shop-row pour éviter que le RGPD soit collé aux inputs */
+.auth-btn {
+    width: 100%;
+    height: 55px;
+    background-color: var(--color-secondary);
+    color: white !important;
+    border: none;
+    border-radius: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background-color: var(--color-primary);
+}
+
+.auth-switch {
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.auth-link, .auth-link-small {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE
+   ========================================================================== */
 .shop-row {
     display: flex;
     gap: 15px;
-    margin-bottom: 5px; /* Réduit pour laisser de la place au bloc RGPD */
+    margin-bottom: 5px;
 }
 
-/* On s'assure que les messages d'erreurs sous la checkbox sont bien placés */
-.auth-checkbox-group .error-text {
-    margin-left: 30px; /* Aligné avec le début du texte du label, pas la case */
-    margin-top: 5px;
-}
-
-/* Correction responsive pour mobile */
 @media (max-width: 480px) {
-    .auth-checkbox-label {
-        font-size: 12px; /* Un peu plus petit sur mobile */
-    }
+    .auth-card { padding: 30px 15px; border: none; box-shadow: none; background: transparent; }
+    .shop-row { flex-direction: column; gap: 0; }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    white-space: nowrap; border-width: 0;
 }
